@@ -60,7 +60,7 @@ A smart WhatsApp auto-reply bot with Google Sheets integration, built with Next.
 
 6. Open [http://localhost:3000](http://localhost:3000) and login with:
    - Email: `admin@example.com`
-   - Password: `password123`
+   - Password: `admin123`
 
 ## Environment Variables
 

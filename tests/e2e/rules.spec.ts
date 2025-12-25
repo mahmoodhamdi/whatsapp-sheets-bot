@@ -5,7 +5,7 @@ test.describe("Rules Management", () => {
     // Login
     await page.goto("/login");
     await page.fill("#email", "admin@example.com");
-    await page.fill("#password", "password123");
+    await page.fill("#password", "admin123");
     await page.click('button[type="submit"]');
     await page.waitForURL(/.*dashboard/, { timeout: 10000 });
   });

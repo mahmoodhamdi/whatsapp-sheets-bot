@@ -18,7 +18,7 @@ test.describe("Authentication", () => {
   test("should login with valid credentials", async ({ page }) => {
     await page.goto("/login");
     await page.fill("#email", "admin@example.com");
-    await page.fill("#password", "password123");
+    await page.fill("#password", "admin123");
     await page.click('button[type="submit"]');
     await expect(page).toHaveURL(/.*dashboard/, { timeout: 10000 });
   });
@@ -27,7 +27,7 @@ test.describe("Authentication", () => {
     // Login first
     await page.goto("/login");
     await page.fill("#email", "admin@example.com");
-    await page.fill("#password", "password123");
+    await page.fill("#password", "admin123");
     await page.click('button[type="submit"]');
     await expect(page).toHaveURL(/.*dashboard/, { timeout: 10000 });
 
