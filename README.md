@@ -39,16 +39,18 @@ This application provides a complete solution for automating WhatsApp responses 
 
 ## Screenshots
 
-### Login Page
+### Authentication
 <div align="center">
 <table>
 <tr>
-<td align="center"><strong>Arabic (RTL)</strong></td>
-<td align="center"><strong>English</strong></td>
+<td align="center"><strong>Login - Arabic (RTL)</strong></td>
+<td align="center"><strong>Login - English</strong></td>
+<td align="center"><strong>Login - Dark Mode</strong></td>
 </tr>
 <tr>
-<td><img src="docs/screenshots/01-login-ar.png" width="400" alt="Login Arabic"/></td>
-<td><img src="docs/screenshots/02-login-en.png" width="400" alt="Login English"/></td>
+<td><img src="docs/screenshots/01-login-ar.png" width="280" alt="Login Arabic"/></td>
+<td><img src="docs/screenshots/02-login-en.png" width="280" alt="Login English"/></td>
+<td><img src="docs/screenshots/26-login-dark.png" width="280" alt="Login Dark"/></td>
 </tr>
 </table>
 </div>
@@ -78,6 +80,14 @@ This application provides a complete solution for automating WhatsApp responses 
 <td><img src="docs/screenshots/07-rules-list.png" width="400" alt="Rules List"/></td>
 <td><img src="docs/screenshots/08-rules-create.png" width="400" alt="Create Rule"/></td>
 </tr>
+<tr>
+<td align="center"><strong>Rules - Dark Mode</strong></td>
+<td align="center"><strong>Rule Form Filled</strong></td>
+</tr>
+<tr>
+<td><img src="docs/screenshots/13-rules-dark.png" width="400" alt="Rules Dark"/></td>
+<td><img src="docs/screenshots/21-rules-form-filled.png" width="400" alt="Rule Form Filled"/></td>
+</tr>
 </table>
 </div>
 
@@ -92,6 +102,14 @@ This application provides a complete solution for automating WhatsApp responses 
 <td><img src="docs/screenshots/05-messages-empty.png" width="400" alt="Messages"/></td>
 <td><img src="docs/screenshots/06-contacts-empty.png" width="400" alt="Contacts"/></td>
 </tr>
+<tr>
+<td align="center"><strong>Messages - Dark Mode</strong></td>
+<td align="center"><strong>Contacts - Dark Mode</strong></td>
+</tr>
+<tr>
+<td><img src="docs/screenshots/18-messages-dark.png" width="400" alt="Messages Dark"/></td>
+<td><img src="docs/screenshots/19-contacts-dark.png" width="400" alt="Contacts Dark"/></td>
+</tr>
 </table>
 </div>
 
@@ -100,11 +118,33 @@ This application provides a complete solution for automating WhatsApp responses 
 <table>
 <tr>
 <td align="center"><strong>General Settings</strong></td>
-<td align="center"><strong>WhatsApp Connection</strong></td>
+<td align="center"><strong>Settings - Dark Mode</strong></td>
 </tr>
 <tr>
 <td><img src="docs/screenshots/09-settings-main.png" width="400" alt="Settings"/></td>
+<td><img src="docs/screenshots/20-settings-dark.png" width="400" alt="Settings Dark"/></td>
+</tr>
+<tr>
+<td align="center"><strong>WhatsApp Connection</strong></td>
+<td align="center"><strong>Google Sheets Sync</strong></td>
+</tr>
+<tr>
 <td><img src="docs/screenshots/10-settings-whatsapp.png" width="400" alt="WhatsApp Settings"/></td>
+<td><img src="docs/screenshots/11-settings-sheets.png" width="400" alt="Sheets Settings"/></td>
+</tr>
+</table>
+</div>
+
+### UI Components
+<div align="center">
+<table>
+<tr>
+<td align="center"><strong>User Menu</strong></td>
+<td align="center"><strong>Delete Confirmation</strong></td>
+</tr>
+<tr>
+<td><img src="docs/screenshots/16-user-menu.png" width="400" alt="User Menu"/></td>
+<td><img src="docs/screenshots/17-delete-dialog.png" width="400" alt="Delete Dialog"/></td>
 </tr>
 </table>
 </div>
@@ -113,12 +153,16 @@ This application provides a complete solution for automating WhatsApp responses 
 <div align="center">
 <table>
 <tr>
-<td align="center"><strong>Dashboard Mobile</strong></td>
-<td align="center"><strong>Rules Mobile</strong></td>
+<td align="center"><strong>Dashboard</strong></td>
+<td align="center"><strong>Rules</strong></td>
+<td align="center"><strong>Messages</strong></td>
+<td align="center"><strong>Settings</strong></td>
 </tr>
 <tr>
-<td><img src="docs/screenshots/14-dashboard-mobile.png" width="200" alt="Dashboard Mobile"/></td>
-<td><img src="docs/screenshots/15-rules-mobile.png" width="200" alt="Rules Mobile"/></td>
+<td><img src="docs/screenshots/14-dashboard-mobile.png" width="180" alt="Dashboard Mobile"/></td>
+<td><img src="docs/screenshots/15-rules-mobile.png" width="180" alt="Rules Mobile"/></td>
+<td><img src="docs/screenshots/22-messages-mobile.png" width="180" alt="Messages Mobile"/></td>
+<td><img src="docs/screenshots/24-settings-mobile.png" width="180" alt="Settings Mobile"/></td>
 </tr>
 </table>
 </div>

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 import path from "path";
 
 const screenshotsDir = path.join(__dirname, "../../docs/screenshots");
@@ -46,7 +46,7 @@ test.describe("Screenshot Capture - All Pages", () => {
     test.beforeEach(async ({ page }) => {
       await page.goto("/login");
       await page.fill("#email", "admin@example.com");
-      await page.fill("#password", "SecurePassword123!");
+      await page.fill("#password", "admin123");
       await page.click('button[type="submit"]');
       await page.waitForURL(/.*dashboard/, { timeout: 10000 });
     });
@@ -215,6 +215,145 @@ test.describe("Screenshot Capture - All Pages", () => {
           fullPage: true,
         });
       }
+    });
+
+    // Additional screenshots for comprehensive coverage
+    test("capture messages page - dark mode", async ({ page }) => {
+      await page.goto("/dashboard/messages");
+      await page.waitForLoadState("networkidle");
+      await page.evaluate(() => {
+        document.documentElement.classList.add("dark");
+      });
+      await page.waitForTimeout(500);
+      await page.screenshot({
+        path: `${screenshotsDir}/18-messages-dark.png`,
+        fullPage: true,
+      });
+    });
+
+    test("capture contacts page - dark mode", async ({ page }) => {
+      await page.goto("/dashboard/contacts");
+      await page.waitForLoadState("networkidle");
+      await page.evaluate(() => {
+        document.documentElement.classList.add("dark");
+      });
+      await page.waitForTimeout(500);
+      await page.screenshot({
+        path: `${screenshotsDir}/19-contacts-dark.png`,
+        fullPage: true,
+      });
+    });
+
+    test("capture settings page - dark mode", async ({ page }) => {
+      await page.goto("/dashboard/settings");
+      await page.waitForLoadState("networkidle");
+      await page.evaluate(() => {
+        document.documentElement.classList.add("dark");
+      });
+      await page.waitForTimeout(500);
+      await page.screenshot({
+        path: `${screenshotsDir}/20-settings-dark.png`,
+        fullPage: true,
+      });
+    });
+
+    test("capture create rule form filled", async ({ page }) => {
+      await page.goto("/dashboard/rules/new");
+      await page.waitForLoadState("networkidle");
+      // Fill the form
+      await page.fill("#name", "Welcome Message");
+      await page.fill("#trigger", "hello");
+      await page.fill("#response", "Welcome! How can I help you today?");
+      await page.fill("#priority", "100");
+      await page.waitForTimeout(300);
+      await page.screenshot({
+        path: `${screenshotsDir}/21-rules-form-filled.png`,
+        fullPage: true,
+      });
+    });
+
+    test("capture messages page - mobile view", async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 812 });
+      await page.goto("/dashboard/messages");
+      await page.waitForLoadState("networkidle");
+      await page.waitForTimeout(500);
+      await page.screenshot({
+        path: `${screenshotsDir}/22-messages-mobile.png`,
+        fullPage: true,
+      });
+    });
+
+    test("capture contacts page - mobile view", async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 812 });
+      await page.goto("/dashboard/contacts");
+      await page.waitForLoadState("networkidle");
+      await page.waitForTimeout(500);
+      await page.screenshot({
+        path: `${screenshotsDir}/23-contacts-mobile.png`,
+        fullPage: true,
+      });
+    });
+
+    test("capture settings page - mobile view", async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 812 });
+      await page.goto("/dashboard/settings");
+      await page.waitForLoadState("networkidle");
+      await page.waitForTimeout(500);
+      await page.screenshot({
+        path: `${screenshotsDir}/24-settings-mobile.png`,
+        fullPage: true,
+      });
+    });
+
+    test("capture sidebar navigation", async ({ page }) => {
+      await page.goto("/dashboard");
+      await page.waitForLoadState("networkidle");
+      // Hover over navigation items
+      await page.hover('[data-testid="nav-rules"]');
+      await page.waitForTimeout(300);
+      await page.screenshot({
+        path: `${screenshotsDir}/25-sidebar-hover.png`,
+        fullPage: true,
+      });
+    });
+
+    test("capture login page - dark mode", async ({ page }) => {
+      await page.goto("/login");
+      await page.waitForLoadState("networkidle");
+      await page.evaluate(() => {
+        document.documentElement.classList.add("dark");
+      });
+      await page.waitForTimeout(500);
+      await page.screenshot({
+        path: `${screenshotsDir}/26-login-dark.png`,
+        fullPage: true,
+      });
+    });
+
+    test("capture whatsapp settings - dark mode", async ({ page }) => {
+      await page.goto("/dashboard/settings/whatsapp");
+      await page.waitForLoadState("networkidle");
+      await page.evaluate(() => {
+        document.documentElement.classList.add("dark");
+      });
+      await page.waitForTimeout(500);
+      await page.screenshot({
+        path: `${screenshotsDir}/27-whatsapp-dark.png`,
+        fullPage: true,
+      });
+    });
+
+    test("capture sheets settings - dark mode", async ({ page }) => {
+      await page.goto("/dashboard/settings/sheets");
+      await page.waitForLoadState("networkidle");
+      await page.evaluate(() => {
+        document.documentElement.classList.add("dark");
+      });
+      await page.waitForTimeout(500);
+      await page.screenshot({
+        path: `${screenshotsDir}/28-sheets-dark.png`,
+        fullPage: true,
+      });
     });
   });
 });
