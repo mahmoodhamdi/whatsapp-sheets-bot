@@ -23,12 +23,14 @@ This application provides a complete solution for automating WhatsApp responses 
 ## Features
 
 ### Core Features
+
 - **Smart Auto-Reply Rules** - Create rules with exact match, contains, starts with, or regex patterns
 - **WhatsApp Web Integration** - Connect via QR code scanning using Baileys
 - **Google Sheets Sync** - Automatically sync contacts and messages to Google Sheets
 - **Multi-language Support** - Arabic (default with RTL) and English
 
 ### Dashboard Features
+
 - **Real-time Statistics** - Monitor messages, contacts, and rule performance
 - **Contact Management** - View, search, and manage WhatsApp contacts
 - **Message History** - Complete log of all incoming and outgoing messages
@@ -40,22 +42,22 @@ This application provides a complete solution for automating WhatsApp responses 
 ## Screenshots
 
 ### Authentication
+
 <div align="center">
 <table>
 <tr>
 <td align="center"><strong>Login - Arabic (RTL)</strong></td>
 <td align="center"><strong>Login - English</strong></td>
-<td align="center"><strong>Login - Dark Mode</strong></td>
 </tr>
 <tr>
 <td><img src="docs/screenshots/01-login-ar.png" width="280" alt="Login Arabic"/></td>
 <td><img src="docs/screenshots/02-login-en.png" width="280" alt="Login English"/></td>
-<td><img src="docs/screenshots/26-login-dark.png" width="280" alt="Login Dark"/></td>
 </tr>
 </table>
 </div>
 
 ### Dashboard
+
 <div align="center">
 <table>
 <tr>
@@ -70,6 +72,7 @@ This application provides a complete solution for automating WhatsApp responses 
 </div>
 
 ### Auto-Reply Rules
+
 <div align="center">
 <table>
 <tr>
@@ -92,6 +95,7 @@ This application provides a complete solution for automating WhatsApp responses 
 </div>
 
 ### Messages & Contacts
+
 <div align="center">
 <table>
 <tr>
@@ -114,6 +118,7 @@ This application provides a complete solution for automating WhatsApp responses 
 </div>
 
 ### Settings
+
 <div align="center">
 <table>
 <tr>
@@ -136,6 +141,7 @@ This application provides a complete solution for automating WhatsApp responses 
 </div>
 
 ### UI Components
+
 <div align="center">
 <table>
 <tr>
@@ -150,6 +156,7 @@ This application provides a complete solution for automating WhatsApp responses 
 </div>
 
 ### Mobile Responsive
+
 <div align="center">
 <table>
 <tr>
@@ -188,6 +195,7 @@ This application provides a complete solution for automating WhatsApp responses 
 ## Installation
 
 ### Prerequisites
+
 - Node.js 20+
 - PostgreSQL 15+
 - Docker (optional)
@@ -247,6 +255,7 @@ docker-compose down
 ### Default Credentials
 
 After running `npm run db:seed`:
+
 - **Email**: `admin@example.com`
 - **Password**: `admin123` (or `ADMIN_PASSWORD` from .env)
 
@@ -255,11 +264,13 @@ After running `npm run db:seed`:
 ## API Reference
 
 ### Authentication
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/api/auth/[...nextauth]` | NextAuth handlers |
 
 ### Contacts
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/contacts` | List contacts (paginated) |
@@ -267,12 +278,14 @@ After running `npm run db:seed`:
 | DELETE | `/api/contacts/[id]` | Delete contact |
 
 ### Messages
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/messages` | List messages |
 | POST | `/api/messages/send` | Send a message |
 
 ### Rules
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/rules` | List all rules |
@@ -282,6 +295,7 @@ After running `npm run db:seed`:
 | PATCH | `/api/rules/[id]/toggle` | Toggle rule status |
 
 ### WhatsApp
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/whatsapp/status` | Get connection status |
@@ -289,6 +303,7 @@ After running `npm run db:seed`:
 | POST | `/api/whatsapp/disconnect` | Disconnect |
 
 ### Google Sheets
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/sheets/status` | Get sync status |
@@ -370,9 +385,11 @@ npm run test:e2e:ui
 2. Enable Google Sheets API
 3. Create a service account and download JSON key
 4. Base64 encode the JSON:
+
    ```bash
    cat service-account.json | base64
    ```
+
 5. Set `GOOGLE_SHEETS_CREDENTIALS` environment variable
 6. Set `GOOGLE_SHEET_ID` with your spreadsheet ID
 7. Share the spreadsheet with the service account email
