@@ -14,6 +14,8 @@ npm run build        # Production build
 npm run lint         # Run ESLint
 npm run test         # Run all unit tests (vitest)
 npm run test:watch   # Run tests in watch mode
+npm run test:e2e     # Run Playwright E2E tests
+npm run test:e2e:ui  # Run E2E tests with UI
 npm run db:migrate   # Run Prisma migrations
 npm run db:push      # Push schema changes without migration
 npm run db:seed      # Seed database with initial data
@@ -23,6 +25,13 @@ npm run db:studio    # Open Prisma Studio
 Run a single test file:
 ```bash
 npx vitest run tests/unit/matcher.test.ts
+```
+
+Docker:
+```bash
+docker-compose up -d      # Start app + PostgreSQL
+docker-compose logs -f    # View logs
+docker-compose down       # Stop
 ```
 
 ## Architecture
@@ -40,6 +49,12 @@ npx vitest run tests/unit/matcher.test.ts
 - `(auth)/*` - Login pages (unauthenticated)
 - `(dashboard)/*` - Protected dashboard pages
 
+### Middleware & Auth Flow
+The middleware (`src/middleware.ts`) wraps NextAuth's `auth()` and:
+- Redirects unauthenticated users to `/login` (except for public routes)
+- Redirects authenticated users away from `/login` to `/dashboard`
+- Public routes: `/login`, `/api/auth/*`
+
 ### Key Modules
 
 **WhatsApp Integration** (`src/lib/whatsapp/`)
@@ -55,9 +70,9 @@ npx vitest run tests/unit/matcher.test.ts
 - Regex patterns use case-insensitive matching
 
 ### Database Models (Prisma)
-- `User` - Admin users with roles
+- `User` - Admin users with roles (ADMIN, USER)
 - `Contact` - WhatsApp contacts with message counts
-- `Message` - Message history with sync status
+- `Message` - Message history with sync status and direction (INCOMING/OUTGOING)
 - `AutoReplyRule` - Trigger/response pairs with priority
 - `Settings` - App configuration (WhatsApp status, default reply, working hours)
 - `SyncLog` - Google Sheets sync history
@@ -67,19 +82,31 @@ npx vitest run tests/unit/matcher.test.ts
 - Locales: `ar`, `en`
 - Translation files: `messages/{locale}.json`
 - Direction auto-switches based on locale (RTL for Arabic)
+- Config in `src/i18n/config.ts`
 
 ## Testing
 
 Tests located in `tests/` directory:
 - `tests/unit/` - Unit tests (vitest)
-- `tests/e2e/` - E2E tests (planned for Playwright)
+- `tests/e2e/` - E2E tests (Playwright)
 
-Test configuration in `vitest.config.ts` uses Node environment with `@/` path alias.
+Test setup file: `tests/setup.ts`
+Vitest config uses Node environment with `@/` path alias.
+Playwright runs against `http://localhost:3000` with auto-start dev server.
 
 ## Environment Variables
 
 Required in `.env`:
 - `DATABASE_URL` - PostgreSQL connection string
-- `AUTH_SECRET` - NextAuth secret
+- `NEXTAUTH_SECRET` - NextAuth secret
+- `NEXTAUTH_URL` - Application URL (e.g., `http://localhost:3000`)
+
+Optional:
 - `GOOGLE_SHEET_ID` - Target Google Sheet ID
-- Google service account credentials for Sheets API
+- `GOOGLE_SHEETS_CREDENTIALS` - Base64 encoded service account JSON
+- `WHATSAPP_SESSION_PATH` - Custom session storage path
+- `ADMIN_EMAIL` / `ADMIN_PASSWORD` - Override seed defaults
+
+Default credentials after `npm run db:seed`:
+- Email: `admin@example.com`
+- Password: `admin123`
