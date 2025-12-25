@@ -1,0 +1,127 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model Contact {
+  id           String    @id @default(cuid())
+  phone        String    @unique
+  name         String?
+  firstContact DateTime  @default(now())
+  lastContact  DateTime  @default(now())
+  messageCount Int       @default(0)
+  messages     Message[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("contacts")
+}
+
+model Message {
+  id             String         @id @default(cuid())
+  contactId      String
+  contact        Contact        @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  direction      Direction
+  content        String
+  status         MessageStatus  @default(RECEIVED)
+  ruleId         String?
+  rule           AutoReplyRule? @relation(fields: [ruleId], references: [id])
+  syncedToSheets Boolean        @default(false)
+  createdAt      DateTime       @default(now())
+
+  @@index([contactId])
+  @@index([createdAt])
+  @@map("messages")
+}
+
+enum Direction {
+  INCOMING
+  OUTGOING
+}
+
+enum MessageStatus {
+  PENDING
+  RECEIVED
+  SENT
+  DELIVERED
+  READ
+  FAILED
+}
+
+model AutoReplyRule {
+  id          String      @id @default(cuid())
+  name        String
+  trigger     String
+  triggerType TriggerType @default(CONTAINS)
+  response    String
+  isActive    Boolean     @default(true)
+  priority    Int         @default(0)
+  messages    Message[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("auto_reply_rules")
+}
+
+enum TriggerType {
+  EXACT
+  CONTAINS
+  STARTS_WITH
+  REGEX
+}
+
+model Settings {
+  id                String  @id @default("default")
+  whatsappConnected Boolean @default(false)
+  googleSheetsId    String?
+  defaultReply      String  @default("شكراً لتواصلك معنا! سنرد عليك قريباً.")
+  businessName      String  @default("My Business")
+  workingHours      Json?
+
+  @@map("settings")
+}
+
+model SyncLog {
+  id        String     @id @default(cuid())
+  type      SyncType
+  status    SyncStatus
+  details   String?
+  createdAt DateTime   @default(now())
+
+  @@map("sync_logs")
+}
+
+enum SyncType {
+  GOOGLE_SHEETS
+  WHATSAPP
+}
+
+enum SyncStatus {
+  SUCCESS
+  FAILED
+  PENDING
+}

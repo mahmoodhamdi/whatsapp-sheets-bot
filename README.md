@@ -1,36 +1,171 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WhatsApp Bot - Auto-Reply & Google Sheets Integration
 
-## Getting Started
+A smart WhatsApp auto-reply bot with Google Sheets integration, built with Next.js 16. Features include automated responses based on customizable rules, contact management, message logging, and data synchronization with Google Sheets.
 
-First, run the development server:
+## Features
+
+- **Auto-Reply Rules**: Create rules with exact match, contains, starts with, or regex patterns
+- **WhatsApp Integration**: Connect via QR code scanning using Baileys
+- **Google Sheets Sync**: Automatically sync contacts and messages to Google Sheets
+- **Multi-language Support**: Arabic (default) and English with RTL support
+- **Dashboard**: Real-time statistics and analytics
+- **Contact Management**: View and manage all WhatsApp contacts
+- **Message History**: Complete log of all incoming and outgoing messages
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Database**: PostgreSQL with Prisma ORM
+- **WhatsApp**: @whiskeysockets/baileys
+- **Authentication**: NextAuth v5 (Credentials provider)
+- **Internationalization**: next-intl
+- **UI**: Tailwind CSS v4, shadcn/ui components
+- **Testing**: Vitest (unit), Playwright (E2E)
+
+## Prerequisites
+
+- Node.js 20+
+- PostgreSQL 15+
+- npm or yarn
+
+## Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd whatsapp-sheets-bot
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
+
+4. **Set up the database**
+   ```bash
+   npm run db:push
+   npm run db:seed
+   ```
+
+5. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+6. Open [http://localhost:3000](http://localhost:3000) and login with:
+   - Email: `admin@example.com`
+   - Password: `password123`
+
+## Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `DATABASE_URL` | PostgreSQL connection string | Yes |
+| `NEXTAUTH_SECRET` | NextAuth secret (generate with `openssl rand -base64 32`) | Yes |
+| `NEXTAUTH_URL` | Application URL | Yes |
+| `WHATSAPP_SESSION_PATH` | Path to store WhatsApp sessions | No (default: `./sessions`) |
+| `GOOGLE_SHEETS_CREDENTIALS` | Base64 encoded service account JSON | No |
+| `GOOGLE_SHEET_ID` | Target Google Sheets spreadsheet ID | No |
+| `ADMIN_EMAIL` | Initial admin email for seeding | No |
+| `ADMIN_PASSWORD` | Initial admin password for seeding | No |
+
+## Running with Docker
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Build and run
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop
+docker-compose down
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Available Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
+| `npm run test` | Run unit tests |
+| `npm run test:e2e` | Run E2E tests |
+| `npm run db:push` | Push schema to database |
+| `npm run db:seed` | Seed initial data |
+| `npm run db:studio` | Open Prisma Studio |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Google Sheets Setup
 
-## Learn More
+1. Create a Google Cloud project
+2. Enable Google Sheets API
+3. Create a service account and download the JSON key
+4. Base64 encode the JSON: `cat service-account.json | base64`
+5. Set `GOOGLE_SHEETS_CREDENTIALS` with the base64 string
+6. Set `GOOGLE_SHEET_ID` with your spreadsheet ID
+7. Share the spreadsheet with the service account email
 
-To learn more about Next.js, take a look at the following resources:
+## API Endpoints
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Authentication
+- `POST /api/auth/[...nextauth]` - NextAuth handlers
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Contacts
+- `GET /api/contacts` - List contacts (paginated, searchable)
+- `GET /api/contacts/[id]` - Get contact details with messages
+- `DELETE /api/contacts/[id]` - Delete contact
 
-## Deploy on Vercel
+### Messages
+- `GET /api/messages` - List messages
+- `POST /api/messages/send` - Send a message
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Rules
+- `GET /api/rules` - List rules
+- `POST /api/rules` - Create rule
+- `PUT /api/rules/[id]` - Update rule
+- `DELETE /api/rules/[id]` - Delete rule
+- `PATCH /api/rules/[id]/toggle` - Toggle rule active status
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### WhatsApp
+- `GET /api/whatsapp/status` - Get connection status
+- `POST /api/whatsapp/connect` - Initialize connection
+- `POST /api/whatsapp/disconnect` - Disconnect
+
+### Google Sheets
+- `GET /api/sheets/status` - Get sync status
+- `POST /api/sheets/sync` - Trigger sync
+- `GET /api/sheets/logs` - Get sync logs
+
+### Analytics
+- `GET /api/analytics/overview` - Dashboard statistics
+- `GET /api/analytics/messages` - Message analytics
+- `GET /api/analytics/rules` - Rule performance
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── (auth)/           # Auth pages (login)
+│   ├── (dashboard)/      # Dashboard pages
+│   └── api/              # API routes
+├── components/
+│   ├── dashboard/        # Dashboard components
+│   ├── rules/            # Rule form components
+│   └── ui/               # shadcn/ui components
+├── lib/
+│   ├── google-sheets/    # Google Sheets integration
+│   └── whatsapp/         # WhatsApp client
+└── i18n/                 # Internationalization config
+```
+
+## License
+
+MIT
