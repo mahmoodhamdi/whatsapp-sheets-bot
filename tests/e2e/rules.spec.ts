@@ -32,9 +32,8 @@ test.describe("Rules Management", () => {
     // Fill form
     await page.fill("#name", "E2E Test Rule");
     await page.fill("#trigger", "test-e2e");
-    // Select trigger type
-    await page.click('[data-testid="trigger-type-select"]');
-    await page.click('[data-value="CONTAINS"]');
+    // Select trigger type - default is already CONTAINS, so just verify it exists
+    await expect(page.locator('[data-testid="trigger-type-select"]')).toBeVisible();
     await page.fill("#response", "This is an E2E test response");
     await page.fill("#priority", "50");
 
