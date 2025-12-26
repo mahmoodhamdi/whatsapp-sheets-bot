@@ -73,7 +73,8 @@
     },
     "testimonials": {
       "title": "What Our Customers Say",
-      "subtitle": "Join thousands of businesses using our platform"
+      "subtitle": "Join thousands of businesses using our platform",
+      "trustedBy": "Trusted by leading companies"
     },
     "cta": {
       "title": "Ready to Automate Your Replies?",
