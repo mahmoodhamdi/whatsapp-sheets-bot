@@ -3,6 +3,7 @@ import { FeaturesSection } from "@/components/marketing/sections/FeaturesSection
 import { PricingSection } from "@/components/marketing/sections/PricingSection";
 import { TestimonialsSection } from "@/components/marketing/sections/TestimonialsSection";
 import { FAQSection } from "@/components/marketing/sections/FAQSection";
+import { CTASection } from "@/components/marketing/sections/CTASection";
 
 export default function LandingPage() {
   return (
@@ -12,7 +13,7 @@ export default function LandingPage() {
       <PricingSection />
       <TestimonialsSection />
       <FAQSection />
-      {/* CTA section will be added in M6 */}
+      <CTASection />
     </>
   );
 }

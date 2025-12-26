@@ -24,6 +24,10 @@
     "features": "Features",
     "pricing": "Pricing",
     "docs": "Docs",
+    "support": "Support",
+    "gettingStarted": "Getting Started",
+    "faq": "FAQ",
+    "contact": "Contact Us",
     "legal": "Legal",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
@@ -111,7 +115,8 @@
     "cta": {
       "title": "Ready to Automate Your Replies?",
       "description": "Start your free trial today with no credit card required",
-      "button": "Start Free Now"
+      "button": "Start Free Now",
+      "demo": "Watch Demo"
     }
   },
   "pricing": {
