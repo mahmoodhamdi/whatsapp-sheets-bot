@@ -4,6 +4,7 @@ import {
   validateResetToken,
   consumeResetToken,
 } from "@/lib/auth/password-reset";
+import { createAuditLog, getClientInfo } from "@/lib/security/audit";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 
@@ -38,17 +39,35 @@ export async function POST(request: Request) {
       );
     }
 
+    // Get user for audit logging
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: { id: true },
+    });
+
     // Hash new password
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Update user password
+    // Update user password and reset failed attempts
     await prisma.user.update({
       where: { email },
-      data: { password: hashedPassword },
+      data: {
+        password: hashedPassword,
+        lastPasswordChange: new Date(),
+        failedLoginAttempts: 0,
+        lockedUntil: null,
+      },
     });
 
     // Delete the used token
     await consumeResetToken(token);
+
+    // Log password change
+    await createAuditLog({
+      userId: user?.id,
+      action: "PASSWORD_RESET_COMPLETED",
+      ...getClientInfo(request),
+    });
 
     return NextResponse.json({ message: "Password reset successful" });
   } catch (error) {

@@ -2,6 +2,11 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import {
+  checkAccountLocked,
+  recordFailedAttempt,
+  resetFailedAttempts,
+} from "@/lib/security/lockout";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -15,8 +20,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null;
         }
 
+        const email = credentials.email as string;
+
+        // Check if account is locked
+        const { isLocked } = await checkAccountLocked(email);
+        if (isLocked) {
+          throw new Error("ACCOUNT_LOCKED");
+        }
+
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email as string },
+          where: { email },
         });
 
         if (!user) {
@@ -29,8 +42,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         );
 
         if (!isValid) {
+          // Record failed attempt
+          const { locked } = await recordFailedAttempt(email);
+          if (locked) {
+            throw new Error("ACCOUNT_LOCKED");
+          }
           return null;
         }
+
+        // Reset failed attempts on successful login
+        await resetFailedAttempts(email);
 
         return {
           id: user.id,

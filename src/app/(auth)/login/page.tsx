@@ -34,7 +34,12 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        setError(t("auth.loginError"));
+        // Check if account is locked
+        if (result.error.includes("ACCOUNT_LOCKED")) {
+          setError(t("auth.accountLocked"));
+        } else {
+          setError(t("auth.loginError"));
+        }
       } else {
         router.push("/dashboard");
         router.refresh();

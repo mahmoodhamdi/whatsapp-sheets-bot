@@ -30,6 +30,19 @@ function isAuthOnlyRoute(pathname: string): boolean {
   return authOnlyRoutes.includes(pathname);
 }
 
+// Add security headers to response
+function addSecurityHeaders(response: NextResponse): NextResponse {
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=()"
+  );
+  response.headers.set("X-XSS-Protection", "1; mode=block");
+  return response;
+}
+
 export default auth((req) => {
   const { pathname } = req.nextUrl;
   const isLoggedIn = !!req.auth;
@@ -41,35 +54,43 @@ export default auth((req) => {
     if (isLoggedIn && ["/login", "/register"].includes(pathname)) {
       // If email not verified, go to verify-email
       if (!isEmailVerified) {
-        return NextResponse.redirect(new URL("/verify-email", req.url));
+        return addSecurityHeaders(
+          NextResponse.redirect(new URL("/verify-email", req.url))
+        );
       }
-      return NextResponse.redirect(new URL("/dashboard", req.url));
+      return addSecurityHeaders(
+        NextResponse.redirect(new URL("/dashboard", req.url))
+      );
     }
-    return NextResponse.next();
+    return addSecurityHeaders(NextResponse.next());
   }
 
   // Protect all other routes - require authentication
   if (!isLoggedIn) {
     const loginUrl = new URL("/login", req.url);
     loginUrl.searchParams.set("callbackUrl", pathname);
-    return NextResponse.redirect(loginUrl);
+    return addSecurityHeaders(NextResponse.redirect(loginUrl));
   }
 
   // Auth-only routes (like verify-email) - don't require email verification
   if (isAuthOnlyRoute(pathname)) {
     // If already verified, redirect to dashboard
     if (isEmailVerified) {
-      return NextResponse.redirect(new URL("/dashboard", req.url));
+      return addSecurityHeaders(
+        NextResponse.redirect(new URL("/dashboard", req.url))
+      );
     }
-    return NextResponse.next();
+    return addSecurityHeaders(NextResponse.next());
   }
 
   // For all other protected routes, require email verification
   if (!isEmailVerified) {
-    return NextResponse.redirect(new URL("/verify-email", req.url));
+    return addSecurityHeaders(
+      NextResponse.redirect(new URL("/verify-email", req.url))
+    );
   }
 
-  return NextResponse.next();
+  return addSecurityHeaders(NextResponse.next());
 });
 
 export const config = {

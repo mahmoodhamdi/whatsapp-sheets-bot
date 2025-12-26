@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { createVerificationToken } from "@/lib/auth/verification";
 import { sendEmail } from "@/lib/email";
 import { verificationEmailTemplate } from "@/lib/email/templates";
+import { verificationLimiter, getClientIP } from "@/lib/security/rate-limit";
+import { createAuditLog, getClientInfo } from "@/lib/security/audit";
 
 export async function POST(request: Request) {
   try {
@@ -11,6 +13,21 @@ export async function POST(request: Request) {
 
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Rate limiting per user
+    const ip = getClientIP(request);
+    const rateLimitKey = `verification:${session.user.id}:${ip}`;
+    const { success, resetIn } = verificationLimiter(rateLimitKey);
+
+    if (!success) {
+      return NextResponse.json(
+        {
+          error: "Please wait before requesting another code",
+          retryAfter: Math.ceil(resetIn / 1000),
+        },
+        { status: 429 }
+      );
     }
 
     const user = await prisma.user.findUnique({
@@ -48,6 +65,13 @@ export async function POST(request: Request) {
           ? "تأكيد بريدك الإلكتروني - واتساب بوت"
           : "Verify Your Email - WhatsApp Bot",
       html: verificationEmailTemplate(token, locale),
+    });
+
+    // Log the action
+    await createAuditLog({
+      userId: user.id,
+      action: "VERIFICATION_CODE_SENT",
+      ...getClientInfo(request),
     });
 
     return NextResponse.json({ message: "Verification email sent" });

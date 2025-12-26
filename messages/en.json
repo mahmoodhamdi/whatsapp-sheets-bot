@@ -201,6 +201,8 @@
     "password": "Password",
     "loginButton": "Sign In",
     "loginError": "Invalid credentials",
+    "accountLocked": "Your account has been temporarily locked due to multiple failed login attempts. Please try again in 15 minutes.",
+    "tooManyRequests": "Too many requests. Please wait before trying again.",
     "loggingIn": "Signing in...",
     "noAccount": "Don't have an account?",
     "registerNow": "Register",
