@@ -27,7 +27,7 @@ This plan outlines the complete implementation of a professional landing page wi
 | Phase 1: Foundation | ✅ Complete | 4/4 | [Details](#phase-1-foundation--public-routes) |
 | Phase 2: Landing Page | ✅ Complete | 6/6 | [Details](#phase-2-landing-page-sections) |
 | Phase 3: Auth Enhancement | ✅ Complete | 5/5 | [Details](#phase-3-authentication-enhancement) |
-| Phase 4: Subscriptions | 🔄 In Progress | 1/6 | [Details](#phase-4-subscription-system) |
+| Phase 4: Subscriptions | 🔄 In Progress | 2/6 | [Details](#phase-4-subscription-system) |
 | Phase 5: Documentation | ⬜ Not Started | 0/4 | [Details](#phase-5-documentation-system) |
 | Phase 6: Dashboard Integration | ⬜ Not Started | 0/4 | [Details](#phase-6-dashboard-integration) |
 | Phase 7: Production Polish | ⬜ Not Started | 0/5 | [Details](#phase-7-production-polish) |
@@ -85,7 +85,7 @@ This plan outlines the complete implementation of a professional landing page wi
 | # | Milestone | Status | Prompt File |
 |---|-----------|--------|-------------|
 | 4.1 | Database Schema Updates | ✅ | [phase-4-subscriptions/M1-schema.md](./phase-4-subscriptions/M1-schema.md) |
-| 4.2 | Stripe Integration Setup | ⬜ | [phase-4-subscriptions/M2-stripe-setup.md](./phase-4-subscriptions/M2-stripe-setup.md) |
+| 4.2 | Stripe Integration Setup | ✅ | [phase-4-subscriptions/M2-stripe-setup.md](./phase-4-subscriptions/M2-stripe-setup.md) |
 | 4.3 | Checkout Flow | ⬜ | [phase-4-subscriptions/M3-checkout.md](./phase-4-subscriptions/M3-checkout.md) |
 | 4.4 | Webhook Handlers | ⬜ | [phase-4-subscriptions/M4-webhooks.md](./phase-4-subscriptions/M4-webhooks.md) |
 | 4.5 | Subscription Management | ⬜ | [phase-4-subscriptions/M5-management.md](./phase-4-subscriptions/M5-management.md) |

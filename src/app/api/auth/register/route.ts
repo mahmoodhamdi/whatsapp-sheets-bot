@@ -5,6 +5,8 @@ import { z } from "zod";
 import { createVerificationToken } from "@/lib/auth/verification";
 import { sendEmail } from "@/lib/email";
 import { verificationEmailTemplate } from "@/lib/email/templates";
+import { createOrGetStripeCustomer } from "@/lib/stripe/customer";
+import { createFreeSubscription } from "@/lib/services/subscription";
 
 const registerSchema = z.object({
   name: z
@@ -60,6 +62,22 @@ export async function POST(request: Request) {
         emailVerified: false,
       },
     });
+
+    // Create Stripe customer (if Stripe is configured)
+    try {
+      await createOrGetStripeCustomer(user.id);
+    } catch (stripeError) {
+      console.error("Failed to create Stripe customer:", stripeError);
+      // Don't fail registration if Stripe fails
+    }
+
+    // Create free subscription for the user
+    try {
+      await createFreeSubscription(user.id);
+    } catch (subscriptionError) {
+      console.error("Failed to create free subscription:", subscriptionError);
+      // Don't fail registration if subscription creation fails
+    }
 
     // Create verification token and send email
     try {
