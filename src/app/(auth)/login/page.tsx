@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { MessageSquare, Loader2 } from "lucide-react";
@@ -14,6 +15,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from "@/components/ui/card";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useLocale } from "next-intl";
@@ -81,7 +83,15 @@ export default function LoginPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">{t("auth.password")}</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="password">{t("auth.password")}</Label>
+              <Link
+                href="/forgot-password"
+                className="text-sm text-green-600 hover:text-green-700 hover:underline"
+              >
+                {t("auth.forgotPassword.title")}
+              </Link>
+            </div>
             <Input
               id="password"
               type="password"
@@ -112,6 +122,17 @@ export default function LoginPage() {
           </Button>
         </form>
       </CardContent>
+      <CardFooter className="flex justify-center border-t pt-4">
+        <p className="text-sm text-muted-foreground">
+          {t("auth.noAccount")}{" "}
+          <Link
+            href="/register"
+            className="text-green-600 hover:text-green-700 hover:underline font-medium"
+          >
+            {t("auth.registerNow")}
+          </Link>
+        </p>
+      </CardFooter>
     </Card>
   );
 }

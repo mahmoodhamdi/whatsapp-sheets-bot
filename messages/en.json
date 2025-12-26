@@ -194,6 +194,8 @@
     "loginButton": "Sign In",
     "loginError": "Invalid credentials",
     "loggingIn": "Signing in...",
+    "noAccount": "Don't have an account?",
+    "registerNow": "Register",
     "register": {
       "title": "Create New Account",
       "subtitle": "Start your free trial today",
@@ -222,8 +224,10 @@
       "emailPlaceholder": "Enter your email",
       "submit": "Send Reset Link",
       "submitting": "Sending...",
-      "success": "Reset link sent to your email",
-      "backToLogin": "Back to Login"
+      "successTitle": "Email Sent!",
+      "success": "If this email is registered, you'll receive a password reset link",
+      "backToLogin": "Back to Login",
+      "error": "Something went wrong, please try again"
     },
     "resetPassword": {
       "title": "Reset Password",
@@ -234,8 +238,13 @@
       "confirmPasswordPlaceholder": "Re-enter your password",
       "submit": "Set Password",
       "submitting": "Setting...",
-      "success": "Password set successfully",
-      "invalidToken": "Invalid or expired reset link"
+      "successTitle": "Success!",
+      "success": "Password set successfully. Redirecting to login...",
+      "invalidTokenTitle": "Invalid Link",
+      "invalidToken": "Invalid or expired reset link",
+      "requestNewLink": "Request New Link",
+      "passwordMismatch": "Passwords do not match",
+      "error": "Something went wrong, please try again"
     },
     "verifyEmail": {
       "title": "Verify Email",
