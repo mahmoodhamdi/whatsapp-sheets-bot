@@ -474,6 +474,26 @@
       "faq": "الأسئلة الشائعة"
     }
   },
+  "subscription": {
+    "processing": "جاري المعالجة...",
+    "subscribe": "اشترك",
+    "upgrade": "ترقية",
+    "downgrade": "تخفيض",
+    "cancel": "إلغاء الاشتراك",
+    "reactivate": "إعادة تفعيل",
+    "manageBilling": "إدارة الفواتير",
+    "checkout": {
+      "success": "تم تفعيل الاشتراك بنجاح!",
+      "canceled": "تم إلغاء عملية الدفع",
+      "error": "فشل في معالجة الدفع"
+    },
+    "status": {
+      "active": "نشط",
+      "canceled": "ملغي",
+      "pastDue": "متأخر",
+      "trialing": "فترة تجريبية"
+    }
+  },
   "errors": {
     "general": "حدث خطأ ما",
     "notFound": "غير موجود",

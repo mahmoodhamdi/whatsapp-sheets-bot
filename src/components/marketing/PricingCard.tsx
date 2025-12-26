@@ -1,7 +1,10 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import Link from "next/link";
+import { CheckoutButton } from "@/components/subscription/CheckoutButton";
 
 interface PricingCardProps {
   name: string;
@@ -11,6 +14,8 @@ interface PricingCardProps {
   features: string[];
   cta: string;
   ctaHref: string;
+  planSlug: string;
+  billingInterval?: "monthly" | "yearly";
   popular?: boolean;
   popularLabel?: string;
   className?: string;
@@ -24,10 +29,17 @@ export function PricingCard({
   features,
   cta,
   ctaHref,
+  planSlug,
+  billingInterval = "monthly",
   popular = false,
   popularLabel = "Most Popular",
   className,
 }: PricingCardProps) {
+  // Determine button type based on plan
+  const isFree = planSlug === "free";
+  const isEnterprise = planSlug === "enterprise";
+  const needsCheckout = !isFree && !isEnterprise;
+
   return (
     <div
       className={cn(
@@ -62,17 +74,35 @@ export function PricingCard({
         ))}
       </ul>
 
-      <Button
-        className={cn(
-          "w-full",
-          popular
-            ? "bg-green-600 hover:bg-green-700"
-            : "bg-secondary hover:bg-secondary/80"
-        )}
-        asChild
-      >
-        <Link href={ctaHref}>{cta}</Link>
-      </Button>
+      {needsCheckout ? (
+        <CheckoutButton
+          planSlug={planSlug}
+          billingInterval={billingInterval}
+          className={cn(
+            "w-full",
+            popular
+              ? "bg-green-600 hover:bg-green-700"
+              : "bg-secondary hover:bg-secondary/80 text-foreground"
+          )}
+        >
+          {cta}
+        </CheckoutButton>
+      ) : (
+        <Button
+          className={cn(
+            "w-full",
+            popular
+              ? "bg-green-600 hover:bg-green-700"
+              : isEnterprise
+                ? "bg-secondary hover:bg-secondary/80 text-foreground"
+                : "bg-green-600 hover:bg-green-700"
+          )}
+          variant={isEnterprise ? "outline" : "default"}
+          asChild
+        >
+          <Link href={ctaHref}>{cta}</Link>
+        </Button>
+      )}
     </div>
   );
 }

@@ -474,6 +474,33 @@
       "faq": "FAQ"
     }
   },
+  "subscription": {
+    "processing": "Processing...",
+    "subscribe": "Subscribe",
+    "upgrade": "Upgrade",
+    "downgrade": "Downgrade",
+    "cancel": "Cancel Subscription",
+    "reactivate": "Reactivate",
+    "currentPlan": "Current Plan",
+    "changePlan": "Change Plan",
+    "billingInterval": "Billing Interval",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "nextBilling": "Next billing date",
+    "cancelAtEnd": "Cancels at end of period",
+    "usage": {
+      "title": "Usage",
+      "messages": "Messages this month",
+      "rules": "Active rules",
+      "of": "of",
+      "unlimited": "Unlimited"
+    },
+    "checkout": {
+      "success": "Subscription activated successfully!",
+      "canceled": "Checkout was canceled",
+      "error": "Failed to process payment"
+    }
+  },
   "errors": {
     "general": "Something went wrong",
     "notFound": "Not found",

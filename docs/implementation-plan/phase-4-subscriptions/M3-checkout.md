@@ -1,7 +1,7 @@
 # Milestone 4.3: Checkout Flow
 
 > **Phase:** 4 - Subscription System
-> **Status:** ⬜ Not Started
+> **Status:** ✅ Completed
 > **Last Updated:** 2025-12-26
 > **Depends On:** M2-stripe-setup.md
 
@@ -24,12 +24,12 @@ Implement Stripe Checkout for subscription purchases.
 
 ## Implementation Checklist
 
-- [ ] Create Checkout Session API
-- [ ] Create checkout success page
-- [ ] Create checkout cancel page
-- [ ] Integrate with pricing page
-- [ ] Handle free plan separately
-- [ ] Test complete flow
+- [x] Create Checkout Session API
+- [x] Create checkout success page (via query params)
+- [x] Create checkout cancel page (via query params)
+- [x] Integrate with pricing page
+- [x] Handle free plan separately
+- [x] Test complete flow
 
 ---
 
@@ -250,9 +250,9 @@ import { CheckoutButton } from "@/components/subscription/CheckoutButton";
 
 ## Acceptance Criteria
 
-- [ ] Checkout session created successfully
-- [ ] User redirected to Stripe Checkout
-- [ ] Success/cancel URLs work
-- [ ] Free plan handled separately
-- [ ] Enterprise shows contact button
-- [ ] Loading states work
+- [x] Checkout session created successfully
+- [x] User redirected to Stripe Checkout
+- [x] Success/cancel URLs work
+- [x] Free plan handled separately
+- [x] Enterprise shows contact button
+- [x] Loading states work

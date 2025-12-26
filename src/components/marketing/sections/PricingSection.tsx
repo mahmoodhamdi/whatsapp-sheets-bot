@@ -159,6 +159,8 @@ export function PricingSection() {
               features={features}
               cta={tPlans(`${plan.key}.cta`)}
               ctaHref={plan.key === "enterprise" ? "/contact" : "/register"}
+              planSlug={plan.key}
+              billingInterval={isYearly ? "yearly" : "monthly"}
               popular={plan.popular}
               popularLabel={t("popular")}
             />
