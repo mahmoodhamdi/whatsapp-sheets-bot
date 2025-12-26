@@ -467,11 +467,401 @@
     "title": "Documentation",
     "search": "Search documentation...",
     "noResults": "No results found",
-    "sections": {
-      "gettingStarted": "Getting Started",
-      "features": "Features",
-      "api": "API Reference",
-      "faq": "FAQ"
+    "nav": {
+      "sections": {
+        "gettingStarted": "Getting Started",
+        "features": "Features",
+        "apiReference": "API Reference"
+      },
+      "items": {
+        "introduction": "Introduction",
+        "quickStart": "Quick Start",
+        "installation": "Installation",
+        "autoReply": "Auto-Reply Rules",
+        "sheetsSync": "Google Sheets Sync",
+        "analytics": "Analytics",
+        "authentication": "Authentication",
+        "contacts": "Contacts",
+        "messages": "Messages",
+        "rules": "Rules"
+      }
+    },
+    "introduction": {
+      "title": "Introduction",
+      "subtitle": "Welcome to the WhatsApp Auto-Reply Bot documentation",
+      "whatIs": {
+        "title": "What is WhatsApp Bot?",
+        "description": "WhatsApp Bot is a powerful automation tool that helps businesses respond to customer messages instantly. It integrates seamlessly with Google Sheets for data management and provides comprehensive analytics to track your performance."
+      },
+      "keyFeatures": {
+        "title": "Key Features",
+        "autoReply": {
+          "title": "Smart Auto-Replies",
+          "description": "Create custom reply rules based on keywords, phrases, or regex patterns"
+        },
+        "sheetsSync": {
+          "title": "Google Sheets Sync",
+          "description": "Automatically save all conversations and customer data to Google Sheets"
+        },
+        "instant": {
+          "title": "Instant Response",
+          "description": "Respond to customers 24/7 without any delay"
+        },
+        "multilingual": {
+          "title": "Multi-Language",
+          "description": "Full Arabic and English support with RTL interface"
+        }
+      },
+      "getStarted": {
+        "title": "Getting Started",
+        "description": "Ready to automate your WhatsApp replies? Follow our quick start guide to get up and running in minutes.",
+        "cta": "Start Quick Start Guide"
+      }
+    },
+    "quickStart": {
+      "title": "Quick Start Guide",
+      "subtitle": "Get your WhatsApp Bot running in under 5 minutes",
+      "step1": {
+        "title": "1. Create Your Account",
+        "description": "Sign up for a free account to access the dashboard.",
+        "cta": "Create Account"
+      },
+      "step2": {
+        "title": "2. Connect WhatsApp",
+        "description": "Link your WhatsApp number by scanning the QR code.",
+        "steps": {
+          "1": "Go to Dashboard > Settings > WhatsApp",
+          "2": "Click 'Connect' to generate QR code",
+          "3": "Open WhatsApp > Linked Devices > Link a Device and scan"
+        }
+      },
+      "step3": {
+        "title": "3. Create Your First Rule",
+        "description": "Set up auto-reply rules to respond to customer messages.",
+        "triggerTypes": {
+          "exact": "EXACT",
+          "exactDesc": "Message must match exactly",
+          "contains": "CONTAINS",
+          "containsDesc": "Message contains the keyword",
+          "startsWith": "STARTS_WITH",
+          "startsWithDesc": "Message starts with the phrase",
+          "regex": "REGEX",
+          "regexDesc": "Match using regular expressions"
+        }
+      },
+      "step4": {
+        "title": "4. Test Your Bot",
+        "description": "Send a message to your connected WhatsApp number to test the auto-reply."
+      },
+      "success": {
+        "title": "You're all set!",
+        "description": "Your bot is now ready to handle customer messages automatically."
+      },
+      "nextSteps": {
+        "title": "Next Steps",
+        "autoReply": "Learn more about Auto-Reply Rules",
+        "sheetsSync": "Set up Google Sheets Integration",
+        "api": "Explore the API Reference"
+      }
+    },
+    "installation": {
+      "title": "Installation Guide",
+      "subtitle": "Deploy WhatsApp Bot on your own infrastructure",
+      "requirements": {
+        "title": "Requirements"
+      },
+      "docker": {
+        "title": "Docker Installation (Recommended)",
+        "description": "The easiest way to run WhatsApp Bot is using Docker Compose:"
+      },
+      "manual": {
+        "title": "Manual Installation",
+        "description": "Follow these steps to install manually:",
+        "step1": {
+          "title": "1. Clone the Repository"
+        },
+        "step2": {
+          "title": "2. Install Dependencies"
+        },
+        "step3": {
+          "title": "3. Configure Environment",
+          "description": "Edit .env with your configuration:"
+        },
+        "step4": {
+          "title": "4. Set Up Database"
+        },
+        "step5": {
+          "title": "5. Start Development Server"
+        }
+      },
+      "production": {
+        "title": "Production Deployment",
+        "description": "For production, build and run the optimized version:"
+      }
+    },
+    "features": {
+      "autoReply": {
+        "title": "Auto-Reply Rules",
+        "subtitle": "Create intelligent automated responses for your customers",
+        "overview": {
+          "title": "Overview",
+          "description": "Auto-reply rules allow you to automatically respond to incoming WhatsApp messages based on specific triggers. Rules are evaluated by priority, with higher priority rules taking precedence."
+        },
+        "triggerTypes": {
+          "title": "Trigger Types",
+          "description": "Choose the matching strategy that best fits your needs:",
+          "exact": {
+            "description": "Message must match the trigger exactly (case-insensitive).",
+            "example": "Trigger: \"hello\" matches \"Hello\" or \"HELLO\""
+          },
+          "contains": {
+            "description": "Message contains the trigger phrase anywhere.",
+            "example": "Trigger: \"price\" matches \"What is the price?\" or \"price list\""
+          },
+          "startsWith": {
+            "description": "Message starts with the trigger phrase.",
+            "example": "Trigger: \"order\" matches \"order #123\" or \"Order status\""
+          },
+          "regex": {
+            "description": "Use regular expressions for complex pattern matching.",
+            "example": "Trigger: \"^(hi|hello|hey)$\" matches greetings"
+          }
+        },
+        "priority": {
+          "title": "Priority System",
+          "description": "When multiple rules could match a message, the rule with the highest priority number is used. Set important rules to higher priority values."
+        },
+        "workingHours": {
+          "title": "Working Hours",
+          "description": "Configure working hours in Settings to automatically send different replies outside business hours."
+        },
+        "bestPractices": {
+          "title": "Best Practices",
+          "items": {
+            "1": "Use specific triggers to avoid false matches",
+            "2": "Set higher priority for important rules",
+            "3": "Test rules before activating them",
+            "4": "Use CONTAINS for flexible matching, EXACT for precise control"
+          }
+        }
+      },
+      "sheetsSync": {
+        "title": "Google Sheets Sync",
+        "subtitle": "Automatically backup your data to Google Sheets",
+        "overview": {
+          "title": "Overview",
+          "description": "Keep all your contacts and message history synchronized with Google Sheets. Access your data from anywhere and create custom reports."
+        },
+        "setup": {
+          "title": "Setup Guide",
+          "steps": {
+            "1": "Create a Google Cloud project and enable Google Sheets API",
+            "2": "Create a service account and download the JSON credentials",
+            "3": "Base64 encode the credentials file",
+            "4": "Share your Google Sheet with the service account email"
+          }
+        },
+        "configuration": {
+          "title": "Environment Configuration",
+          "description": "Add these environment variables:"
+        },
+        "syncTypes": {
+          "title": "Sync Types",
+          "contacts": {
+            "title": "Contacts Sync",
+            "description": "All contacts with their phone numbers, names, and message counts are synced to a 'Contacts' sheet."
+          },
+          "messages": {
+            "title": "Messages Sync",
+            "description": "Message history including content, direction, timestamps, and matched rules are synced to a 'Messages' sheet."
+          }
+        },
+        "scheduling": {
+          "title": "Sync Scheduling",
+          "description": "Syncs can be triggered manually from the Settings page or scheduled using the API."
+        },
+        "troubleshooting": {
+          "title": "Troubleshooting",
+          "items": {
+            "1": "Verify the service account has Editor access to the sheet",
+            "2": "Check that Sheets API is enabled in Google Cloud Console",
+            "3": "Ensure credentials are properly base64 encoded"
+          }
+        }
+      },
+      "analytics": {
+        "title": "Analytics Dashboard",
+        "subtitle": "Track your bot performance with detailed metrics",
+        "overview": {
+          "title": "Overview",
+          "description": "The analytics dashboard provides insights into your message volume, rule performance, and customer engagement patterns."
+        },
+        "metrics": {
+          "title": "Available Metrics",
+          "messages": {
+            "title": "Message Metrics",
+            "description": "Track your messaging activity:",
+            "items": {
+              "1": "Total incoming and outgoing messages",
+              "2": "Messages over time (daily, weekly, monthly)",
+              "3": "Peak messaging hours and days"
+            }
+          },
+          "rules": {
+            "title": "Rule Performance",
+            "description": "Monitor your auto-reply rules:",
+            "items": {
+              "1": "Match count per rule",
+              "2": "Most and least used rules"
+            }
+          },
+          "contacts": {
+            "title": "Contact Insights",
+            "description": "Understand your customer base with contact growth and engagement metrics."
+          }
+        },
+        "timeRanges": {
+          "title": "Time Ranges",
+          "description": "Filter analytics by different time periods:",
+          "items": {
+            "1": "Today - Current day statistics",
+            "2": "This Week - Last 7 days",
+            "3": "This Month - Last 30 days",
+            "4": "This Year - Last 365 days"
+          }
+        },
+        "export": {
+          "title": "Export Data",
+          "description": "Export your analytics data via Google Sheets sync for custom reporting and analysis."
+        }
+      }
+    },
+    "api": {
+      "auth": {
+        "title": "Authentication API",
+        "subtitle": "Secure your API requests with session-based authentication",
+        "overview": {
+          "title": "Overview",
+          "description": "The API uses session-based authentication via NextAuth. All dashboard API endpoints require authentication."
+        },
+        "endpoints": {
+          "title": "Endpoints",
+          "register": {
+            "description": "Create a new user account"
+          },
+          "signin": {
+            "description": "Sign in and create a session"
+          },
+          "signout": {
+            "description": "Sign out and destroy the session"
+          },
+          "session": {
+            "description": "Get current session information"
+          }
+        },
+        "authentication": {
+          "title": "Session Authentication",
+          "description": "After signing in, include the session cookie in all subsequent requests. The session is automatically managed by NextAuth."
+        },
+        "errors": {
+          "title": "Error Codes",
+          "code": "Code",
+          "description": "Description",
+          "unauthorized": "Not authenticated - sign in required",
+          "forbidden": "Not authorized to access this resource",
+          "validation": "Invalid request parameters"
+        }
+      },
+      "contacts": {
+        "title": "Contacts API",
+        "subtitle": "Manage your WhatsApp contacts programmatically",
+        "endpoints": {
+          "title": "Endpoints",
+          "list": {
+            "description": "Get paginated list of contacts",
+            "params": "Query Parameters",
+            "pageDesc": "Page number (default: 1)",
+            "limitDesc": "Items per page (default: 20)",
+            "searchDesc": "Search by name or phone number",
+            "response": "Response"
+          },
+          "get": {
+            "description": "Get a specific contact by ID"
+          },
+          "update": {
+            "description": "Update contact information"
+          },
+          "delete": {
+            "description": "Delete a contact"
+          }
+        },
+        "table": {
+          "param": "Parameter",
+          "type": "Type",
+          "description": "Description"
+        }
+      },
+      "messages": {
+        "title": "Messages API",
+        "subtitle": "Access and send WhatsApp messages",
+        "endpoints": {
+          "title": "Endpoints",
+          "list": {
+            "description": "Get paginated list of messages",
+            "params": "Query Parameters",
+            "pageDesc": "Page number (default: 1)",
+            "limitDesc": "Items per page (default: 20)",
+            "directionDesc": "Filter by INCOMING or OUTGOING",
+            "response": "Response"
+          },
+          "getByContact": {
+            "description": "Get messages for a specific contact"
+          },
+          "send": {
+            "description": "Send a message to a phone number",
+            "response": "Response"
+          }
+        },
+        "table": {
+          "param": "Parameter",
+          "type": "Type",
+          "description": "Description"
+        }
+      },
+      "rules": {
+        "title": "Rules API",
+        "subtitle": "Manage auto-reply rules via API",
+        "endpoints": {
+          "title": "Endpoints",
+          "list": {
+            "description": "Get all auto-reply rules",
+            "response": "Response"
+          },
+          "create": {
+            "description": "Create a new auto-reply rule",
+            "triggerTypes": "Trigger Types",
+            "types": {
+              "exact": "Exact message match",
+              "contains": "Message contains the trigger",
+              "startsWith": "Message starts with trigger",
+              "regex": "Regular expression pattern"
+            }
+          },
+          "update": {
+            "description": "Update an existing rule"
+          },
+          "delete": {
+            "description": "Delete a rule"
+          },
+          "toggle": {
+            "description": "Enable or disable a rule"
+          }
+        },
+        "table": {
+          "type": "Type",
+          "description": "Description"
+        }
+      }
     }
   },
   "subscription": {

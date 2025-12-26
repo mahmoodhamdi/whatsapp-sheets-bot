@@ -1,21 +1,74 @@
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MessageSquare, Table2, Zap, Globe } from "lucide-react";
 
-export default function DocsPage() {
+export default async function DocsIntroductionPage() {
+  const t = await getTranslations("docs.introduction");
+
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="text-center px-4">
-        <h1 className="text-4xl font-bold mb-4">التوثيق</h1>
-        <p className="text-muted-foreground mb-8">
-          صفحة التوثيق - سيتم إضافة المحتوى في Phase 5
-        </p>
-        <Button variant="outline" asChild>
-          <Link href="/">
-            <ArrowRight className="me-2 h-4 w-4 rtl:rotate-180" />
-            العودة للرئيسية
-          </Link>
-        </Button>
+    <div>
+      <h1>{t("title")}</h1>
+      <p className="lead text-xl text-muted-foreground">{t("subtitle")}</p>
+
+      <h2>{t("whatIs.title")}</h2>
+      <p>{t("whatIs.description")}</p>
+
+      <h2>{t("keyFeatures.title")}</h2>
+      <div className="grid gap-4 md:grid-cols-2 not-prose my-6">
+        <FeatureCard
+          icon={<MessageSquare className="h-6 w-6 text-green-600" />}
+          title={t("keyFeatures.autoReply.title")}
+          description={t("keyFeatures.autoReply.description")}
+        />
+        <FeatureCard
+          icon={<Table2 className="h-6 w-6 text-green-600" />}
+          title={t("keyFeatures.sheetsSync.title")}
+          description={t("keyFeatures.sheetsSync.description")}
+        />
+        <FeatureCard
+          icon={<Zap className="h-6 w-6 text-green-600" />}
+          title={t("keyFeatures.instant.title")}
+          description={t("keyFeatures.instant.description")}
+        />
+        <FeatureCard
+          icon={<Globe className="h-6 w-6 text-green-600" />}
+          title={t("keyFeatures.multilingual.title")}
+          description={t("keyFeatures.multilingual.description")}
+        />
+      </div>
+
+      <h2>{t("getStarted.title")}</h2>
+      <p>{t("getStarted.description")}</p>
+      <div className="not-prose">
+        <Link
+          href="/docs/quick-start"
+          className="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors"
+        >
+          {t("getStarted.cta")}
+          <ArrowRight className="h-4 w-4 rtl:rotate-180" />
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function FeatureCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="border rounded-lg p-4 bg-card">
+      <div className="flex items-start gap-3">
+        <div className="shrink-0 mt-1">{icon}</div>
+        <div>
+          <h3 className="font-semibold mb-1">{title}</h3>
+          <p className="text-sm text-muted-foreground">{description}</p>
+        </div>
       </div>
     </div>
   );
