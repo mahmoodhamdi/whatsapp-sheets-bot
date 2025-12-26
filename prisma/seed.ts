@@ -1,5 +1,6 @@
 import { PrismaClient, Role, TriggerType } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { seedPlans } from "./seed-plans";
 
 const prisma = new PrismaClient();
 
@@ -93,6 +94,9 @@ async function main() {
     });
     console.log(`Created rule: ${created.name}`);
   }
+
+  // Seed subscription plans
+  await seedPlans();
 
   console.log("Seeding completed!");
 }
