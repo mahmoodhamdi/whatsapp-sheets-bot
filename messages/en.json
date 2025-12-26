@@ -477,6 +477,7 @@
         "introduction": "Introduction",
         "quickStart": "Quick Start",
         "installation": "Installation",
+        "configuration": "Configuration",
         "autoReply": "Auto-Reply Rules",
         "sheetsSync": "Google Sheets Sync",
         "analytics": "Analytics",
@@ -521,9 +522,24 @@
     "quickStart": {
       "title": "Quick Start Guide",
       "subtitle": "Get your WhatsApp Bot running in under 5 minutes",
+      "timeEstimate": "Estimated time: 5 minutes",
+      "videoPlaceholder": "Video Tutorial",
+      "videoComingSoon": "Coming soon",
+      "prerequisites": {
+        "title": "Prerequisites",
+        "item1": "A WhatsApp account with an active phone number",
+        "item2": "A smartphone with WhatsApp installed",
+        "item3": "A computer with a web browser"
+      },
       "step1": {
         "title": "1. Create Your Account",
         "description": "Sign up for a free account to access the dashboard.",
+        "steps": {
+          "1": "Click the 'Create Account' button below",
+          "2": "Enter your email and create a password",
+          "3": "Verify your email address",
+          "4": "Log in to your new account"
+        },
         "cta": "Create Account"
       },
       "step2": {
@@ -532,12 +548,26 @@
         "steps": {
           "1": "Go to Dashboard > Settings > WhatsApp",
           "2": "Click 'Connect' to generate QR code",
-          "3": "Open WhatsApp > Linked Devices > Link a Device and scan"
+          "3": "Open WhatsApp on your phone",
+          "4": "Go to Settings > Linked Devices > Link a Device and scan"
+        },
+        "tip": {
+          "title": "Tip",
+          "description": "Keep your phone connected to the internet. The bot uses your phone's connection to send and receive messages."
         }
       },
       "step3": {
         "title": "3. Create Your First Rule",
         "description": "Set up auto-reply rules to respond to customer messages.",
+        "example": {
+          "title": "Example Rule",
+          "name": "Name:",
+          "trigger": "Trigger:",
+          "type": "Type:",
+          "response": "Response:",
+          "responseText": "Hello! Thanks for your message."
+        },
+        "triggerTypesTitle": "Trigger Types",
         "triggerTypes": {
           "exact": "EXACT",
           "exactDesc": "Message must match exactly",
@@ -551,32 +581,80 @@
       },
       "step4": {
         "title": "4. Test Your Bot",
-        "description": "Send a message to your connected WhatsApp number to test the auto-reply."
+        "description": "Send a message to your connected WhatsApp number to test the auto-reply.",
+        "steps": {
+          "1": "Use another phone to send a message to your connected number",
+          "2": "Send a message that matches your rule's trigger",
+          "3": "You should receive an automatic reply instantly"
+        }
       },
       "success": {
         "title": "You're all set!",
         "description": "Your bot is now ready to handle customer messages automatically."
       },
+      "troubleshooting": {
+        "title": "Troubleshooting",
+        "qrNotLoading": {
+          "title": "QR Code Not Loading",
+          "description": "Try refreshing the page or clearing your browser cache. Make sure you have a stable internet connection."
+        },
+        "notConnecting": {
+          "title": "WhatsApp Not Connecting",
+          "description": "Ensure your phone has an active internet connection and WhatsApp is up to date. Try disconnecting and reconnecting."
+        },
+        "ruleNotMatching": {
+          "title": "Rule Not Matching",
+          "description": "Check that your rule is active and the trigger matches exactly (for EXACT type) or contains the keyword (for CONTAINS type)."
+        }
+      },
       "nextSteps": {
         "title": "Next Steps",
+        "configuration": "Configure Environment",
+        "configurationDesc": "Set up environment variables and advanced settings",
         "autoReply": "Learn more about Auto-Reply Rules",
+        "autoReplyDesc": "Create advanced rules with regex and priority",
         "sheetsSync": "Set up Google Sheets Integration",
-        "api": "Explore the API Reference"
+        "sheetsSyncDesc": "Sync your contacts and messages automatically"
       }
     },
     "installation": {
       "title": "Installation Guide",
       "subtitle": "Deploy WhatsApp Bot on your own infrastructure",
       "requirements": {
-        "title": "Requirements"
+        "title": "Requirements",
+        "description": "Before you begin, ensure you have the following installed:",
+        "required": "Required",
+        "optional": "Optional"
       },
       "docker": {
         "title": "Docker Installation (Recommended)",
-        "description": "The easiest way to run WhatsApp Bot is using Docker Compose:"
+        "description": "The easiest way to run WhatsApp Bot is using Docker Compose:",
+        "badge": "Recommended",
+        "recommendation": "Best for production and quick setup",
+        "step1": {
+          "title": "1. Clone the Repository"
+        },
+        "step2": {
+          "title": "2. Configure Environment",
+          "description": "Copy the example environment file and edit it:"
+        },
+        "step3": {
+          "title": "3. Start Containers",
+          "description": "This will start both the app and PostgreSQL database."
+        },
+        "step4": {
+          "title": "4. View Logs"
+        },
+        "success": {
+          "title": "Success!",
+          "description": "Your app is now running at http://localhost:3000"
+        }
       },
       "manual": {
         "title": "Manual Installation",
         "description": "Follow these steps to install manually:",
+        "badge": "Manual",
+        "recommendation": "For development and customization",
         "step1": {
           "title": "1. Clone the Repository"
         },
@@ -585,18 +663,164 @@
         },
         "step3": {
           "title": "3. Configure Environment",
-          "description": "Edit .env with your configuration:"
+          "description": "Copy the example environment file and configure your settings:",
+          "required": "Required Environment Variables",
+          "optional": "Optional Environment Variables"
         },
         "step4": {
-          "title": "4. Set Up Database"
+          "title": "4. Set Up Database",
+          "description": "Run migrations and seed the database with initial data."
         },
         "step5": {
-          "title": "5. Start Development Server"
+          "title": "5. Start Development Server",
+          "description": "The app will be available at http://localhost:3000"
         }
       },
       "production": {
         "title": "Production Deployment",
-        "description": "For production, build and run the optimized version:"
+        "description": "For production, build and run the optimized version:",
+        "build": {
+          "title": "Build the Application"
+        },
+        "start": {
+          "title": "Start Production Server"
+        },
+        "warning": {
+          "title": "Important for Production",
+          "item1": "Use a strong NEXTAUTH_SECRET (at least 32 characters)",
+          "item2": "Set NEXTAUTH_URL to your production domain",
+          "item3": "Use a managed PostgreSQL database",
+          "item4": "Set up SSL/TLS for secure connections"
+        }
+      },
+      "verification": {
+        "title": "Verify Installation",
+        "description": "After installation, verify everything is working:",
+        "steps": {
+          "1": "Open http://localhost:3000 in your browser",
+          "2": "Log in with the default credentials (admin@example.com / admin123)",
+          "3": "Navigate to Settings and verify the WhatsApp connection option appears",
+          "4": "Create a test auto-reply rule to confirm the system is working"
+        }
+      },
+      "nextSteps": {
+        "title": "Next Steps",
+        "configuration": "Configure Environment",
+        "configurationDesc": "Set up environment variables and integrations",
+        "quickStart": "Quick Start Guide",
+        "quickStartDesc": "Learn how to use the bot effectively"
+      }
+    },
+    "configuration": {
+      "title": "Configuration Guide",
+      "subtitle": "Set up environment variables and integrations",
+      "sections": {
+        "environment": "Environment Variables",
+        "whatsapp": "WhatsApp Settings",
+        "sheets": "Google Sheets",
+        "hours": "Working Hours"
+      },
+      "environment": {
+        "title": "Environment Variables",
+        "description": "Configure your application using environment variables. Create a .env file in your project root.",
+        "table": {
+          "variable": "Variable",
+          "description": "Description",
+          "required": "Required",
+          "yes": "Yes",
+          "no": "No"
+        },
+        "database": {
+          "title": "Database Configuration",
+          "description": "Configure your PostgreSQL database connection:",
+          "urlDesc": "PostgreSQL connection string"
+        },
+        "auth": {
+          "title": "Authentication",
+          "description": "Configure NextAuth for secure authentication:",
+          "secretDesc": "Secret key for JWT encryption (min 32 characters)",
+          "urlDesc": "Your application URL",
+          "warning": {
+            "title": "Security Warning",
+            "description": "Never commit your .env file to version control. Generate a secure secret using:"
+          }
+        },
+        "stripe": {
+          "title": "Stripe (Optional)",
+          "description": "Configure Stripe for payment processing:"
+        }
+      },
+      "whatsapp": {
+        "title": "WhatsApp Settings",
+        "description": "Configure the WhatsApp integration settings.",
+        "connection": {
+          "title": "Connection Setup",
+          "steps": {
+            "1": "Navigate to Dashboard > Settings > WhatsApp",
+            "2": "Click 'Connect' to generate a QR code",
+            "3": "Open WhatsApp on your phone",
+            "4": "Go to Settings > Linked Devices > Link a Device and scan"
+          }
+        },
+        "session": {
+          "title": "Session Storage",
+          "description": "WhatsApp session data is stored locally. Configure the storage path:"
+        },
+        "defaultReply": {
+          "title": "Default Reply",
+          "description": "Configure a default reply message when no rules match in Settings > General."
+        }
+      },
+      "sheets": {
+        "title": "Google Sheets Integration",
+        "description": "Sync your contacts and messages to Google Sheets.",
+        "setup": {
+          "title": "Setup Steps",
+          "step1": {
+            "title": "Create Google Cloud Project",
+            "description": "Go to Google Cloud Console and create a new project. Enable the Google Sheets API."
+          },
+          "step2": {
+            "title": "Create Service Account",
+            "description": "Create a service account and download the JSON credentials file."
+          },
+          "step3": {
+            "title": "Encode Credentials",
+            "description": "Base64 encode your credentials file:"
+          },
+          "step4": {
+            "title": "Share Your Sheet",
+            "description": "Share your Google Sheet with the service account email address (found in your credentials JSON)."
+          }
+        },
+        "config": {
+          "title": "Environment Configuration"
+        }
+      },
+      "hours": {
+        "title": "Working Hours",
+        "description": "Configure when the bot should respond to messages.",
+        "setup": {
+          "title": "Configuration",
+          "description": "Set up working hours from the Settings page:",
+          "steps": {
+            "1": "Navigate to Dashboard > Settings > General",
+            "2": "Enable Working Hours",
+            "3": "Set start and end times for each day",
+            "4": "Configure an out-of-office message"
+          }
+        },
+        "offHours": {
+          "title": "Off-Hours Behavior",
+          "description": "When outside working hours, the bot will send your configured out-of-office message instead of matching rules."
+        }
+      },
+      "nextSteps": {
+        "title": "Next Steps",
+        "autoReply": "Configure Auto-Reply Rules",
+        "autoReplyDesc": "Create rules for automatic responses",
+        "sheetsSync": "Set Up Google Sheets Sync",
+        "sheetsSyncDesc": "Sync your data to Google Sheets"
       }
     },
     "features": {

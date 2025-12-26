@@ -51,6 +51,11 @@ const docsNav: NavSection[] = [
         href: "/docs/installation",
         icon: <Settings className="h-4 w-4" />,
       },
+      {
+        titleKey: "configuration",
+        href: "/docs/configuration",
+        icon: <Key className="h-4 w-4" />,
+      },
     ],
   },
   {
