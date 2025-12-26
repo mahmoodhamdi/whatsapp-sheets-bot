@@ -1,7 +1,7 @@
 # Milestone 1.4: i18n Extensions
 
 > **Phase:** 1 - Foundation & Public Routes
-> **Status:** ⬜ Not Started
+> **Status:** ✅ Complete
 > **Last Updated:** 2025-12-26
 > **Depends On:** M1-public-routes.md
 
@@ -32,44 +32,44 @@ Extend the internationalization system to support all landing page, pricing, doc
 ## Implementation Checklist
 
 ### 1. Restructure Translation Files
-- [ ] Organize translations into logical sections
-- [ ] Add `landing` section
-- [ ] Add `pricing` section
-- [ ] Add `docs` section
-- [ ] Add `auth` section (extend existing)
-- [ ] Add `subscription` section
-- [ ] Add `errors` section
+- [x] Organize translations into logical sections
+- [x] Add `landing` section
+- [x] Add `pricing` section
+- [x] Add `docs` section
+- [x] Add `auth` section (extend existing)
+- [x] Add `subscription` section
+- [x] Add `errors` section
 
 ### 2. Landing Page Translations
-- [ ] Hero section content
-- [ ] Features list
-- [ ] Statistics labels
-- [ ] Testimonials
-- [ ] FAQ content
-- [ ] CTA buttons
+- [x] Hero section content
+- [x] Features list
+- [x] Statistics labels
+- [x] Testimonials
+- [x] FAQ content
+- [x] CTA buttons
 
 ### 3. Pricing Page Translations
-- [ ] Plan names and descriptions
-- [ ] Feature lists per plan
-- [ ] Billing toggle (monthly/yearly)
-- [ ] FAQ specific to pricing
+- [x] Plan names and descriptions
+- [x] Feature lists per plan
+- [x] Billing toggle (monthly/yearly)
+- [x] FAQ specific to pricing
 
 ### 4. Auth Page Translations
-- [ ] Registration form
-- [ ] Email verification page
-- [ ] Password reset flow
-- [ ] Error messages
+- [x] Registration form
+- [x] Email verification page
+- [x] Password reset flow
+- [x] Error messages
 
 ### 5. Subscription Translations
-- [ ] Subscription status messages
-- [ ] Upgrade/downgrade prompts
-- [ ] Billing-related messages
-- [ ] Usage limit warnings
+- [x] Subscription status messages
+- [x] Upgrade/downgrade prompts
+- [x] Billing-related messages
+- [x] Usage limit warnings
 
 ### 6. Testing
-- [ ] Verify all keys exist in both languages
-- [ ] Test RTL layout with new content
-- [ ] Test dynamic values (interpolation)
+- [x] Verify all keys exist in both languages
+- [x] Test RTL layout with new content
+- [x] Test dynamic values (interpolation)
 
 ---
 
@@ -646,10 +646,10 @@ npm run lint
 
 ## Acceptance Criteria
 
-- [ ] All new translation keys added to both files
-- [ ] No missing key warnings in console
-- [ ] Interpolation works ({count}, {percent}, etc.)
-- [ ] RTL text displays correctly in Arabic
-- [ ] All pricing values are localized
-- [ ] Error messages are helpful and clear
-- [ ] FAQ content is complete
+- [x] All new translation keys added to both files
+- [x] No missing key warnings in console
+- [x] Interpolation works ({count}, {percent}, etc.)
+- [x] RTL text displays correctly in Arabic
+- [x] All pricing values are localized
+- [x] Error messages are helpful and clear
+- [x] FAQ content is complete

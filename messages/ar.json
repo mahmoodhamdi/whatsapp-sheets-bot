@@ -29,13 +29,186 @@
     "terms": "شروط الاستخدام",
     "copyright": "© {year} واتساب بوت. جميع الحقوق محفوظة."
   },
+  "landing": {
+    "hero": {
+      "title": "أتمتة ردود الواتساب لعملك",
+      "subtitle": "وفر وقتك واجعل عملاءك سعداء مع نظام الرد التلقائي الذكي",
+      "cta": "ابدأ مجاناً",
+      "ctaSecondary": "شاهد العرض",
+      "trustedBy": "موثوق من قبل أكثر من {count} عمل تجاري"
+    },
+    "features": {
+      "title": "كل ما تحتاجه لأتمتة ردودك",
+      "subtitle": "أدوات قوية وسهلة الاستخدام لإدارة تواصلك مع العملاء",
+      "autoReply": {
+        "title": "ردود تلقائية ذكية",
+        "description": "أنشئ قواعد رد مخصصة بناءً على كلمات مفتاحية أو أنماط محددة"
+      },
+      "sheetsSync": {
+        "title": "مزامنة مع جوجل شيتس",
+        "description": "احفظ جميع المحادثات وبيانات العملاء تلقائياً في جوجل شيتس"
+      },
+      "multiLanguage": {
+        "title": "دعم متعدد اللغات",
+        "description": "واجهة تدعم العربية والإنجليزية بشكل كامل"
+      },
+      "analytics": {
+        "title": "تحليلات مفصلة",
+        "description": "تابع أداء ردودك وتفاعل عملائك بإحصائيات دقيقة"
+      },
+      "scheduling": {
+        "title": "جدولة ساعات العمل",
+        "description": "حدد أوقات عمل البوت ورسائل خارج الدوام"
+      },
+      "templates": {
+        "title": "قوالب جاهزة",
+        "description": "ابدأ بسرعة مع قوالب ردود معدة مسبقاً"
+      }
+    },
+    "stats": {
+      "messages": "رسالة تم إرسالها",
+      "businesses": "عمل تجاري",
+      "uptime": "وقت التشغيل",
+      "satisfaction": "رضا العملاء"
+    },
+    "testimonials": {
+      "title": "ماذا يقول عملاؤنا",
+      "subtitle": "انضم لآلاف الأعمال التي تستخدم منصتنا"
+    },
+    "cta": {
+      "title": "جاهز لأتمتة ردودك؟",
+      "description": "ابدأ تجربتك المجانية اليوم بدون بطاقة ائتمان",
+      "button": "ابدأ الآن مجاناً"
+    }
+  },
+  "pricing": {
+    "title": "خطط تناسب كل الأعمال",
+    "subtitle": "اختر الخطة المناسبة لحجم عملك",
+    "monthly": "شهري",
+    "yearly": "سنوي",
+    "yearlyDiscount": "وفر {percent}%",
+    "perMonth": "شهرياً",
+    "popular": "الأكثر شيوعاً",
+    "plans": {
+      "free": {
+        "name": "مجاني",
+        "description": "للتجربة والمشاريع الصغيرة",
+        "price": "0",
+        "cta": "ابدأ مجاناً"
+      },
+      "starter": {
+        "name": "المبتدئ",
+        "description": "للأعمال الصغيرة",
+        "price": "35",
+        "cta": "اشترك الآن"
+      },
+      "professional": {
+        "name": "المحترف",
+        "description": "للأعمال المتوسطة",
+        "price": "110",
+        "cta": "اشترك الآن"
+      },
+      "enterprise": {
+        "name": "المؤسسات",
+        "description": "للشركات الكبيرة",
+        "price": "370",
+        "cta": "تواصل معنا"
+      }
+    },
+    "features": {
+      "messages": "{count} رسالة شهرياً",
+      "messagesUnlimited": "رسائل غير محدودة",
+      "rules": "{count} قواعد رد",
+      "rulesUnlimited": "قواعد غير محدودة",
+      "sheetsSync": "مزامنة جوجل شيتس",
+      "analytics": "تحليلات متقدمة",
+      "priority": "دعم أولوية",
+      "dedicated": "مدير حساب مخصص",
+      "api": "وصول API",
+      "customIntegrations": "تكاملات مخصصة"
+    },
+    "faq": {
+      "title": "الأسئلة الشائعة",
+      "questions": {
+        "changePlan": {
+          "question": "هل يمكنني تغيير خطتي لاحقاً؟",
+          "answer": "نعم، يمكنك الترقية أو تخفيض خطتك في أي وقت. التغييرات تصبح سارية فوراً."
+        },
+        "exceedLimit": {
+          "question": "ماذا يحدث إذا تجاوزت حد الرسائل؟",
+          "answer": "سنرسل لك تنبيهاً عند اقترابك من الحد. يمكنك الترقية أو انتظار بداية الشهر التالي."
+        },
+        "contract": {
+          "question": "هل هناك عقد طويل الأمد؟",
+          "answer": "لا، جميع خططنا شهرية ويمكنك الإلغاء في أي وقت بدون رسوم إضافية."
+        },
+        "payment": {
+          "question": "ما طرق الدفع المتاحة؟",
+          "answer": "نقبل بطاقات الائتمان الرئيسية (فيزا، ماستركارد) والتحويلات البنكية للخطط المؤسسية."
+        }
+      }
+    }
+  },
   "auth": {
     "login": "تسجيل الدخول",
     "email": "البريد الإلكتروني",
     "password": "كلمة المرور",
     "loginButton": "دخول",
     "loginError": "بيانات غير صحيحة",
-    "loggingIn": "جاري تسجيل الدخول..."
+    "loggingIn": "جاري تسجيل الدخول...",
+    "register": {
+      "title": "إنشاء حساب جديد",
+      "subtitle": "ابدأ تجربتك المجانية اليوم",
+      "name": "الاسم الكامل",
+      "namePlaceholder": "أدخل اسمك",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "password": "كلمة المرور",
+      "passwordPlaceholder": "أدخل كلمة مرور قوية",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "confirmPasswordPlaceholder": "أعد إدخال كلمة المرور",
+      "terms": "أوافق على",
+      "termsLink": "شروط الاستخدام",
+      "and": "و",
+      "privacyLink": "سياسة الخصوصية",
+      "submit": "إنشاء الحساب",
+      "submitting": "جاري إنشاء الحساب...",
+      "haveAccount": "لديك حساب بالفعل؟",
+      "loginLink": "تسجيل الدخول"
+    },
+    "forgotPassword": {
+      "title": "نسيت كلمة المرور؟",
+      "subtitle": "أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة التعيين",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "submit": "إرسال رابط إعادة التعيين",
+      "submitting": "جاري الإرسال...",
+      "success": "تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني",
+      "backToLogin": "العودة لتسجيل الدخول"
+    },
+    "resetPassword": {
+      "title": "إعادة تعيين كلمة المرور",
+      "subtitle": "أدخل كلمة المرور الجديدة",
+      "password": "كلمة المرور الجديدة",
+      "passwordPlaceholder": "أدخل كلمة مرور قوية",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "confirmPasswordPlaceholder": "أعد إدخال كلمة المرور",
+      "submit": "تعيين كلمة المرور",
+      "submitting": "جاري التعيين...",
+      "success": "تم تعيين كلمة المرور بنجاح",
+      "invalidToken": "رابط إعادة التعيين غير صالح أو منتهي الصلاحية"
+    },
+    "verifyEmail": {
+      "title": "تأكيد البريد الإلكتروني",
+      "subtitle": "لقد أرسلنا رمز التأكيد إلى",
+      "instruction": "أدخل الرمز المكون من 6 أرقام",
+      "submit": "تأكيد",
+      "submitting": "جاري التأكيد...",
+      "resend": "لم تستلم الرمز؟",
+      "resendLink": "إعادة الإرسال",
+      "resendSuccess": "تم إرسال رمز جديد",
+      "success": "تم تأكيد بريدك الإلكتروني بنجاح"
+    }
   },
   "dashboard": {
     "title": "لوحة التحكم",
@@ -188,10 +361,66 @@
     "date": "التاريخ",
     "noData": "لا توجد بيانات"
   },
+  "subscription": {
+    "status": {
+      "active": "نشط",
+      "cancelled": "ملغي",
+      "expired": "منتهي",
+      "trial": "فترة تجريبية"
+    },
+    "limits": {
+      "messagesUsed": "استخدمت {used} من {limit} رسالة",
+      "messagesRemaining": "متبقي {remaining} رسالة",
+      "rulesUsed": "استخدمت {used} من {limit} قاعدة",
+      "limitReached": "وصلت للحد الأقصى",
+      "upgradePrompt": "قم بالترقية للحصول على المزيد"
+    },
+    "upgrade": {
+      "title": "ترقية خطتك",
+      "currentPlan": "خطتك الحالية",
+      "benefits": "مميزات الترقية",
+      "cta": "ترقية الآن"
+    },
+    "billing": {
+      "title": "الفوترة",
+      "currentPlan": "الخطة الحالية",
+      "nextBilling": "تاريخ الدفع القادم",
+      "paymentMethod": "طريقة الدفع",
+      "updateCard": "تحديث البطاقة",
+      "viewInvoices": "عرض الفواتير",
+      "cancelSubscription": "إلغاء الاشتراك"
+    }
+  },
+  "docs": {
+    "title": "التوثيق",
+    "search": "البحث في التوثيق...",
+    "noResults": "لا توجد نتائج",
+    "sections": {
+      "gettingStarted": "البداية السريعة",
+      "features": "المميزات",
+      "api": "واجهة برمجة التطبيقات",
+      "faq": "الأسئلة الشائعة"
+    }
+  },
   "errors": {
     "general": "حدث خطأ ما",
     "notFound": "غير موجود",
     "unauthorized": "غير مصرح",
-    "forbidden": "ممنوع"
+    "forbidden": "ممنوع",
+    "auth": {
+      "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+      "emailExists": "هذا البريد الإلكتروني مسجل بالفعل",
+      "weakPassword": "كلمة المرور ضعيفة جداً",
+      "passwordMismatch": "كلمات المرور غير متطابقة",
+      "invalidToken": "رابط غير صالح أو منتهي الصلاحية",
+      "emailNotVerified": "يرجى تأكيد بريدك الإلكتروني أولاً"
+    },
+    "subscription": {
+      "paymentFailed": "فشل الدفع، يرجى المحاولة مرة أخرى",
+      "cardDeclined": "تم رفض البطاقة",
+      "limitExceeded": "تجاوزت الحد المسموح لخطتك"
+    },
+    "tryAgain": "يرجى المحاولة مرة أخرى",
+    "contactSupport": "تواصل مع الدعم"
   }
 }
