@@ -501,6 +501,48 @@
       "error": "Failed to process payment"
     }
   },
+  "billing": {
+    "title": "Billing & Subscription",
+    "currentPlan": "Current Plan",
+    "currentPlanDescription": "Your active subscription plan and status",
+    "freePlan": "Free",
+    "upgrade": "Upgrade Plan",
+    "usage": "Usage",
+    "usageDescription": "Your usage for the current billing period",
+    "messages": "Messages",
+    "rules": "Auto-Reply Rules",
+    "unlimited": "Unlimited",
+    "nearLimitWarning": "You're approaching your message limit. Consider upgrading.",
+    "billingPeriod": "Billing period: {start} - {end}",
+    "manageBilling": "Manage Billing",
+    "manageBillingDescription": "Update payment method, view invoices, or cancel subscription",
+    "openPortal": "Open Billing Portal",
+    "portalInfo": "Manage your payment methods, download invoices, and update billing information through the Stripe Customer Portal.",
+    "cancelSubscription": "Cancel Subscription",
+    "cancelConfirm": "Are you sure you want to cancel? You will lose access to premium features at the end of your billing period.",
+    "resumeSubscription": "Resume Subscription",
+    "canceledNotice": "Your subscription is set to cancel at the end of the current billing period. You can resume anytime before then.",
+    "pastDueNotice": "Your payment is past due. Please update your payment method to continue using premium features.",
+    "updatePayment": "Update Payment Method",
+    "renewsOn": "Renews on {date}",
+    "endsOn": "Ends on {date}",
+    "status": {
+      "active": "Active",
+      "canceling": "Canceling",
+      "pastDue": "Past Due",
+      "trialing": "Trial",
+      "canceled": "Canceled"
+    },
+    "interval": {
+      "monthly": "Monthly",
+      "yearly": "Yearly"
+    },
+    "upgradePrompt": {
+      "title": "Upgrade for More Features",
+      "description": "Unlock more messages, unlimited rules, and premium features with a paid plan.",
+      "cta": "View Plans"
+    }
+  },
   "errors": {
     "general": "Something went wrong",
     "notFound": "Not found",
