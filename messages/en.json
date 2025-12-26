@@ -485,7 +485,8 @@
         "authentication": "Authentication",
         "contacts": "Contacts",
         "messages": "Messages",
-        "rules": "Rules"
+        "rules": "Rules",
+        "whatsapp": "WhatsApp"
       }
     },
     "introduction": {
@@ -1301,126 +1302,423 @@
       "auth": {
         "title": "Authentication API",
         "subtitle": "Secure your API requests with session-based authentication",
+        "nav": {
+          "register": "Register",
+          "signin": "Sign In",
+          "signout": "Sign Out",
+          "session": "Session"
+        },
         "overview": {
           "title": "Overview",
-          "description": "The API uses session-based authentication via NextAuth. All dashboard API endpoints require authentication."
+          "description": "The API uses session-based authentication via NextAuth. All dashboard API endpoints require authentication.",
+          "sessionAuth": {
+            "title": "Session-Based Authentication",
+            "description": "This API uses HTTP-only cookies for session management. After signing in, the session cookie is automatically included in subsequent requests."
+          }
         },
         "endpoints": {
           "title": "Endpoints",
           "register": {
-            "description": "Create a new user account"
+            "description": "Create a new user account",
+            "requestBody": "Request Body",
+            "response": "Response",
+            "validation": "Validation Rules",
+            "nameMin": "Name must be at least 2 characters",
+            "emailValid": "Email must be a valid email address",
+            "passwordMin": "Password must be at least 8 characters"
           },
           "signin": {
-            "description": "Sign in and create a session"
+            "description": "Sign in and create a session",
+            "requestBody": "Request Body",
+            "response": "Response"
           },
           "signout": {
-            "description": "Sign out and destroy the session"
+            "description": "Sign out and destroy the session",
+            "response": "Response"
           },
           "session": {
-            "description": "Get current session information"
+            "description": "Get current session information",
+            "response": "Response",
+            "authenticated": "Authenticated Response",
+            "unauthenticated": "Unauthenticated Response"
+          }
+        },
+        "passwordReset": {
+          "title": "Password Reset",
+          "forgot": {
+            "description": "Request a password reset link",
+            "response": "Response"
+          },
+          "reset": {
+            "description": "Reset password with token",
+            "response": "Response"
           }
         },
         "authentication": {
           "title": "Session Authentication",
           "description": "After signing in, include the session cookie in all subsequent requests. The session is automatically managed by NextAuth."
         },
+        "rateLimit": {
+          "title": "Rate Limiting",
+          "description": "Authentication endpoints are rate-limited to prevent brute force attacks. After 5 failed login attempts, the account will be temporarily locked for 15 minutes."
+        },
         "errors": {
           "title": "Error Codes",
+          "description": "Common error codes returned by the authentication API:",
           "code": "Code",
-          "description": "Description",
-          "unauthorized": "Not authenticated - sign in required",
-          "forbidden": "Not authorized to access this resource",
-          "validation": "Invalid request parameters"
+          "status": "Status",
+          "codes": {
+            "badRequest": "Invalid request body or parameters",
+            "unauthorized": "Invalid credentials or session expired",
+            "conflict": "Email already registered",
+            "tooMany": "Too many requests - rate limited"
+          }
+        },
+        "tip": {
+          "title": "Security Tip",
+          "description": "Always use HTTPS in production to ensure your authentication cookies are transmitted securely."
+        },
+        "nextSteps": {
+          "title": "Next Steps",
+          "contacts": "Contacts API",
+          "contactsDesc": "Learn how to manage contacts programmatically",
+          "messages": "Messages API",
+          "messagesDesc": "Send and receive WhatsApp messages via API"
         }
       },
       "contacts": {
         "title": "Contacts API",
         "subtitle": "Manage your WhatsApp contacts programmatically",
+        "nav": {
+          "list": "List Contacts",
+          "get": "Get Contact",
+          "update": "Update Contact",
+          "delete": "Delete Contact"
+        },
+        "overview": {
+          "title": "Overview",
+          "description": "The Contacts API allows you to manage WhatsApp contacts that have interacted with your bot. Contacts are automatically created when someone sends a message to your connected WhatsApp number."
+        },
         "endpoints": {
           "title": "Endpoints",
           "list": {
             "description": "Get paginated list of contacts",
             "params": "Query Parameters",
-            "pageDesc": "Page number (default: 1)",
-            "limitDesc": "Items per page (default: 20)",
+            "pageDesc": "Page number",
+            "limitDesc": "Items per page (max: 100)",
             "searchDesc": "Search by name or phone number",
+            "example": "Example Request",
             "response": "Response"
           },
           "get": {
-            "description": "Get a specific contact by ID"
+            "description": "Get a specific contact by ID",
+            "params": "Path Parameters",
+            "idDesc": "The contact ID",
+            "response": "Response"
           },
           "update": {
-            "description": "Update contact information"
+            "description": "Update contact information",
+            "requestBody": "Request Body",
+            "fields": "Available Fields",
+            "nameDesc": "The contact's display name",
+            "response": "Response"
           },
           "delete": {
-            "description": "Delete a contact"
+            "description": "Delete a contact and all associated messages",
+            "warning": "This action is irreversible. All messages from this contact will also be deleted.",
+            "response": "Response"
           }
         },
         "table": {
           "param": "Parameter",
           "type": "Type",
+          "default": "Default",
+          "field": "Field",
           "description": "Description"
+        },
+        "schema": {
+          "title": "Contact Object",
+          "description": "The contact object structure:",
+          "fields": {
+            "id": "Unique contact identifier",
+            "phoneNumber": "Phone number in E.164 format",
+            "name": "Contact's display name (if set)",
+            "messagesCount": "Total messages exchanged",
+            "lastMessageAt": "Timestamp of last message",
+            "createdAt": "When the contact was first seen"
+          }
+        },
+        "tip": {
+          "title": "Pro Tip",
+          "description": "Use the search parameter to quickly find contacts by name or phone number without paginating through all results."
+        },
+        "nextSteps": {
+          "title": "Next Steps",
+          "messages": "Messages API",
+          "messagesDesc": "Learn how to send and receive messages",
+          "rules": "Rules API",
+          "rulesDesc": "Configure auto-reply rules programmatically"
         }
       },
       "messages": {
         "title": "Messages API",
         "subtitle": "Access and send WhatsApp messages",
+        "nav": {
+          "list": "List Messages",
+          "byContact": "By Contact",
+          "send": "Send Message"
+        },
+        "overview": {
+          "title": "Overview",
+          "description": "The Messages API provides access to your WhatsApp message history and allows you to send messages programmatically.",
+          "whatsappRequired": {
+            "title": "WhatsApp Connection Required",
+            "description": "To send messages, you must have an active WhatsApp connection. Check the WhatsApp API for connection status."
+          }
+        },
         "endpoints": {
           "title": "Endpoints",
           "list": {
-            "description": "Get paginated list of messages",
+            "description": "Get paginated list of all messages",
             "params": "Query Parameters",
-            "pageDesc": "Page number (default: 1)",
-            "limitDesc": "Items per page (default: 20)",
-            "directionDesc": "Filter by INCOMING or OUTGOING",
+            "pageDesc": "Page number",
+            "limitDesc": "Items per page (max: 100)",
+            "directionDesc": "Filter by message direction",
+            "directionValues": "Direction Values",
+            "example": "Example Request",
             "response": "Response"
           },
           "getByContact": {
-            "description": "Get messages for a specific contact"
+            "description": "Get all messages for a specific contact",
+            "params": "Path Parameters",
+            "contactIdDesc": "The contact ID",
+            "response": "Response"
           },
           "send": {
             "description": "Send a message to a phone number",
-            "response": "Response"
+            "requestBody": "Request Body",
+            "fields": "Request Fields",
+            "phoneNumberDesc": "Phone number in E.164 format (e.g., +966501234567)",
+            "contentDesc": "The message content to send",
+            "response": "Response",
+            "warning": "Messages can only be sent when WhatsApp is connected. Check connection status first."
           }
         },
         "table": {
           "param": "Parameter",
           "type": "Type",
+          "default": "Default",
+          "field": "Field",
           "description": "Description"
+        },
+        "schema": {
+          "title": "Message Object",
+          "description": "The message object structure:",
+          "fields": {
+            "id": "Unique message identifier",
+            "content": "The message content",
+            "direction": "INCOMING or OUTGOING",
+            "contactId": "Associated contact ID",
+            "ruleId": "ID of matched rule (if auto-replied)",
+            "syncedToSheets": "Whether synced to Google Sheets",
+            "createdAt": "When the message was sent/received"
+          }
+        },
+        "tip": {
+          "title": "Pro Tip",
+          "description": "Use the direction filter to separate incoming customer messages from your outgoing responses when analyzing conversation flow."
+        },
+        "nextSteps": {
+          "title": "Next Steps",
+          "rules": "Rules API",
+          "rulesDesc": "Configure auto-reply rules for automatic responses",
+          "whatsapp": "WhatsApp API",
+          "whatsappDesc": "Manage your WhatsApp connection"
         }
       },
       "rules": {
         "title": "Rules API",
         "subtitle": "Manage auto-reply rules via API",
+        "nav": {
+          "list": "List Rules",
+          "create": "Create Rule",
+          "update": "Update Rule",
+          "delete": "Delete Rule",
+          "toggle": "Toggle Rule"
+        },
+        "overview": {
+          "title": "Overview",
+          "description": "The Rules API allows you to programmatically manage auto-reply rules. Rules define how your bot responds to incoming messages based on trigger patterns.",
+          "types": {
+            "title": "Trigger Types",
+            "exact": {
+              "title": "EXACT",
+              "description": "Message must match exactly (case-insensitive)"
+            },
+            "contains": {
+              "title": "CONTAINS",
+              "description": "Message contains the trigger anywhere"
+            },
+            "startsWith": {
+              "title": "STARTS_WITH",
+              "description": "Message starts with the trigger"
+            },
+            "regex": {
+              "title": "REGEX",
+              "description": "Match using regular expressions"
+            }
+          }
+        },
         "endpoints": {
           "title": "Endpoints",
           "list": {
-            "description": "Get all auto-reply rules",
+            "description": "Get all auto-reply rules sorted by priority",
             "response": "Response"
           },
           "create": {
             "description": "Create a new auto-reply rule",
+            "requestBody": "Request Body",
+            "fields": "Required Fields",
+            "nameDesc": "Display name for the rule",
+            "triggerDesc": "The trigger pattern to match",
+            "triggerTypeDesc": "How to match the trigger (EXACT, CONTAINS, STARTS_WITH, REGEX)",
+            "responseDesc": "The message to send when triggered",
+            "priorityDesc": "Higher priority rules are matched first (default: 0)",
+            "isActiveDesc": "Whether the rule is active (default: true)",
             "triggerTypes": "Trigger Types",
             "types": {
-              "exact": "Exact message match",
-              "contains": "Message contains the trigger",
-              "startsWith": "Message starts with trigger",
-              "regex": "Regular expression pattern"
-            }
+              "exact": "Exact message match (case-insensitive)",
+              "contains": "Message contains the trigger anywhere",
+              "startsWith": "Message starts with the trigger",
+              "regex": "Regular expression pattern match"
+            },
+            "response": "Response"
           },
           "update": {
-            "description": "Update an existing rule"
+            "description": "Update an existing rule",
+            "requestBody": "Request Body",
+            "response": "Response"
           },
           "delete": {
-            "description": "Delete a rule"
+            "description": "Delete a rule permanently",
+            "warning": "This action cannot be undone. The rule will be permanently deleted.",
+            "response": "Response"
           },
           "toggle": {
-            "description": "Enable or disable a rule"
+            "description": "Enable or disable a rule without deleting it",
+            "requestBody": "Request Body",
+            "response": "Response"
           }
         },
         "table": {
           "type": "Type",
+          "field": "Field",
+          "required": "Required",
           "description": "Description"
+        },
+        "schema": {
+          "title": "Rule Object",
+          "description": "The rule object structure:",
+          "fields": {
+            "id": "Unique rule identifier",
+            "name": "Display name for the rule",
+            "trigger": "The trigger pattern",
+            "triggerType": "EXACT, CONTAINS, STARTS_WITH, or REGEX",
+            "response": "The auto-reply message",
+            "priority": "Rule priority (higher = matched first)",
+            "isActive": "Whether the rule is enabled",
+            "matchCount": "Number of times this rule matched",
+            "createdAt": "When the rule was created"
+          }
+        },
+        "tip": {
+          "title": "Pro Tip",
+          "description": "Use higher priority values for specific rules and lower values for general fallback rules. This ensures specific matches take precedence."
+        },
+        "nextSteps": {
+          "title": "Next Steps",
+          "messages": "Messages API",
+          "messagesDesc": "Send and receive messages programmatically",
+          "whatsapp": "WhatsApp API",
+          "whatsappDesc": "Manage your WhatsApp connection"
+        }
+      },
+      "whatsapp": {
+        "title": "WhatsApp API",
+        "subtitle": "Manage your WhatsApp connection and status",
+        "nav": {
+          "status": "Connection Status",
+          "qr": "QR Code",
+          "connect": "Connect",
+          "disconnect": "Disconnect"
+        },
+        "overview": {
+          "title": "Overview",
+          "description": "The WhatsApp API provides endpoints to manage your WhatsApp Web connection. Connect your WhatsApp account by scanning a QR code, check connection status, and disconnect when needed.",
+          "baileys": {
+            "title": "Powered by Baileys",
+            "description": "This integration uses the Baileys library to connect to WhatsApp Web. Your phone must stay connected to the internet for the bot to work."
+          }
+        },
+        "endpoints": {
+          "title": "Endpoints",
+          "status": {
+            "description": "Get the current WhatsApp connection status",
+            "response": "Response",
+            "states": "Connection States",
+            "connected": "Connected",
+            "connectedDesc": "WhatsApp is connected and ready",
+            "connecting": "Connecting",
+            "connectingDesc": "Connection in progress",
+            "disconnected": "Disconnected",
+            "disconnectedDesc": "Not connected to WhatsApp"
+          },
+          "qr": {
+            "description": "Get the QR code for WhatsApp connection",
+            "response": "Response",
+            "usage": "Usage Instructions",
+            "step1": "Call this endpoint to get the QR code",
+            "step2": "Display the base64 image to the user",
+            "step3": "User scans with WhatsApp > Linked Devices",
+            "step4": "Connection is established automatically",
+            "warning": "QR codes expire after 60 seconds. Request a new one if expired."
+          },
+          "connect": {
+            "description": "Initiate a new WhatsApp connection",
+            "response": "Response",
+            "flow": "Connection Flow",
+            "flow1": "Call /connect",
+            "flow2": "Scan QR code",
+            "flow3": "Connected!"
+          },
+          "disconnect": {
+            "description": "Disconnect from WhatsApp",
+            "warning": "Disconnecting will stop all auto-replies until you reconnect.",
+            "response": "Response"
+          }
+        },
+        "errors": {
+          "title": "Error Codes",
+          "description": "Common error codes for WhatsApp API:",
+          "code": "Code",
+          "status": "Status",
+          "codes": {
+            "badRequest": "Invalid request parameters",
+            "unauthorized": "Not authenticated",
+            "conflict": "WhatsApp already connected",
+            "unavailable": "WhatsApp service unavailable"
+          }
+        },
+        "tip": {
+          "title": "Connection Tip",
+          "description": "Keep your phone connected to the internet and avoid logging out from WhatsApp to maintain a stable connection."
+        },
+        "nextSteps": {
+          "title": "Next Steps",
+          "messages": "Messages API",
+          "messagesDesc": "Send and receive WhatsApp messages",
+          "quickStart": "Quick Start Guide",
+          "quickStartDesc": "Complete setup guide for new users"
         }
       }
     }

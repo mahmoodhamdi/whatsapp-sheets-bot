@@ -16,6 +16,7 @@ import {
   Mail,
   FileText,
   Clock,
+  Smartphone,
 } from "lucide-react";
 
 interface DocsSidebarProps {
@@ -106,6 +107,11 @@ const docsNav: NavSection[] = [
         titleKey: "rules",
         href: "/docs/api/rules",
         icon: <FileText className="h-4 w-4" />,
+      },
+      {
+        titleKey: "whatsapp",
+        href: "/docs/api/whatsapp",
+        icon: <Smartphone className="h-4 w-4" />,
       },
     ],
   },
