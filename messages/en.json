@@ -212,7 +212,8 @@
       "submit": "Create Account",
       "submitting": "Creating account...",
       "haveAccount": "Already have an account?",
-      "loginLink": "Login"
+      "loginLink": "Login",
+      "success": "Account created successfully"
     },
     "forgotPassword": {
       "title": "Forgot Password?",
@@ -451,7 +452,8 @@
       "weakPassword": "Password is too weak",
       "passwordMismatch": "Passwords do not match",
       "invalidToken": "Invalid or expired link",
-      "emailNotVerified": "Please verify your email first"
+      "emailNotVerified": "Please verify your email first",
+      "somethingWrong": "Something went wrong, please try again"
     },
     "subscription": {
       "paymentFailed": "Payment failed, please try again",
