@@ -481,6 +481,7 @@
         "autoReply": "Auto-Reply Rules",
         "sheetsSync": "Google Sheets Sync",
         "analytics": "Analytics",
+        "workingHours": "Working Hours",
         "authentication": "Authentication",
         "contacts": "Contacts",
         "messages": "Messages",
@@ -827,9 +828,22 @@
       "autoReply": {
         "title": "Auto-Reply Rules",
         "subtitle": "Create intelligent automated responses for your customers",
+        "nav": {
+          "triggerTypes": "Trigger Types",
+          "priority": "Priority",
+          "variables": "Variables",
+          "examples": "Examples"
+        },
         "overview": {
           "title": "Overview",
-          "description": "Auto-reply rules allow you to automatically respond to incoming WhatsApp messages based on specific triggers. Rules are evaluated by priority, with higher priority rules taking precedence."
+          "description": "Auto-reply rules allow you to automatically respond to incoming WhatsApp messages based on specific triggers. Rules are evaluated by priority, with higher priority rules taking precedence.",
+          "howItWorks": {
+            "title": "How It Works",
+            "step1": "Customer sends a message to your WhatsApp number",
+            "step2": "The bot checks the message against your active rules",
+            "step3": "If a rule matches, the configured response is sent",
+            "step4": "If no rule matches, the default reply is sent (if configured)"
+          }
         },
         "triggerTypes": {
           "title": "Trigger Types",
@@ -853,11 +867,62 @@
         },
         "priority": {
           "title": "Priority System",
-          "description": "When multiple rules could match a message, the rule with the highest priority number is used. Set important rules to higher priority values."
+          "description": "When multiple rules could match a message, the rule with the highest priority number is used. Set important rules to higher priority values.",
+          "example": {
+            "title": "Priority Example",
+            "rule1": "VIP Customer Greeting",
+            "rule2": "General Greeting",
+            "rule3": "Fallback Response",
+            "note": "Higher priority rules are checked first. VIP greeting (100) takes precedence over general greeting (50)."
+          }
         },
-        "workingHours": {
-          "title": "Working Hours",
-          "description": "Configure working hours in Settings to automatically send different replies outside business hours."
+        "variables": {
+          "title": "Response Variables",
+          "description": "Use variables in your responses to personalize messages:",
+          "table": {
+            "variable": "Variable",
+            "description": "Description",
+            "example": "Example"
+          },
+          "items": {
+            "name": "Contact's saved name",
+            "phone": "Contact's phone number",
+            "date": "Current date",
+            "time": "Current time"
+          }
+        },
+        "examples": {
+          "title": "Rule Examples",
+          "description": "Here are some common rule configurations:",
+          "trigger": "Trigger",
+          "type": "Type",
+          "response": "Response",
+          "greeting": {
+            "title": "Greeting Rule",
+            "response": "Hello! Welcome to our store."
+          },
+          "pricing": {
+            "title": "Pricing Inquiry",
+            "response": "Our prices start from $10. Visit our website for details."
+          },
+          "order": {
+            "title": "Order Status",
+            "response": "Please provide your order number and we'll check the status."
+          }
+        },
+        "testing": {
+          "title": "Testing Your Rules",
+          "description": "Before activating rules, test them to ensure they work correctly:",
+          "steps": {
+            "1": "Go to Dashboard > Rules",
+            "2": "Click on a rule to open the test panel",
+            "3": "Enter a test message",
+            "4": "Verify the expected response is shown"
+          },
+          "tip": {
+            "title": "Pro Tip",
+            "description": "Use the rule test feature before activating to avoid sending wrong responses to customers."
+          }
         },
         "bestPractices": {
           "title": "Best Practices",
@@ -866,65 +931,177 @@
             "2": "Set higher priority for important rules",
             "3": "Test rules before activating them",
             "4": "Use CONTAINS for flexible matching, EXACT for precise control"
+          },
+          "warning": {
+            "title": "Common Mistake",
+            "description": "Avoid using very short or common words as triggers, as they may match unintended messages."
           }
+        },
+        "nextSteps": {
+          "title": "Next Steps",
+          "workingHours": "Configure Working Hours",
+          "workingHoursDesc": "Set up working hours and out-of-office messages",
+          "sheetsSync": "Google Sheets Sync",
+          "sheetsSyncDesc": "Sync your messages and contacts to Google Sheets"
         }
       },
       "sheetsSync": {
         "title": "Google Sheets Sync",
         "subtitle": "Automatically backup your data to Google Sheets",
+        "nav": {
+          "setup": "Setup",
+          "dataStructure": "Data Structure",
+          "syncOptions": "Sync Options",
+          "troubleshooting": "Troubleshooting"
+        },
         "overview": {
           "title": "Overview",
-          "description": "Keep all your contacts and message history synchronized with Google Sheets. Access your data from anywhere and create custom reports."
+          "description": "Keep all your contacts and message history synchronized with Google Sheets. Access your data from anywhere and create custom reports.",
+          "benefits": {
+            "backup": "Automatic Backup",
+            "realtime": "Real-time Sync",
+            "reports": "Custom Reports"
+          }
         },
         "setup": {
           "title": "Setup Guide",
-          "steps": {
-            "1": "Create a Google Cloud project and enable Google Sheets API",
-            "2": "Create a service account and download the JSON credentials",
-            "3": "Base64 encode the credentials file",
-            "4": "Share your Google Sheet with the service account email"
+          "description": "Follow these steps to set up Google Sheets integration:",
+          "step1": {
+            "title": "Create Google Cloud Project",
+            "description": "Go to Google Cloud Console, create a new project, and enable the Google Sheets API."
+          },
+          "step2": {
+            "title": "Create Service Account",
+            "description": "Create a service account and download the JSON credentials file."
+          },
+          "step3": {
+            "title": "Encode Credentials",
+            "description": "Base64 encode your credentials file for secure storage."
+          },
+          "step4": {
+            "title": "Share Your Sheet",
+            "description": "Share your Google Sheet with the service account email address."
           }
         },
         "configuration": {
           "title": "Environment Configuration",
-          "description": "Add these environment variables:"
+          "description": "Add these environment variables to your .env file:"
         },
-        "syncTypes": {
-          "title": "Sync Types",
+        "dataStructure": {
+          "title": "Data Structure",
+          "description": "Your data is organized into two sheets:",
           "contacts": {
-            "title": "Contacts Sync",
-            "description": "All contacts with their phone numbers, names, and message counts are synced to a 'Contacts' sheet."
+            "title": "Contacts Sheet",
+            "description": "Contains all your WhatsApp contacts with their details.",
+            "columns": {
+              "phone": "Phone",
+              "name": "Name",
+              "messageCount": "Messages",
+              "lastContact": "Last Contact"
+            }
           },
           "messages": {
-            "title": "Messages Sync",
-            "description": "Message history including content, direction, timestamps, and matched rules are synced to a 'Messages' sheet."
+            "title": "Messages Sheet",
+            "description": "Contains your complete message history.",
+            "columns": {
+              "timestamp": "Timestamp",
+              "phone": "Phone",
+              "direction": "Direction",
+              "content": "Content",
+              "rule": "Matched Rule"
+            }
           }
         },
-        "scheduling": {
-          "title": "Sync Scheduling",
-          "description": "Syncs can be triggered manually from the Settings page or scheduled using the API."
+        "syncOptions": {
+          "title": "Sync Options",
+          "description": "Choose how and when to sync your data:",
+          "manual": {
+            "title": "Manual Sync",
+            "description": "Trigger sync manually from the Settings page whenever you need."
+          },
+          "automatic": {
+            "title": "Automatic Sync",
+            "description": "Data is automatically synced when new messages are received."
+          },
+          "frequency": {
+            "title": "Sync Frequency",
+            "description": "Choose the sync frequency that fits your needs:",
+            "realtime": "Real-time - Sync immediately when messages are received",
+            "batch": "Batch - Sync every hour or on-demand",
+            "manual": "Manual - Only sync when you trigger it"
+          },
+          "success": {
+            "title": "Sync Complete",
+            "description": "Your data is now synced to Google Sheets. Check the sync history in Settings."
+          }
         },
         "troubleshooting": {
           "title": "Troubleshooting",
-          "items": {
-            "1": "Verify the service account has Editor access to the sheet",
-            "2": "Check that Sheets API is enabled in Google Cloud Console",
-            "3": "Ensure credentials are properly base64 encoded"
+          "description": "Common issues and their solutions:",
+          "issues": {
+            "permission": {
+              "title": "Permission Denied",
+              "solution": "Make sure you've shared the Google Sheet with your service account email address with Editor access."
+            },
+            "api": {
+              "title": "API Not Enabled",
+              "solution": "Go to Google Cloud Console and enable the Google Sheets API for your project."
+            },
+            "credentials": {
+              "title": "Invalid Credentials",
+              "solution": "Check that your credentials are properly base64 encoded and the JSON is valid."
+            }
+          },
+          "warning": {
+            "title": "Important",
+            "description": "Never share your credentials file or commit it to version control."
           }
+        },
+        "nextSteps": {
+          "title": "Next Steps",
+          "analytics": "View Analytics",
+          "analyticsDesc": "Track your bot performance with detailed metrics",
+          "autoReply": "Configure Auto-Reply Rules",
+          "autoReplyDesc": "Create rules for automatic responses"
         }
       },
       "analytics": {
         "title": "Analytics Dashboard",
         "subtitle": "Track your bot performance with detailed metrics",
+        "nav": {
+          "dashboard": "Dashboard",
+          "messages": "Messages",
+          "rules": "Rules",
+          "export": "Export"
+        },
         "overview": {
           "title": "Overview",
           "description": "The analytics dashboard provides insights into your message volume, rule performance, and customer engagement patterns."
+        },
+        "dashboard": {
+          "title": "Dashboard Overview",
+          "description": "Get a quick summary of your bot's performance at a glance.",
+          "cards": {
+            "totalMessages": "Total Messages",
+            "totalContacts": "Total Contacts",
+            "activeRules": "Active Rules",
+            "responseRate": "Response Rate",
+            "fromLastMonth": "from last month",
+            "rulesActive": "rules active",
+            "excellent": "Excellent"
+          }
         },
         "metrics": {
           "title": "Available Metrics",
           "messages": {
             "title": "Message Metrics",
             "description": "Track your messaging activity:",
+            "chart": {
+              "title": "Message Statistics",
+              "incoming": "Incoming",
+              "outgoing": "Outgoing",
+              "avgPerDay": "Avg/Day"
+            },
             "items": {
               "1": "Total incoming and outgoing messages",
               "2": "Messages over time (daily, weekly, monthly)",
@@ -934,6 +1111,9 @@
           "rules": {
             "title": "Rule Performance",
             "description": "Monitor your auto-reply rules:",
+            "performance": {
+              "title": "Top Performing Rules"
+            },
             "items": {
               "1": "Match count per rule",
               "2": "Most and least used rules"
@@ -947,6 +1127,13 @@
         "timeRanges": {
           "title": "Time Ranges",
           "description": "Filter analytics by different time periods:",
+          "options": {
+            "today": "Today",
+            "week": "This Week",
+            "month": "This Month",
+            "year": "This Year",
+            "custom": "Custom Range"
+          },
           "items": {
             "1": "Today - Current day statistics",
             "2": "This Week - Last 7 days",
@@ -956,7 +1143,157 @@
         },
         "export": {
           "title": "Export Data",
-          "description": "Export your analytics data via Google Sheets sync for custom reporting and analysis."
+          "description": "Export your analytics data for custom reporting and analysis.",
+          "options": {
+            "sheets": {
+              "title": "Google Sheets",
+              "description": "Sync your data to Google Sheets for custom reports"
+            },
+            "api": {
+              "title": "API Access",
+              "description": "Access raw data via the API for programmatic analysis"
+            }
+          },
+          "howTo": {
+            "title": "How to Export",
+            "steps": {
+              "1": "Go to Settings > Google Sheets",
+              "2": "Click 'Sync Now' to export current data",
+              "3": "Access your data in Google Sheets"
+            }
+          }
+        },
+        "nextSteps": {
+          "title": "Next Steps",
+          "sheetsSync": "Set Up Google Sheets Sync",
+          "sheetsSyncDesc": "Export your data for custom reporting",
+          "messagesApi": "Messages API",
+          "messagesApiDesc": "Access message data programmatically"
+        }
+      },
+      "workingHours": {
+        "title": "Working Hours",
+        "subtitle": "Configure when your bot responds to messages",
+        "nav": {
+          "configuration": "Configuration",
+          "schedule": "Schedule",
+          "offHours": "Off-Hours",
+          "timezone": "Timezone"
+        },
+        "overview": {
+          "title": "Overview",
+          "description": "Set up working hours to control when your bot sends auto-replies. Outside of working hours, a custom out-of-office message is sent instead.",
+          "benefits": {
+            "workHours": {
+              "title": "During Work Hours",
+              "description": "Bot responds with your configured auto-reply rules"
+            },
+            "offHours": {
+              "title": "Outside Work Hours",
+              "description": "Bot sends your out-of-office message instead"
+            }
+          }
+        },
+        "configuration": {
+          "title": "Configuration",
+          "description": "Set up working hours from the Settings page:",
+          "steps": {
+            "1": "Go to Dashboard > Settings > General",
+            "2": "Enable Working Hours",
+            "3": "Set start and end times for each day",
+            "4": "Configure your out-of-office message"
+          }
+        },
+        "schedule": {
+          "title": "Weekly Schedule",
+          "description": "Configure different hours for each day of the week:",
+          "example": {
+            "title": "Example Schedule"
+          },
+          "days": {
+            "sunday": "Sunday",
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday"
+          },
+          "closed": "Closed",
+          "tip": {
+            "title": "Tip",
+            "description": "You can set different hours for each day or mark specific days as closed."
+          }
+        },
+        "offHours": {
+          "title": "Out-of-Office Messages",
+          "description": "Configure what message to send when someone contacts you outside of working hours.",
+          "message": {
+            "title": "Custom Message",
+            "description": "Create a helpful message that informs customers about your working hours.",
+            "example": {
+              "title": "Example Message",
+              "text": "Thanks for your message! We're currently closed. Our working hours are Sunday-Thursday, 9 AM - 6 PM. We'll respond when we're back!"
+            }
+          },
+          "variables": {
+            "title": "Available Variables",
+            "description": "Use these variables in your out-of-office message:",
+            "table": {
+              "variable": "Variable",
+              "description": "Description"
+            },
+            "items": {
+              "openTime": "Today's opening time",
+              "closeTime": "Today's closing time",
+              "nextOpen": "Next opening day and time"
+            }
+          }
+        },
+        "timezone": {
+          "title": "Timezone Settings",
+          "description": "Your working hours are based on your configured timezone. Make sure to set the correct timezone for accurate scheduling.",
+          "regions": {
+            "middleEast": {
+              "title": "Middle East"
+            },
+            "other": {
+              "title": "Other Regions"
+            }
+          },
+          "warning": {
+            "title": "Important",
+            "description": "Changing the timezone will affect all your scheduled working hours. Make sure to verify your schedule after changing timezones."
+          }
+        },
+        "examples": {
+          "title": "Use Case Examples",
+          "retail": {
+            "title": "Retail Store",
+            "description": "Extended hours for customer convenience",
+            "days": "7 days a week"
+          },
+          "clinic": {
+            "title": "Medical Clinic",
+            "description": "Standard business hours",
+            "days": "Sunday - Thursday"
+          },
+          "restaurant": {
+            "title": "Restaurant",
+            "description": "Lunch and dinner service",
+            "days": "Daily except Monday"
+          }
+        },
+        "success": {
+          "title": "Working Hours Configured",
+          "description": "Your bot will now respect working hours and send appropriate messages."
+        },
+        "nextSteps": {
+          "title": "Next Steps",
+          "autoReply": "Configure Auto-Reply Rules",
+          "autoReplyDesc": "Set up rules for automatic responses during work hours",
+          "configuration": "Environment Configuration",
+          "configurationDesc": "Configure other settings for your bot"
         }
       }
     },

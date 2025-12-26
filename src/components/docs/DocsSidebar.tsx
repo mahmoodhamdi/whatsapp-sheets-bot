@@ -15,6 +15,7 @@ import {
   Users,
   Mail,
   FileText,
+  Clock,
 } from "lucide-react";
 
 interface DocsSidebarProps {
@@ -75,6 +76,11 @@ const docsNav: NavSection[] = [
         titleKey: "analytics",
         href: "/docs/features/analytics",
         icon: <BarChart3 className="h-4 w-4" />,
+      },
+      {
+        titleKey: "workingHours",
+        href: "/docs/features/working-hours",
+        icon: <Clock className="h-4 w-4" />,
       },
     ],
   },
