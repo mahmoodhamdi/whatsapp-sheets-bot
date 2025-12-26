@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 
@@ -20,6 +20,7 @@ export function RegisterForm() {
   const t = useTranslations("auth.register");
   const tErrors = useTranslations("errors.auth");
   const router = useRouter();
+  const locale = useLocale();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,6 +51,7 @@ export function RegisterForm() {
           name: data.name,
           email: data.email,
           password: data.password,
+          locale,
         }),
       });
 
@@ -77,7 +79,8 @@ export function RegisterForm() {
       }
 
       toast.success(t("success"));
-      router.push("/dashboard");
+      // Redirect to email verification page
+      router.push("/verify-email");
     } catch {
       toast.error(tErrors("somethingWrong"));
     } finally {

@@ -246,7 +246,8 @@
       "resend": "Didn't receive the code?",
       "resendLink": "Resend",
       "resendSuccess": "New code sent",
-      "success": "Email verified successfully"
+      "success": "Email verified successfully",
+      "error": "Invalid or expired code"
     }
   },
   "dashboard": {

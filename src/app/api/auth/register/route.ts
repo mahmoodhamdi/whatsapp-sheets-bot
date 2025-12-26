@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
+import { createVerificationToken } from "@/lib/auth/verification";
+import { sendEmail } from "@/lib/email";
+import { verificationEmailTemplate } from "@/lib/email/templates";
 
 const registerSchema = z.object({
   name: z
@@ -14,6 +17,7 @@ const registerSchema = z.object({
     .min(8, "Password must be at least 8 characters")
     .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
     .regex(/[0-9]/, "Password must contain at least one number"),
+  locale: z.string().optional().default("ar"),
 });
 
 export async function POST(request: Request) {
@@ -29,7 +33,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, email, password } = result.data;
+    const { name, email, password, locale } = result.data;
 
     // Check if email already exists
     const existingUser = await prisma.user.findUnique({
@@ -46,20 +50,38 @@ export async function POST(request: Request) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Create user
+    // Create user with emailVerified: false (default)
     const user = await prisma.user.create({
       data: {
         name,
         email,
         password: hashedPassword,
         role: "USER",
+        emailVerified: false,
       },
     });
+
+    // Create verification token and send email
+    try {
+      const token = await createVerificationToken(user.id);
+      await sendEmail({
+        to: user.email,
+        subject:
+          locale === "ar"
+            ? "تأكيد بريدك الإلكتروني - واتساب بوت"
+            : "Verify Your Email - WhatsApp Bot",
+        html: verificationEmailTemplate(token, locale),
+      });
+    } catch (emailError) {
+      console.error("Failed to send verification email:", emailError);
+      // Don't fail registration if email fails - user can resend
+    }
 
     return NextResponse.json(
       {
         message: "Registration successful",
         user: { id: user.id, email: user.email, name: user.name },
+        requiresVerification: true,
       },
       { status: 201 }
     );
