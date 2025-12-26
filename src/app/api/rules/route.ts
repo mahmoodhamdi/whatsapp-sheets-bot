@@ -3,6 +3,7 @@ import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { TriggerType } from "@prisma/client";
+import { canCreateRule } from "@/lib/services/usage";
 
 const createRuleSchema = z.object({
   name: z.string().min(1).max(100),
@@ -34,11 +35,25 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const session = await auth();
-  if (!session) {
+  if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
+    // Check rule limit
+    const canCreate = await canCreateRule(session.user.id);
+    if (!canCreate) {
+      return NextResponse.json(
+        {
+          error: "Rule limit reached",
+          code: "RULE_LIMIT_REACHED",
+          message:
+            "You have reached the maximum number of rules for your plan. Please upgrade to create more rules.",
+        },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
     const data = createRuleSchema.parse(body);
 

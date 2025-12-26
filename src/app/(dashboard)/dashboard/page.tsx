@@ -4,6 +4,10 @@ import { StatsCard } from "@/components/dashboard/StatsCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
+import { getCurrentUsage } from "@/lib/services/usage";
+import { getSubscriptionLimits } from "@/lib/services/subscription";
+import { UsageDisplay } from "@/components/dashboard/UsageDisplay";
 
 async function getStats() {
   const [totalMessages, totalContacts, activeRules, todayMessages] =
@@ -38,12 +42,32 @@ async function getTopContacts() {
   });
 }
 
+async function getUserUsageData(userId: string) {
+  const [usage, limits] = await Promise.all([
+    getCurrentUsage(userId),
+    getSubscriptionLimits(userId),
+  ]);
+
+  return {
+    messagesUsed: usage.messagesCount,
+    messagesLimit: limits.messagesPerMonth,
+    rulesUsed: usage.rulesCount,
+    rulesLimit: limits.rulesLimit,
+    periodStart: usage.periodStart,
+    periodEnd: usage.periodEnd,
+  };
+}
+
 export default async function DashboardPage() {
   const t = await getTranslations();
-  const [stats, recentMessages, topContacts] = await Promise.all([
+  const session = await auth();
+  const userId = session?.user?.id;
+
+  const [stats, recentMessages, topContacts, usageData] = await Promise.all([
     getStats(),
     getRecentMessages(),
     getTopContacts(),
+    userId ? getUserUsageData(userId) : null,
   ]);
 
   return (
@@ -78,6 +102,20 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
+        {/* Usage Display */}
+        {usageData && (
+          <UsageDisplay
+            messagesUsed={usageData.messagesUsed}
+            messagesLimit={usageData.messagesLimit}
+            rulesUsed={usageData.rulesUsed}
+            rulesLimit={usageData.rulesLimit}
+            periodStart={usageData.periodStart}
+            periodEnd={usageData.periodEnd}
+            showCard
+            showWarnings
+          />
+        )}
+
         <Card data-testid="recent-messages">
           <CardHeader>
             <CardTitle>{t("dashboard.recentMessages")}</CardTitle>

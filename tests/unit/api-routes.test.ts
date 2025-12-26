@@ -25,6 +25,11 @@ vi.mock("@/lib/prisma", () => ({
   },
 }));
 
+// Mock usage service
+vi.mock("@/lib/services/usage", () => ({
+  canCreateRule: vi.fn().mockResolvedValue(true),
+}));
+
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 

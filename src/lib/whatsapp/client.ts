@@ -9,6 +9,36 @@ import { Boom } from "@hapi/boom";
 import { prisma } from "@/lib/prisma";
 import { matchMessage } from "./matcher";
 import type { WhatsAppStatus } from "./types";
+import { canSendMessage, incrementMessageCount } from "@/lib/services/usage";
+
+/**
+ * Get the bot owner's user ID.
+ * In single-tenant mode, this is the first user with a subscription,
+ * or the first admin user.
+ */
+async function getBotOwnerUserId(): Promise<string | null> {
+  // First try to find a user with an active subscription
+  const subscription = await prisma.subscription.findFirst({
+    where: {
+      status: { in: ["ACTIVE", "TRIALING"] },
+    },
+    select: { userId: true },
+    orderBy: { createdAt: "asc" },
+  });
+
+  if (subscription) {
+    return subscription.userId;
+  }
+
+  // Fallback to first admin user
+  const adminUser = await prisma.user.findFirst({
+    where: { role: "ADMIN" },
+    select: { id: true },
+    orderBy: { createdAt: "asc" },
+  });
+
+  return adminUser?.id || null;
+}
 
 // Simple logger compatible with Baileys
 const logger = {
@@ -215,16 +245,34 @@ async function handleIncomingMessage(
       },
     });
 
-    // Send auto-reply if matched
+    // Send auto-reply if matched (check usage limits first)
+    const botOwnerId = await getBotOwnerUserId();
+
     if (matchedRule) {
-      await sendMessage(phone, matchedRule.response, matchedRule.id, contact.id);
+      const canSend = botOwnerId ? await canSendMessage(botOwnerId) : true;
+      if (canSend) {
+        const sent = await sendMessage(phone, matchedRule.response, matchedRule.id, contact.id);
+        if (sent && botOwnerId) {
+          await incrementMessageCount(botOwnerId);
+        }
+      } else {
+        console.log("Message limit reached, skipping auto-reply");
+      }
     } else {
       // Send default reply if no match and default reply is set
       const settings = await prisma.settings.findUnique({
         where: { id: "default" },
       });
       if (settings?.defaultReply) {
-        await sendMessage(phone, settings.defaultReply, null, contact.id);
+        const canSend = botOwnerId ? await canSendMessage(botOwnerId) : true;
+        if (canSend) {
+          const sent = await sendMessage(phone, settings.defaultReply, null, contact.id);
+          if (sent && botOwnerId) {
+            await incrementMessageCount(botOwnerId);
+          }
+        } else {
+          console.log("Message limit reached, skipping default reply");
+        }
       }
     }
   } catch (error) {

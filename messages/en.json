@@ -1744,6 +1744,11 @@
       "of": "of",
       "unlimited": "Unlimited"
     },
+    "ruleLimitReached": {
+      "title": "Rule limit reached",
+      "description": "You have reached the maximum number of rules for your plan.",
+      "upgrade": "Upgrade to create more rules"
+    },
     "checkout": {
       "success": "Subscription activated successfully!",
       "canceled": "Checkout was canceled",
@@ -1820,6 +1825,21 @@
         "description": "Get faster response times and dedicated support from our team."
       }
     }
+  },
+  "usage": {
+    "title": "Usage",
+    "messages": "Messages",
+    "rules": "Rules",
+    "unlimited": "Unlimited",
+    "unlimitedPlan": "Unlimited plan",
+    "nearLimit": "Approaching Limit",
+    "nearLimitDescription": "You've used {used} of {limit} messages. Consider upgrading.",
+    "atLimit": "Limit Reached",
+    "atLimitDescription": "You've reached your message limit. Upgrade to continue sending.",
+    "upgrade": "Upgrade Plan",
+    "billingPeriod": "Period: {start} - {end}",
+    "messagesRemaining": "{count} messages remaining",
+    "rulesRemaining": "{count} rules remaining"
   },
   "errors": {
     "general": "Something went wrong",

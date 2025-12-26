@@ -22,6 +22,11 @@ vi.mock("@/lib/prisma", () => ({
   },
 }));
 
+// Mock features service
+vi.mock("@/lib/features", () => ({
+  hasFeature: vi.fn().mockResolvedValue(true),
+}));
+
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
