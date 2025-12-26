@@ -1,3 +1,11 @@
 export { Navbar } from "./Navbar";
 export { MobileMenu } from "./MobileMenu";
 export { Footer } from "./Footer";
+export { Section } from "./Section";
+export { SectionHeader } from "./SectionHeader";
+export { FeatureCard } from "./FeatureCard";
+export { PricingCard } from "./PricingCard";
+export { TestimonialCard } from "./TestimonialCard";
+export { FAQAccordion } from "./FAQAccordion";
+export { CTABanner } from "./CTABanner";
+export { StatsCounter } from "./StatsCounter";

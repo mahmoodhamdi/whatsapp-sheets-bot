@@ -44,7 +44,7 @@ This plan outlines the complete implementation of a professional landing page wi
 |---|-----------|--------|-------------|
 | 1.1 | Public Route Structure | ✅ | [phase-1-foundation/M1-public-routes.md](./phase-1-foundation/M1-public-routes.md) |
 | 1.2 | Landing Layout & Navigation | ✅ | [phase-1-foundation/M2-landing-layout.md](./phase-1-foundation/M2-landing-layout.md) |
-| 1.3 | Shared UI Components | ⬜ | [phase-1-foundation/M3-shared-components.md](./phase-1-foundation/M3-shared-components.md) |
+| 1.3 | Shared UI Components | ✅ | [phase-1-foundation/M3-shared-components.md](./phase-1-foundation/M3-shared-components.md) |
 | 1.4 | i18n Extensions | ⬜ | [phase-1-foundation/M4-i18n-extensions.md](./phase-1-foundation/M4-i18n-extensions.md) |
 
 ---
