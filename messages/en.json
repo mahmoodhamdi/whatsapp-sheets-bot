@@ -1792,6 +1792,35 @@
       "cta": "View Plans"
     }
   },
+  "featureGate": {
+    "locked": "Feature Locked",
+    "requiresPlan": "This feature requires {plan} plan or higher",
+    "availableIn": "Available in {plan} plan",
+    "upgrade": "Upgrade",
+    "viewPlans": "View Plans",
+    "upgradeTitle": "Unlock Premium Features",
+    "upgradeDescription": "Upgrade to {plan} to access this feature and more",
+    "currentPlan": "You're on {plan} plan",
+    "featureRequires": "{feature} requires {plan} plan",
+    "features": {
+      "sheets_sync": {
+        "title": "Google Sheets Sync",
+        "description": "Automatically sync your contacts and messages to Google Sheets for easy data management and reporting."
+      },
+      "analytics": {
+        "title": "Advanced Analytics",
+        "description": "Get detailed insights into your messaging patterns, response rates, and rule performance."
+      },
+      "api_access": {
+        "title": "API Access",
+        "description": "Access our REST API to integrate WhatsApp Bot with your custom applications and workflows."
+      },
+      "priority_support": {
+        "title": "Priority Support",
+        "description": "Get faster response times and dedicated support from our team."
+      }
+    }
+  },
   "errors": {
     "general": "Something went wrong",
     "notFound": "Not found",

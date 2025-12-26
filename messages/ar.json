@@ -1785,6 +1785,35 @@
       "cta": "عرض الخطط"
     }
   },
+  "featureGate": {
+    "locked": "الميزة مقفلة",
+    "requiresPlan": "هذه الميزة تتطلب خطة {plan} أو أعلى",
+    "availableIn": "متاحة في خطة {plan}",
+    "upgrade": "ترقية",
+    "viewPlans": "عرض الخطط",
+    "upgradeTitle": "افتح الميزات المميزة",
+    "upgradeDescription": "قم بالترقية إلى {plan} للوصول إلى هذه الميزة والمزيد",
+    "currentPlan": "أنت على خطة {plan}",
+    "featureRequires": "{feature} يتطلب خطة {plan}",
+    "features": {
+      "sheets_sync": {
+        "title": "مزامنة جوجل شيتس",
+        "description": "مزامنة جهات الاتصال والرسائل تلقائياً إلى جوجل شيتس لإدارة البيانات والتقارير بسهولة."
+      },
+      "analytics": {
+        "title": "التحليلات المتقدمة",
+        "description": "احصل على رؤى تفصيلية حول أنماط الرسائل ومعدلات الاستجابة وأداء القواعد."
+      },
+      "api_access": {
+        "title": "الوصول إلى API",
+        "description": "الوصول إلى REST API لدمج بوت الواتساب مع تطبيقاتك وسير العمل المخصصة."
+      },
+      "priority_support": {
+        "title": "دعم أولوية",
+        "description": "احصل على أوقات استجابة أسرع ودعم مخصص من فريقنا."
+      }
+    }
+  },
   "errors": {
     "general": "حدث خطأ ما",
     "notFound": "غير موجود",

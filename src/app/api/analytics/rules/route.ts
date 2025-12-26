@@ -1,11 +1,26 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { hasFeature } from "@/lib/features";
 
 export async function GET() {
   const session = await auth();
-  if (!session) {
+  if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Check if user has analytics feature
+  const hasAnalyticsAccess = await hasFeature(session.user.id, "analytics");
+  if (!hasAnalyticsAccess) {
+    return NextResponse.json(
+      {
+        error: "Feature not available",
+        code: "FEATURE_NOT_AVAILABLE",
+        requiredPlan: "Professional",
+        message: "Rules analytics requires Professional plan or higher",
+      },
+      { status: 403 }
+    );
   }
 
   try {

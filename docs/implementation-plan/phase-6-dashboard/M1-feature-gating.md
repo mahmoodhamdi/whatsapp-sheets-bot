@@ -1,7 +1,7 @@
 # Milestone 6.1: Feature Gating System
 
 > **Phase:** 6 - Dashboard Integration
-> **Status:** ⬜ Not Started
+> **Status:** ✅ Completed
 > **Last Updated:** 2025-12-26
 
 ## Objective
@@ -10,7 +10,7 @@ Implement feature restrictions based on subscription tier.
 
 ---
 
-## Feature Gates
+## Feature Gates Implemented
 
 | Feature | Free | Starter | Pro | Enterprise |
 |---------|------|---------|-----|------------|
@@ -25,117 +25,89 @@ Implement feature restrictions based on subscription tier.
 
 ## Implementation Checklist
 
-- [ ] Create feature check utilities
-- [ ] Create FeatureGate component
-- [ ] Apply gates to dashboard features
-- [ ] Show upgrade prompts
-- [ ] Block API access for restricted features
+- [x] Create feature check utilities
+- [x] Create FeatureGate component
+- [x] Create UpgradePrompt component
+- [x] Apply gates to dashboard features (Sheets settings)
+- [x] Show upgrade prompts when features locked
+- [x] Block API access for restricted features
+- [x] Add bilingual translations (EN/AR)
 
 ---
 
-## Code Templates
+## Files Created/Modified
 
-### Feature Check Utility
+### New Files
+
+**Feature Utilities:**
+- `src/lib/features/index.ts` - Feature check utilities
+  - `hasFeature(userId, feature)` - Check if user has feature access
+  - `canUseFeature(userId, feature)` - Detailed feature access check
+  - `getUserFeatures(userId)` - Get all user features
+  - `requireFeature(userId, feature)` - Server-side feature guard (throws error)
+  - `hasFeatures(userId, features)` - Check multiple features at once
+
+**UI Components:**
+- `src/components/subscription/FeatureGate.tsx`
+  - `FeatureGate` - Full card with lock icon and upgrade CTA
+  - `LockedOverlay` - Blurred overlay for locked content
+- `src/components/subscription/UpgradePrompt.tsx`
+  - `UpgradePrompt` - Multiple variants (default, banner, inline, card)
+  - `ProBadge` - Premium feature indicator badge
+
+**Dashboard Pages:**
+- `src/app/(dashboard)/dashboard/settings/sheets/page.tsx` - Server wrapper with feature gate
+- `src/app/(dashboard)/dashboard/settings/sheets/SheetsSettingsContent.tsx` - Client component
+
+### Modified Files (API Route Protection)
+
+**Sheets API (requires `sheets_sync` - Starter+):**
+- `src/app/api/sheets/status/route.ts`
+- `src/app/api/sheets/sync/route.ts`
+- `src/app/api/sheets/logs/route.ts`
+
+**Analytics API (requires `analytics` - Professional+):**
+- `src/app/api/analytics/overview/route.ts`
+- `src/app/api/analytics/messages/route.ts`
+- `src/app/api/analytics/rules/route.ts`
+
+### Translations
+- `messages/en.json` - Added `featureGate` section
+- `messages/ar.json` - Added `featureGate` section (Arabic)
+
+---
+
+## Feature Types
+
 ```typescript
-// src/lib/features/index.ts
-import { getUserSubscription } from "@/lib/services/subscription";
-
 export type Feature =
+  | "basic_support"
+  | "priority_support"
+  | "dedicated_support"
   | "sheets_sync"
   | "analytics"
   | "api_access"
-  | "priority_support"
-  | "unlimited_messages"
-  | "unlimited_rules";
-
-export async function hasFeature(userId: string, feature: Feature): Promise<boolean> {
-  const subscription = await getUserSubscription(userId);
-  if (!subscription) return false;
-
-  const features = subscription.plan.features as string[];
-  return features.includes(feature);
-}
-
-export async function canUseFeature(userId: string, feature: Feature): Promise<{
-  allowed: boolean;
-  reason?: string;
-  upgradeUrl?: string;
-}> {
-  const allowed = await hasFeature(userId, feature);
-
-  if (!allowed) {
-    return {
-      allowed: false,
-      reason: `This feature requires a higher plan`,
-      upgradeUrl: "/pricing",
-    };
-  }
-
-  return { allowed: true };
-}
+  | "custom_integrations"
+  | "sla";
 ```
 
-### FeatureGate Component
+---
+
+## Usage Examples
+
+### Server Component (Page)
 ```typescript
-// src/components/subscription/FeatureGate.tsx
-"use client";
-
-import { ReactNode } from "react";
-import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Lock } from "lucide-react";
-import { useTranslations } from "next-intl";
-
-interface FeatureGateProps {
-  feature: string;
-  hasAccess: boolean;
-  children: ReactNode;
-  planRequired?: string;
-}
-
-export function FeatureGate({
-  feature,
-  hasAccess,
-  children,
-  planRequired = "Professional",
-}: FeatureGateProps) {
-  const t = useTranslations("subscription.upgrade");
-
-  if (hasAccess) {
-    return <>{children}</>;
-  }
-
-  return (
-    <Card className="border-dashed">
-      <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-        <Lock className="h-12 w-12 text-muted-foreground mb-4" />
-        <h3 className="text-lg font-semibold mb-2">{t("locked")}</h3>
-        <p className="text-muted-foreground mb-4">
-          {t("requiresPlan", { plan: planRequired })}
-        </p>
-        <Button asChild>
-          <Link href="/pricing">{t("cta")}</Link>
-        </Button>
-      </CardContent>
-    </Card>
-  );
-}
-```
-
-### Server-Side Feature Check
-```typescript
-// Usage in server components
 import { auth } from "@/lib/auth";
 import { hasFeature } from "@/lib/features";
+import { FeatureGate } from "@/components/subscription/FeatureGate";
 
-export default async function AnalyticsPage() {
+export default async function SheetsPage() {
   const session = await auth();
-  const canAccessAnalytics = await hasFeature(session.user.id, "analytics");
+  const hasAccess = await hasFeature(session.user.id, "sheets_sync");
 
   return (
-    <FeatureGate feature="analytics" hasAccess={canAccessAnalytics}>
-      <AnalyticsDashboard />
+    <FeatureGate feature="sheets_sync" hasAccess={hasAccess} requiredPlan="Starter">
+      <SheetsContent />
     </FeatureGate>
   );
 }
@@ -143,30 +115,53 @@ export default async function AnalyticsPage() {
 
 ### API Route Protection
 ```typescript
-// Middleware for API routes
 import { hasFeature } from "@/lib/features";
 
-export async function checkFeatureAccess(userId: string, feature: Feature) {
-  const allowed = await hasFeature(userId, feature);
-  if (!allowed) {
-    throw new Error("Feature not available on your plan");
-  }
-}
-
-// Usage in API route
-export async function POST(request: Request) {
+export async function GET() {
   const session = await auth();
-  await checkFeatureAccess(session.user.id, "api_access");
+
+  const hasAccess = await hasFeature(session.user.id, "analytics");
+  if (!hasAccess) {
+    return NextResponse.json(
+      { error: "Feature not available", code: "FEATURE_NOT_AVAILABLE", requiredPlan: "Professional" },
+      { status: 403 }
+    );
+  }
+
   // Continue with API logic...
 }
 ```
 
 ---
 
+## API Error Response Format
+
+When a feature is not available, API routes return:
+
+```json
+{
+  "error": "Feature not available",
+  "code": "FEATURE_NOT_AVAILABLE",
+  "requiredPlan": "Professional",
+  "message": "Advanced analytics requires Professional plan or higher"
+}
+```
+
+HTTP Status: `403 Forbidden`
+
+---
+
 ## Acceptance Criteria
 
-- [ ] Feature checks work correctly
-- [ ] Locked features show upgrade prompt
-- [ ] API routes protected
-- [ ] Upgrade links work
-- [ ] All feature gates applied
+- [x] Feature checks work correctly
+- [x] Locked features show upgrade prompt
+- [x] API routes protected with 403 response
+- [x] Upgrade links direct to /pricing
+- [x] All feature gates applied (Sheets, Analytics)
+- [x] Bilingual support (EN/AR)
+
+---
+
+## Next Milestone
+
+Proceed to **M2: Usage Tracking** to implement real-time usage monitoring and limits enforcement.
