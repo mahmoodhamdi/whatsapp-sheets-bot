@@ -4,12 +4,30 @@
     "tagline": "Smart Auto-Reply & Google Sheets Integration"
   },
   "nav": {
+    "brand": "WhatsApp Bot",
+    "features": "Features",
+    "pricing": "Pricing",
+    "docs": "Docs",
+    "login": "Login",
+    "getStarted": "Get Started Free",
     "dashboard": "Dashboard",
     "messages": "Messages",
     "contacts": "Contacts",
     "rules": "Auto-Reply Rules",
     "settings": "Settings",
     "logout": "Logout"
+  },
+  "footer": {
+    "brand": "WhatsApp Bot",
+    "description": "Automate your WhatsApp responses and sync with Google Sheets to manage your business efficiently.",
+    "product": "Product",
+    "features": "Features",
+    "pricing": "Pricing",
+    "docs": "Docs",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "copyright": "© {year} WhatsApp Bot. All rights reserved."
   },
   "auth": {
     "login": "Login",
