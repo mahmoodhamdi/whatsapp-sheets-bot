@@ -254,3 +254,17 @@ model UsageRecord {
   @@index([subscriptionId])
   @@map("usage_records")
 }
+
+model WebhookEvent {
+  id            String   @id @default(cuid())
+  stripeEventId String   @unique
+  eventType     String
+  processed     Boolean  @default(false)
+  error         String?
+  payload       Json?
+  createdAt     DateTime @default(now())
+
+  @@index([eventType])
+  @@index([processed])
+  @@map("webhook_events")
+}

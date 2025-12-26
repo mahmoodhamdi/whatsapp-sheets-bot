@@ -1,7 +1,7 @@
 # Milestone 4.4: Stripe Webhook Handlers
 
 > **Phase:** 4 - Subscription System
-> **Status:** ⬜ Not Started
+> **Status:** ✅ Completed
 > **Last Updated:** 2025-12-26
 > **Depends On:** M3-checkout.md
 
@@ -26,12 +26,12 @@ Handle Stripe webhooks to sync subscription status with database.
 
 ## Implementation Checklist
 
-- [ ] Create webhook endpoint
-- [ ] Verify webhook signature
-- [ ] Handle each event type
-- [ ] Update subscription records
-- [ ] Log webhook events
-- [ ] Test with Stripe CLI
+- [x] Create webhook endpoint
+- [x] Verify webhook signature
+- [x] Handle each event type
+- [x] Update subscription records
+- [x] Log webhook events (WebhookEvent model)
+- [x] Test with Stripe CLI (unit tests)
 
 ---
 
@@ -222,9 +222,9 @@ stripe trigger customer.subscription.updated
 
 ## Acceptance Criteria
 
-- [ ] Webhook signature verified
-- [ ] Checkout completion creates subscription
-- [ ] Subscription updates synced
-- [ ] Cancellation handled
-- [ ] Payment failures tracked
-- [ ] All events logged
+- [x] Webhook signature verified
+- [x] Checkout completion creates subscription
+- [x] Subscription updates synced
+- [x] Cancellation handled
+- [x] Payment failures tracked
+- [x] All events logged
