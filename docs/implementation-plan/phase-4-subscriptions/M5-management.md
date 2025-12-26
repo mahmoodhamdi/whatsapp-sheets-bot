@@ -1,7 +1,7 @@
 # Milestone 4.5: Subscription Management
 
 > **Phase:** 4 - Subscription System
-> **Status:** ⬜ Not Started
+> **Status:** ✅ Completed
 > **Last Updated:** 2025-12-26
 > **Depends On:** M4-webhooks.md
 
@@ -13,11 +13,11 @@ Create APIs and utilities for managing subscriptions (upgrade, downgrade, cancel
 
 ## Implementation Checklist
 
-- [ ] Get subscription status API
-- [ ] Upgrade/downgrade subscription API
-- [ ] Cancel subscription API
-- [ ] Resume canceled subscription API
-- [ ] Update payment method
+- [x] Get subscription status API
+- [x] Upgrade/downgrade subscription API
+- [x] Cancel subscription API
+- [x] Resume canceled subscription API
+- [x] Update payment method (Stripe Billing Portal)
 
 ---
 
@@ -201,8 +201,8 @@ export async function POST() {
 
 ## Acceptance Criteria
 
-- [ ] Get subscription status works
-- [ ] Plan upgrade works with proration
-- [ ] Plan downgrade works
-- [ ] Cancel at period end works
-- [ ] Resume canceled subscription works
+- [x] Get subscription status works
+- [x] Plan upgrade works with proration
+- [x] Plan downgrade works
+- [x] Cancel at period end works
+- [x] Resume canceled subscription works
