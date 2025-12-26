@@ -1,15 +1,8 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { MessageSquare } from "lucide-react";
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { AuthCard } from "@/components/auth/AuthCard";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { RegisterForm } from "@/components/auth/RegisterForm";
 
@@ -18,22 +11,27 @@ export default function RegisterPage() {
   const locale = useLocale();
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader className="space-y-1">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="p-2 bg-green-500 rounded-lg">
-              <MessageSquare className="h-6 w-6 text-white" />
-            </div>
-            <CardTitle className="text-2xl">{t("title")}</CardTitle>
-          </Link>
-          <LanguageSwitcher currentLocale={locale} />
-        </div>
-        <CardDescription>{t("subtitle")}</CardDescription>
-      </CardHeader>
-      <CardContent>
+    <div className="relative">
+      <div className="absolute top-4 end-4">
+        <LanguageSwitcher currentLocale={locale} />
+      </div>
+      <AuthCard
+        title={t("title")}
+        description={t("subtitle")}
+        footer={
+          <p className="text-sm text-muted-foreground">
+            {t("haveAccount")}{" "}
+            <Link
+              href="/login"
+              className="text-green-600 hover:text-green-700 hover:underline font-medium"
+            >
+              {t("loginLink")}
+            </Link>
+          </p>
+        }
+      >
         <RegisterForm />
-      </CardContent>
-    </Card>
+      </AuthCard>
+    </div>
   );
 }

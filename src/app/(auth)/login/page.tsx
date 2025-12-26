@@ -4,21 +4,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { useTranslations } from "next-intl";
-import { MessageSquare, Loader2 } from "lucide-react";
+import { useTranslations, useLocale } from "next-intl";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from "@/components/ui/card";
+import { AuthCard } from "@/components/auth/AuthCard";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { useLocale } from "next-intl";
 
 export default function LoginPage() {
   const t = useTranslations();
@@ -55,27 +47,32 @@ export default function LoginPage() {
   };
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader className="space-y-1">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="p-2 bg-green-500 rounded-lg">
-              <MessageSquare className="h-6 w-6 text-white" />
-            </div>
-            <CardTitle className="text-2xl">{t("app.name")}</CardTitle>
-          </div>
-          <LanguageSwitcher currentLocale={locale} />
-        </div>
-        <CardDescription>{t("app.tagline")}</CardDescription>
-      </CardHeader>
-      <CardContent>
+    <div className="relative">
+      <div className="absolute top-4 end-4">
+        <LanguageSwitcher currentLocale={locale} />
+      </div>
+      <AuthCard
+        title={t("auth.login")}
+        description={t("app.tagline")}
+        footer={
+          <p className="text-sm text-muted-foreground">
+            {t("auth.noAccount")}{" "}
+            <Link
+              href="/register"
+              className="text-green-600 hover:text-green-700 hover:underline font-medium"
+            >
+              {t("auth.registerNow")}
+            </Link>
+          </p>
+        }
+      >
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">{t("auth.email")}</Label>
             <Input
               id="email"
               type="email"
-              placeholder="admin@example.com"
+              placeholder="email@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -113,7 +110,7 @@ export default function LoginPage() {
           >
             {isLoading ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="me-2 h-4 w-4 animate-spin" />
                 {t("auth.loggingIn")}
               </>
             ) : (
@@ -121,18 +118,7 @@ export default function LoginPage() {
             )}
           </Button>
         </form>
-      </CardContent>
-      <CardFooter className="flex justify-center border-t pt-4">
-        <p className="text-sm text-muted-foreground">
-          {t("auth.noAccount")}{" "}
-          <Link
-            href="/register"
-            className="text-green-600 hover:text-green-700 hover:underline font-medium"
-          >
-            {t("auth.registerNow")}
-          </Link>
-        </p>
-      </CardFooter>
-    </Card>
+      </AuthCard>
+    </div>
   );
 }

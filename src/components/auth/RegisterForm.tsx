@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations, useLocale } from "next-intl";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { registerSchema, RegisterFormData } from "@/lib/validations/auth";
 import { toast } from "sonner";
+import { PasswordStrength } from "@/components/auth/PasswordStrength";
 
 export function RegisterForm() {
   const t = useTranslations("auth.register");
@@ -38,6 +38,7 @@ export function RegisterForm() {
   });
 
   const acceptTerms = watch("acceptTerms");
+  const password = watch("password");
 
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
@@ -148,6 +149,7 @@ export function RegisterForm() {
         {errors.password && (
           <p className="text-sm text-destructive">{errors.password.message}</p>
         )}
+        <PasswordStrength password={password || ""} />
       </div>
 
       {/* Confirm Password */}
@@ -210,14 +212,6 @@ export function RegisterForm() {
           t("submit")
         )}
       </Button>
-
-      {/* Login Link */}
-      <p className="text-center text-sm text-muted-foreground">
-        {t("haveAccount")}{" "}
-        <Link href="/login" className="text-green-600 hover:underline">
-          {t("loginLink")}
-        </Link>
-      </p>
     </form>
   );
 }

@@ -188,6 +188,14 @@
     }
   },
   "auth": {
+    "brand": "WhatsApp Bot",
+    "brandTagline": "Automate Your Replies. Grow Your Sales.",
+    "brandDescription": "Join thousands of businesses using our platform to automate customer service",
+    "brandFeatures": {
+      "feature1": "Smart 24/7 auto-replies",
+      "feature2": "Automatic Google Sheets sync",
+      "feature3": "Detailed reply performance analytics"
+    },
     "login": "Login",
     "email": "Email",
     "password": "Password",
@@ -196,6 +204,19 @@
     "loggingIn": "Signing in...",
     "noAccount": "Don't have an account?",
     "registerNow": "Register",
+    "passwordStrength": {
+      "strength": "Password strength",
+      "weak": "Weak",
+      "fair": "Fair",
+      "good": "Good",
+      "strong": "Strong",
+      "requirements": {
+        "minLength": "At least 8 characters",
+        "hasUppercase": "At least one uppercase letter",
+        "hasLowercase": "At least one lowercase letter",
+        "hasNumber": "At least one number"
+      }
+    },
     "register": {
       "title": "Create New Account",
       "subtitle": "Start your free trial today",

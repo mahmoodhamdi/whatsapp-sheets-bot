@@ -3,18 +3,14 @@
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { AuthCard } from "@/components/auth/AuthCard";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { toast } from "sonner";
-import { ArrowLeft, Loader2, Mail, CheckCircle } from "lucide-react";
+import { ArrowLeft, Loader2, CheckCircle } from "lucide-react";
 
 export default function ForgotPasswordPage() {
   const t = useTranslations("auth.forgotPassword");
@@ -48,70 +44,70 @@ export default function ForgotPasswordPage() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardContent className="pt-6 text-center">
-            <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold mb-2">{t("successTitle")}</h2>
-            <p className="text-muted-foreground mb-6">{t("success")}</p>
-            <Button variant="outline" asChild>
-              <Link href="/login">
-                <ArrowLeft className="me-2 h-4 w-4 rtl:rotate-180" />
-                {t("backToLogin")}
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+      <Card className="w-full max-w-md shadow-lg border-0">
+        <CardContent className="pt-6 text-center">
+          <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
+          <h2 className="text-xl font-semibold mb-2">{t("successTitle")}</h2>
+          <p className="text-muted-foreground mb-6">{t("success")}</p>
+          <Button variant="outline" asChild>
+            <Link href="/login">
+              <ArrowLeft className="me-2 h-4 w-4 rtl:rotate-180" />
+              {t("backToLogin")}
+            </Link>
+          </Button>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
-            <Mail className="h-6 w-6 text-green-600" />
+    <div className="relative">
+      <div className="absolute top-4 end-4">
+        <LanguageSwitcher currentLocale={locale} />
+      </div>
+      <AuthCard
+        title={t("title")}
+        description={t("subtitle")}
+        footer={
+          <Link
+            href="/login"
+            className="text-sm text-green-600 hover:text-green-700 hover:underline font-medium flex items-center gap-1"
+          >
+            <ArrowLeft className="h-4 w-4 rtl:rotate-180" />
+            {t("backToLogin")}
+          </Link>
+        }
+      >
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">{t("email")}</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder={t("emailPlaceholder")}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isLoading}
+              required
+            />
           </div>
-          <CardTitle>{t("title")}</CardTitle>
-          <CardDescription>{t("subtitle")}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">{t("email")}</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder={t("emailPlaceholder")}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={isLoading}
-                required
-              />
-            </div>
 
-            <Button
-              type="submit"
-              className="w-full bg-green-600 hover:bg-green-700"
-              disabled={isLoading || !email}
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="me-2 h-4 w-4 animate-spin" />
-                  {t("submitting")}
-                </>
-              ) : (
-                t("submit")
-              )}
-            </Button>
-
-            <Button variant="link" className="w-full" asChild>
-              <Link href="/login">{t("backToLogin")}</Link>
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+          <Button
+            type="submit"
+            className="w-full bg-green-600 hover:bg-green-700"
+            disabled={isLoading || !email}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="me-2 h-4 w-4 animate-spin" />
+                {t("submitting")}
+              </>
+            ) : (
+              t("submit")
+            )}
+          </Button>
+        </form>
+      </AuthCard>
     </div>
   );
 }
