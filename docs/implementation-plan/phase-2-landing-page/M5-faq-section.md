@@ -1,7 +1,7 @@
 # Milestone 2.5: FAQ Section
 
 > **Phase:** 2 - Landing Page Sections
-> **Status:** ⬜ Not Started
+> **Status:** ✅ Complete
 > **Last Updated:** 2025-12-26
 > **Depends On:** M4-testimonials-section.md
 
@@ -55,25 +55,25 @@ Create an FAQ section to address common questions and reduce support burden.
 ## Implementation Checklist
 
 ### 1. Create FAQ Section Component
-- [ ] Create `src/components/marketing/sections/FAQSection.tsx`
-- [ ] Use FAQAccordion component
-- [ ] Add support CTA
+- [x] Create `src/components/marketing/sections/FAQSection.tsx`
+- [x] Use FAQAccordion component
+- [x] Add support CTA
 
 ### 2. Define FAQ Data
-- [ ] Create FAQ questions array
-- [ ] Add Arabic content
-- [ ] Add English content
-- [ ] Organize by category (optional)
+- [x] Create FAQ questions array
+- [x] Add Arabic content
+- [x] Add English content
+- [ ] Organize by category (optional - skipped)
 
 ### 3. Add Contact Support CTA
-- [ ] Link to support/contact page
-- [ ] Or mailto link
-- [ ] Style as secondary action
+- [x] Link to support/contact page
+- [x] Or mailto link
+- [x] Style as secondary action
 
 ### 4. Testing
-- [ ] Test accordion expand/collapse
-- [ ] Test keyboard navigation
-- [ ] Test RTL layout
+- [x] Test accordion expand/collapse
+- [x] Test keyboard navigation
+- [x] Test RTL layout
 
 ---
 
@@ -256,11 +256,11 @@ npm run lint
 
 ## Acceptance Criteria
 
-- [ ] 6+ FAQ items displayed
-- [ ] Accordion expand/collapse works
-- [ ] Only one item open at a time
-- [ ] Keyboard accessible
-- [ ] Contact support CTA visible
-- [ ] RTL layout correct
-- [ ] Dark mode works
-- [ ] Smooth animations
+- [x] 6+ FAQ items displayed
+- [x] Accordion expand/collapse works
+- [x] Only one item open at a time
+- [x] Keyboard accessible
+- [x] Contact support CTA visible
+- [x] RTL layout correct
+- [x] Dark mode works
+- [x] Smooth animations

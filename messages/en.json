@@ -76,6 +76,38 @@
       "subtitle": "Join thousands of businesses using our platform",
       "trustedBy": "Trusted by leading companies"
     },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Answers to the most common questions",
+      "notFound": "Didn't find your answer?",
+      "contactSupport": "Contact Support",
+      "items": [
+        {
+          "question": "How do I get started with the bot?",
+          "answer": "After creating your account, connect your WhatsApp number by scanning the QR code from the dashboard. Then create auto-reply rules and you'll be ready in minutes."
+        },
+        {
+          "question": "Does the bot work 24/7?",
+          "answer": "Yes, the bot works around the clock. You can also set specific working hours and customize out-of-office messages."
+        },
+        {
+          "question": "How does Google Sheets sync work?",
+          "answer": "Sync happens automatically. Every incoming and outgoing message is saved to Google Sheets with sender info and timestamp. Access your data anytime."
+        },
+        {
+          "question": "Can I customize the replies?",
+          "answer": "Yes, you can create unlimited reply rules based on keywords, phrases, or even complex patterns using regular expressions (Regex)."
+        },
+        {
+          "question": "What payment methods are available?",
+          "answer": "We accept major credit cards (Visa, Mastercard) and Mada. For enterprise plans, we accept bank transfers."
+        },
+        {
+          "question": "Can I cancel my subscription anytime?",
+          "answer": "Yes, all our plans have no long-term contracts. You can cancel from your account settings and continue using the service until the end of the current billing period."
+        }
+      ]
+    },
     "cta": {
       "title": "Ready to Automate Your Replies?",
       "description": "Start your free trial today with no credit card required",
