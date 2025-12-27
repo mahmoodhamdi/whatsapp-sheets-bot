@@ -1,16 +1,16 @@
-# WhatsApp Auto-Reply Bot with Google Sheets Integration
+# WhatsApp Auto-Reply Bot SaaS
 
 <div align="center">
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.1.1-black?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-316192?style=for-the-badge&logo=postgresql)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)
+![Stripe](https://img.shields.io/badge/Stripe-Payments-635BFF?style=for-the-badge&logo=stripe)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-**A powerful WhatsApp auto-reply bot with Google Sheets integration, built with Next.js 16**
+**A production-ready WhatsApp auto-reply SaaS with Stripe subscriptions, Google Sheets sync, and bilingual support (Arabic/English)**
 
-[Features](#features) • [Screenshots](#screenshots) • [Installation](#installation) • [Documentation](#documentation)
+[Live Demo](#) • [Features](#features) • [Installation](#installation) • [Documentation](#documentation)
 
 </div>
 
@@ -18,161 +18,49 @@
 
 ## Overview
 
-This application provides a complete solution for automating WhatsApp responses and syncing data with Google Sheets. It features a modern, responsive dashboard with multi-language support (Arabic RTL & English).
+A complete SaaS solution for automating WhatsApp responses, built for small businesses in Saudi Arabia and Egypt. Features include subscription-based pricing, a marketing landing page, comprehensive documentation, and a powerful dashboard.
 
-## Features
-
-### Core Features
-
-- **Smart Auto-Reply Rules** - Create rules with exact match, contains, starts with, or regex patterns
-- **WhatsApp Web Integration** - Connect via QR code scanning using Baileys
-- **Google Sheets Sync** - Automatically sync contacts and messages to Google Sheets
-- **Multi-language Support** - Arabic (default with RTL) and English
-
-### Dashboard Features
-
-- **Real-time Statistics** - Monitor messages, contacts, and rule performance
-- **Contact Management** - View, search, and manage WhatsApp contacts
-- **Message History** - Complete log of all incoming and outgoing messages
-- **Rule Management** - Create, edit, toggle, and delete auto-reply rules
-- **Dark Mode** - Full dark theme support
+### Target Audience
+- Stores & Retail
+- Clinics & Healthcare
+- Restaurants & Food Services
+- Any business needing WhatsApp automation
 
 ---
 
-## Screenshots
+## Features
 
-### Authentication
+### SaaS Features
+- **Subscription Plans** - Free, Starter ($9), Professional ($29), Enterprise ($99)
+- **Stripe Integration** - Secure payments, billing portal, usage tracking
+- **Feature Gating** - Plan-based access to features
+- **Usage Limits** - Messages and rules limits per plan
 
-<div align="center">
-<table>
-<tr>
-<td align="center"><strong>Login - Arabic (RTL)</strong></td>
-<td align="center"><strong>Login - English</strong></td>
-</tr>
-<tr>
-<td><img src="docs/screenshots/01-login-ar.png" width="280" alt="Login Arabic"/></td>
-<td><img src="docs/screenshots/02-login-en.png" width="280" alt="Login English"/></td>
-</tr>
-</table>
-</div>
+### Marketing & SEO
+- **Landing Page** - Hero, features, pricing, testimonials, FAQ sections
+- **SEO Optimized** - Metadata, sitemap, robots.txt, structured data
+- **Analytics** - Google Analytics (GA4) integration
+- **Bilingual** - Arabic (RTL) and English support
+
+### Core Features
+- **Smart Auto-Reply** - Exact match, contains, starts with, regex patterns
+- **WhatsApp Web** - QR code connection via Baileys
+- **Google Sheets Sync** - Auto-sync contacts and messages
+- **Working Hours** - Schedule when auto-replies are active
 
 ### Dashboard
+- **Real-time Stats** - Messages, contacts, rule performance
+- **Contact Management** - View, search, paginate contacts
+- **Message History** - Complete log with filtering
+- **Rule Management** - CRUD with priority ordering
+- **Account Settings** - Profile, password, preferences
+- **Dark Mode** - Full theme support
 
-<div align="center">
-<table>
-<tr>
-<td align="center"><strong>Main Dashboard</strong></td>
-<td align="center"><strong>Dark Mode</strong></td>
-</tr>
-<tr>
-<td><img src="docs/screenshots/04-dashboard-main.png" width="400" alt="Dashboard Main"/></td>
-<td><img src="docs/screenshots/12-dashboard-dark.png" width="400" alt="Dashboard Dark"/></td>
-</tr>
-</table>
-</div>
-
-### Auto-Reply Rules
-
-<div align="center">
-<table>
-<tr>
-<td align="center"><strong>Rules List</strong></td>
-<td align="center"><strong>Create Rule</strong></td>
-</tr>
-<tr>
-<td><img src="docs/screenshots/07-rules-list.png" width="400" alt="Rules List"/></td>
-<td><img src="docs/screenshots/08-rules-create.png" width="400" alt="Create Rule"/></td>
-</tr>
-<tr>
-<td align="center"><strong>Rules - Dark Mode</strong></td>
-<td align="center"><strong>Rule Form Filled</strong></td>
-</tr>
-<tr>
-<td><img src="docs/screenshots/13-rules-dark.png" width="400" alt="Rules Dark"/></td>
-<td><img src="docs/screenshots/21-rules-form-filled.png" width="400" alt="Rule Form Filled"/></td>
-</tr>
-</table>
-</div>
-
-### Messages & Contacts
-
-<div align="center">
-<table>
-<tr>
-<td align="center"><strong>Messages</strong></td>
-<td align="center"><strong>Contacts</strong></td>
-</tr>
-<tr>
-<td><img src="docs/screenshots/05-messages-empty.png" width="400" alt="Messages"/></td>
-<td><img src="docs/screenshots/06-contacts-empty.png" width="400" alt="Contacts"/></td>
-</tr>
-<tr>
-<td align="center"><strong>Messages - Dark Mode</strong></td>
-<td align="center"><strong>Contacts - Dark Mode</strong></td>
-</tr>
-<tr>
-<td><img src="docs/screenshots/18-messages-dark.png" width="400" alt="Messages Dark"/></td>
-<td><img src="docs/screenshots/19-contacts-dark.png" width="400" alt="Contacts Dark"/></td>
-</tr>
-</table>
-</div>
-
-### Settings
-
-<div align="center">
-<table>
-<tr>
-<td align="center"><strong>General Settings</strong></td>
-<td align="center"><strong>Settings - Dark Mode</strong></td>
-</tr>
-<tr>
-<td><img src="docs/screenshots/09-settings-main.png" width="400" alt="Settings"/></td>
-<td><img src="docs/screenshots/20-settings-dark.png" width="400" alt="Settings Dark"/></td>
-</tr>
-<tr>
-<td align="center"><strong>WhatsApp Connection</strong></td>
-<td align="center"><strong>Google Sheets Sync</strong></td>
-</tr>
-<tr>
-<td><img src="docs/screenshots/10-settings-whatsapp.png" width="400" alt="WhatsApp Settings"/></td>
-<td><img src="docs/screenshots/11-settings-sheets.png" width="400" alt="Sheets Settings"/></td>
-</tr>
-</table>
-</div>
-
-### UI Components
-
-<div align="center">
-<table>
-<tr>
-<td align="center"><strong>User Menu</strong></td>
-<td align="center"><strong>Delete Confirmation</strong></td>
-</tr>
-<tr>
-<td><img src="docs/screenshots/16-user-menu.png" width="400" alt="User Menu"/></td>
-<td><img src="docs/screenshots/17-delete-dialog.png" width="400" alt="Delete Dialog"/></td>
-</tr>
-</table>
-</div>
-
-### Mobile Responsive
-
-<div align="center">
-<table>
-<tr>
-<td align="center"><strong>Dashboard</strong></td>
-<td align="center"><strong>Rules</strong></td>
-<td align="center"><strong>Messages</strong></td>
-<td align="center"><strong>Settings</strong></td>
-</tr>
-<tr>
-<td><img src="docs/screenshots/14-dashboard-mobile.png" width="180" alt="Dashboard Mobile"/></td>
-<td><img src="docs/screenshots/15-rules-mobile.png" width="180" alt="Rules Mobile"/></td>
-<td><img src="docs/screenshots/22-messages-mobile.png" width="180" alt="Messages Mobile"/></td>
-<td><img src="docs/screenshots/24-settings-mobile.png" width="180" alt="Settings Mobile"/></td>
-</tr>
-</table>
-</div>
+### Production Ready
+- **Error Handling** - Global error boundaries, custom 404/500 pages
+- **Loading States** - Skeleton loaders for all pages
+- **API Caching** - Optimized response times
+- **Type Safety** - Full TypeScript coverage
 
 ---
 
@@ -182,28 +70,41 @@ This application provides a complete solution for automating WhatsApp responses 
 |----------|------------|
 | **Framework** | Next.js 16 (App Router, Turbopack) |
 | **Language** | TypeScript 5 |
-| **Database** | PostgreSQL 15 with Prisma ORM |
+| **Database** | PostgreSQL 15 + Prisma ORM |
+| **Auth** | NextAuth v5 (Credentials + JWT) |
+| **Payments** | Stripe (Subscriptions, Webhooks) |
 | **WhatsApp** | @whiskeysockets/baileys |
-| **Auth** | NextAuth v5 (Credentials) |
+| **Email** | Resend (Transactional) |
 | **i18n** | next-intl (Arabic RTL + English) |
-| **UI** | Tailwind CSS v4, shadcn/ui, Radix UI |
-| **Testing** | Vitest (Unit), Playwright (E2E) |
-| **Deployment** | Docker, GitHub Actions CI/CD |
+| **UI** | Tailwind CSS v4 + shadcn/ui |
+| **Analytics** | Google Analytics (GA4) |
+| **Testing** | Vitest + Playwright |
+| **Deployment** | Docker, Netlify, DigitalOcean |
 
 ---
 
-## Installation
+## Subscription Plans
+
+| Plan | Price | Messages | Rules | Features |
+|------|-------|----------|-------|----------|
+| **Free** | $0/mo | 50/mo | 1 | Basic auto-reply |
+| **Starter** | $9/mo | 500/mo | 10 | + Google Sheets sync |
+| **Professional** | $29/mo | 5,000/mo | Unlimited | + Priority support, Analytics |
+| **Enterprise** | $99/mo | Unlimited | Unlimited | + Custom integrations, Dedicated support |
+
+---
+
+## Quick Start
 
 ### Prerequisites
-
 - Node.js 20+
 - PostgreSQL 15+
-- Docker (optional)
+- Stripe account (for payments)
 
-### Quick Start
+### Installation
 
 ```bash
-# Clone the repository
+# Clone repository
 git clone https://github.com/mahmoodhamdi/whatsapp-sheets-bot.git
 cd whatsapp-sheets-bot
 
@@ -218,97 +119,32 @@ cp .env.example .env
 npm run db:push
 npm run db:seed
 
-# Start development server
+# Start development
 npm run dev
 ```
 
-### Docker Setup
+### Docker
 
 ```bash
-# Build and run with Docker Compose
 docker-compose up -d
-
-# View logs
-docker-compose logs -f
-
-# Stop
-docker-compose down
 ```
 
 ---
 
-## Configuration
-
-### Environment Variables
+## Environment Variables
 
 | Variable | Description | Required |
 |----------|-------------|:--------:|
-| `DATABASE_URL` | PostgreSQL connection string | ✅ |
-| `NEXTAUTH_SECRET` | NextAuth secret key | ✅ |
+| `DATABASE_URL` | PostgreSQL connection | ✅ |
+| `NEXTAUTH_SECRET` | Auth secret key | ✅ |
 | `NEXTAUTH_URL` | Application URL | ✅ |
-| `WHATSAPP_SESSION_PATH` | WhatsApp session storage path | ❌ |
-| `GOOGLE_SHEETS_CREDENTIALS` | Base64 encoded service account JSON | ❌ |
+| `STRIPE_SECRET_KEY` | Stripe secret key | ✅ |
+| `STRIPE_WEBHOOK_SECRET` | Stripe webhook secret | ✅ |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe public key | ✅ |
+| `RESEND_API_KEY` | Email service key | ✅ |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics ID | ❌ |
+| `GOOGLE_SHEETS_CREDENTIALS` | Base64 service account | ❌ |
 | `GOOGLE_SHEET_ID` | Target spreadsheet ID | ❌ |
-| `ADMIN_EMAIL` | Initial admin email | ❌ |
-| `ADMIN_PASSWORD` | Initial admin password | ❌ |
-
-### Default Credentials
-
-After running `npm run db:seed`:
-
-- **Email**: `admin@example.com`
-- **Password**: `admin123` (or `ADMIN_PASSWORD` from .env)
-
----
-
-## API Reference
-
-### Authentication
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/[...nextauth]` | NextAuth handlers |
-
-### Contacts
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/contacts` | List contacts (paginated) |
-| GET | `/api/contacts/[id]` | Get contact details |
-| DELETE | `/api/contacts/[id]` | Delete contact |
-
-### Messages
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/messages` | List messages |
-| POST | `/api/messages/send` | Send a message |
-
-### Rules
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/rules` | List all rules |
-| POST | `/api/rules` | Create new rule |
-| PUT | `/api/rules/[id]` | Update rule |
-| DELETE | `/api/rules/[id]` | Delete rule |
-| PATCH | `/api/rules/[id]/toggle` | Toggle rule status |
-
-### WhatsApp
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/whatsapp/status` | Get connection status |
-| POST | `/api/whatsapp/connect` | Initialize connection |
-| POST | `/api/whatsapp/disconnect` | Disconnect |
-
-### Google Sheets
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/sheets/status` | Get sync status |
-| POST | `/api/sheets/sync` | Trigger manual sync |
-| GET | `/api/sheets/logs` | Get sync logs |
 
 ---
 
@@ -317,104 +153,147 @@ After running `npm run db:seed`:
 ```
 src/
 ├── app/
-│   ├── (auth)/              # Authentication pages
-│   │   └── login/           # Login page
-│   ├── (dashboard)/         # Dashboard pages
-│   │   └── dashboard/
-│   │       ├── contacts/    # Contacts management
-│   │       ├── messages/    # Message history
-│   │       ├── rules/       # Auto-reply rules
-│   │       └── settings/    # App settings
-│   └── api/                 # API routes
+│   ├── (auth)/           # Auth pages (login, register, reset)
+│   ├── (dashboard)/      # Protected dashboard
+│   ├── (marketing)/      # Landing page, pricing, docs
+│   └── api/              # API routes
 ├── components/
-│   ├── dashboard/           # Dashboard components
-│   ├── rules/               # Rule form components
-│   └── ui/                  # shadcn/ui components
+│   ├── analytics/        # Google Analytics
+│   ├── dashboard/        # Dashboard UI
+│   ├── marketing/        # Landing page sections
+│   ├── providers/        # Context providers
+│   ├── seo/              # Structured data
+│   ├── settings/         # Account settings
+│   ├── subscription/     # Billing components
+│   └── ui/               # shadcn/ui components
 ├── lib/
-│   ├── google-sheets/       # Google Sheets integration
-│   ├── whatsapp/            # WhatsApp client (Baileys)
-│   ├── auth.ts              # NextAuth configuration
-│   └── prisma.ts            # Prisma client
-├── i18n/                    # Internationalization
-│   └── messages/            # Translation files (ar, en)
-└── types/                   # TypeScript types
+│   ├── api/              # API error handling
+│   ├── google-sheets/    # Sheets integration
+│   ├── services/         # Business logic
+│   ├── stripe/           # Stripe integration
+│   └── whatsapp/         # Baileys client
+└── i18n/                 # Translations (ar, en)
 ```
+
+---
+
+## API Endpoints
+
+### Authentication
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/register` | User registration |
+| POST | `/api/auth/[...nextauth]` | NextAuth handlers |
+| POST | `/api/auth/forgot-password` | Password reset request |
+| POST | `/api/auth/reset-password` | Reset password |
+| POST | `/api/auth/verify-email` | Email verification |
+
+### Subscriptions
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/subscription` | Get current subscription |
+| POST | `/api/stripe/checkout` | Create checkout session |
+| POST | `/api/stripe/portal` | Open billing portal |
+| POST | `/api/subscription/cancel` | Cancel subscription |
+| POST | `/api/subscription/resume` | Resume subscription |
+
+### User Management
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET/PUT | `/api/user/profile` | User profile |
+| PUT | `/api/user/password` | Change password |
+| DELETE | `/api/user/delete` | Delete account |
+
+### Resources
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET/POST | `/api/rules` | Auto-reply rules |
+| GET | `/api/contacts` | Contact list |
+| GET | `/api/messages` | Message history |
+| POST | `/api/messages/send` | Send message |
+| GET/POST | `/api/whatsapp/*` | WhatsApp connection |
+| POST | `/api/sheets/sync` | Trigger sync |
+
+---
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run start` | Production server |
+| `npm run lint` | ESLint check |
+| `npm run test` | Unit tests (192 tests) |
+| `npm run test:e2e` | E2E tests |
+| `npm run db:push` | Push schema |
+| `npm run db:seed` | Seed database |
+| `npm run db:studio` | Prisma Studio |
+| `npm run analyze` | Bundle analyzer |
 
 ---
 
 ## Testing
 
 ```bash
-# Run unit tests
-npm run test
+# Unit tests
+npm run test              # 192 tests
 
-# Run unit tests with watch mode
-npm run test:watch
-
-# Run E2E tests
+# E2E tests
 npm run test:e2e
 
-# Run E2E tests with UI
-npm run test:e2e:ui
+# Type check
+npx tsc --noEmit
 
-# Run all validations
-./scripts/validate.sh
+# Lint
+npm run lint
 ```
 
 ---
 
-## Available Scripts
+## Deployment
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm run test` | Run unit tests |
-| `npm run test:e2e` | Run E2E tests |
-| `npm run db:push` | Push Prisma schema |
-| `npm run db:seed` | Seed database |
-| `npm run db:studio` | Open Prisma Studio |
+### Netlify / Vercel / DigitalOcean
 
----
+1. Connect your repository
+2. Set environment variables
+3. Deploy
 
-## Google Sheets Setup
+### Docker
 
-1. Create a Google Cloud project
-2. Enable Google Sheets API
-3. Create a service account and download JSON key
-4. Base64 encode the JSON:
+```bash
+docker-compose -f docker-compose.prod.yml up -d
+```
 
-   ```bash
-   cat service-account.json | base64
-   ```
+### Stripe Webhooks
 
-5. Set `GOOGLE_SHEETS_CREDENTIALS` environment variable
-6. Set `GOOGLE_SHEET_ID` with your spreadsheet ID
-7. Share the spreadsheet with the service account email
+Configure webhook endpoint: `https://yourdomain.com/api/webhooks/stripe`
+
+Events to subscribe:
+- `checkout.session.completed`
+- `customer.subscription.updated`
+- `customer.subscription.deleted`
+- `invoice.payment_failed`
 
 ---
 
-## Contributing
+## Default Credentials
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+After `npm run db:seed`:
+- **Email**: `admin@example.com`
+- **Password**: `admin123`
 
 ---
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
 <div align="center">
 
-**Built with** ❤️ **using Next.js 16**
+**Built with** ❤️ **by [Mahmood Hamdi](https://github.com/mahmoodhamdi)**
 
 [Report Bug](https://github.com/mahmoodhamdi/whatsapp-sheets-bot/issues) • [Request Feature](https://github.com/mahmoodhamdi/whatsapp-sheets-bot/issues)
 
