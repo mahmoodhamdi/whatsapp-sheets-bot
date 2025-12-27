@@ -3,7 +3,6 @@ import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import {
   ArrowRight,
-  MessageSquare,
   Plug,
   Unplug,
   QrCode,

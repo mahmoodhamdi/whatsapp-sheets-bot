@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 // Mock auth
@@ -46,7 +47,7 @@ describe("Subscription Management APIs", () => {
   describe("GET /api/subscription", () => {
     it("should return 401 when not authenticated", async () => {
       const { auth } = await import("@/lib/auth");
-      vi.mocked(auth).mockResolvedValue(null);
+      vi.mocked(auth).mockResolvedValue(null as any);
 
       const { GET } = await import("@/app/api/subscription/route");
       const response = await GET();
@@ -119,7 +120,7 @@ describe("Subscription Management APIs", () => {
         user: { id: "user-1", email: "test@example.com" },
       } as never);
 
-      vi.mocked(getUserSubscription).mockResolvedValue(null);
+      vi.mocked(getUserSubscription).mockResolvedValue(null as any);
       vi.mocked(getCurrentUsage).mockResolvedValue({
         messagesCount: 0,
         rulesCount: 0,
@@ -140,7 +141,7 @@ describe("Subscription Management APIs", () => {
   describe("POST /api/subscription/cancel", () => {
     it("should return 401 when not authenticated", async () => {
       const { auth } = await import("@/lib/auth");
-      vi.mocked(auth).mockResolvedValue(null);
+      vi.mocked(auth).mockResolvedValue(null as any);
 
       const { POST } = await import("@/app/api/subscription/cancel/route");
       const response = await POST();
@@ -158,7 +159,7 @@ describe("Subscription Management APIs", () => {
         user: { id: "user-1", email: "test@example.com" },
       } as never);
 
-      vi.mocked(prisma.subscription.findUnique).mockResolvedValue(null);
+      vi.mocked(prisma.subscription.findUnique).mockResolvedValue(null as any);
 
       const { POST } = await import("@/app/api/subscription/cancel/route");
       const response = await POST();
@@ -234,7 +235,7 @@ describe("Subscription Management APIs", () => {
   describe("POST /api/subscription/resume", () => {
     it("should return 401 when not authenticated", async () => {
       const { auth } = await import("@/lib/auth");
-      vi.mocked(auth).mockResolvedValue(null);
+      vi.mocked(auth).mockResolvedValue(null as any);
 
       const { POST } = await import("@/app/api/subscription/resume/route");
       const response = await POST();
@@ -308,7 +309,7 @@ describe("Subscription Management APIs", () => {
   describe("POST /api/subscription/portal", () => {
     it("should return 401 when not authenticated", async () => {
       const { auth } = await import("@/lib/auth");
-      vi.mocked(auth).mockResolvedValue(null);
+      vi.mocked(auth).mockResolvedValue(null as any);
 
       const { POST } = await import("@/app/api/subscription/portal/route");
       const response = await POST();
@@ -395,7 +396,7 @@ describe("Subscription Management APIs", () => {
   describe("POST /api/subscription/change-plan", () => {
     it("should return 401 when not authenticated", async () => {
       const { auth } = await import("@/lib/auth");
-      vi.mocked(auth).mockResolvedValue(null);
+      vi.mocked(auth).mockResolvedValue(null as any);
 
       const { POST } = await import(
         "@/app/api/subscription/change-plan/route"
@@ -445,7 +446,7 @@ describe("Subscription Management APIs", () => {
       } as never);
 
       vi.mocked(isStripeConfigured).mockReturnValue(true);
-      vi.mocked(prisma.subscription.findUnique).mockResolvedValue(null);
+      vi.mocked(prisma.subscription.findUnique).mockResolvedValue(null as any);
 
       const { POST } = await import(
         "@/app/api/subscription/change-plan/route"

@@ -53,7 +53,7 @@ describe("GET /api/contacts", () => {
   });
 
   it("should return 401 if not authenticated", async () => {
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth).mockResolvedValue(null as any);
 
     const request = createRequest("/api/contacts");
     const response = await getContacts(request);
@@ -118,7 +118,7 @@ describe("GET /api/contacts/[id]", () => {
   });
 
   it("should return 401 if not authenticated", async () => {
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth).mockResolvedValue(null as any);
 
     const request = createRequest("/api/contacts/123");
     const response = await getContact(request, {
@@ -132,7 +132,7 @@ describe("GET /api/contacts/[id]", () => {
 
   it("should return 404 if contact not found", async () => {
     vi.mocked(auth).mockResolvedValue({ user: { id: "1" } } as any);
-    vi.mocked(prisma.contact.findUnique).mockResolvedValue(null);
+    vi.mocked(prisma.contact.findUnique).mockResolvedValue(null as any);
 
     const request = createRequest("/api/contacts/123");
     const response = await getContact(request, {
@@ -171,7 +171,7 @@ describe("DELETE /api/contacts/[id]", () => {
   });
 
   it("should return 401 if not authenticated", async () => {
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth).mockResolvedValue(null as any);
 
     const request = createRequest("/api/contacts/123", { method: "DELETE" });
     const response = await deleteContact(request, {
@@ -221,7 +221,7 @@ describe("GET /api/rules", () => {
   });
 
   it("should return 401 if not authenticated", async () => {
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth).mockResolvedValue(null as any);
 
     const request = createRequest("/api/rules");
     const response = await getRules(request);
@@ -281,7 +281,7 @@ describe("POST /api/rules", () => {
   });
 
   it("should return 401 if not authenticated", async () => {
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth).mockResolvedValue(null as any);
 
     const request = createRequest("/api/rules", {
       method: "POST",
@@ -367,7 +367,7 @@ describe("PATCH /api/rules/[id]/toggle", () => {
   });
 
   it("should return 401 if not authenticated", async () => {
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth).mockResolvedValue(null as any);
 
     const request = createRequest("/api/rules/123/toggle", { method: "PATCH" });
     const response = await toggleRule(request, {
@@ -381,7 +381,7 @@ describe("PATCH /api/rules/[id]/toggle", () => {
 
   it("should return 404 if rule not found", async () => {
     vi.mocked(auth).mockResolvedValue({ user: { id: "1" } } as any);
-    vi.mocked(prisma.autoReplyRule.findUnique).mockResolvedValue(null);
+    vi.mocked(prisma.autoReplyRule.findUnique).mockResolvedValue(null as any);
 
     const request = createRequest("/api/rules/123/toggle", { method: "PATCH" });
     const response = await toggleRule(request, {

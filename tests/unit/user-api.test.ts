@@ -58,7 +58,7 @@ describe("GET /api/user/profile", () => {
   });
 
   it("should return 401 if not authenticated", async () => {
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth).mockResolvedValue(null as any);
 
     const response = await getProfile();
     const data = await response.json();
@@ -86,7 +86,7 @@ describe("GET /api/user/profile", () => {
 
   it("should return 404 if user not found", async () => {
     vi.mocked(auth).mockResolvedValue({ user: { id: "user-1" } } as any);
-    vi.mocked(prisma.user.findUnique).mockResolvedValue(null);
+    vi.mocked(prisma.user.findUnique).mockResolvedValue(null as any);
 
     const response = await getProfile();
     const data = await response.json();
@@ -102,7 +102,7 @@ describe("PATCH /api/user/profile", () => {
   });
 
   it("should return 401 if not authenticated", async () => {
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth).mockResolvedValue(null as any);
 
     const request = createRequest("/api/user/profile", {
       method: "PATCH",
@@ -163,7 +163,7 @@ describe("PATCH /api/user/password", () => {
   });
 
   it("should return 401 if not authenticated", async () => {
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth).mockResolvedValue(null as any);
 
     const request = createRequest("/api/user/password", {
       method: "PATCH",
@@ -258,7 +258,7 @@ describe("DELETE /api/user/delete", () => {
   });
 
   it("should return 401 if not authenticated", async () => {
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth).mockResolvedValue(null as any);
 
     const response = await deleteAccount();
     const data = await response.json();
@@ -288,7 +288,7 @@ describe("DELETE /api/user/delete", () => {
 
   it("should return 404 if user not found", async () => {
     vi.mocked(auth).mockResolvedValue({ user: { id: "user-1" } } as any);
-    vi.mocked(prisma.user.findUnique).mockResolvedValue(null);
+    vi.mocked(prisma.user.findUnique).mockResolvedValue(null as any);
 
     const response = await deleteAccount();
     const data = await response.json();

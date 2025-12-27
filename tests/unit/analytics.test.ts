@@ -36,7 +36,7 @@ describe("Analytics Overview API", () => {
   });
 
   it("should return 401 if not authenticated", async () => {
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth).mockResolvedValue(null as any);
 
     const { GET } = await import("@/app/api/analytics/overview/route");
     const response = await GET();
@@ -86,7 +86,7 @@ describe("Analytics Messages API", () => {
   });
 
   it("should return 401 if not authenticated", async () => {
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth).mockResolvedValue(null as any);
 
     const { GET } = await import("@/app/api/analytics/messages/route");
     const request = {
@@ -152,7 +152,7 @@ describe("Analytics Rules API", () => {
   });
 
   it("should return 401 if not authenticated", async () => {
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth).mockResolvedValue(null as any);
 
     const { GET } = await import("@/app/api/analytics/rules/route");
     const response = await GET();

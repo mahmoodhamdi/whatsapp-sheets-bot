@@ -43,7 +43,7 @@ describe("Send Message API Logic", () => {
 
   describe("Authentication", () => {
     it("should require authentication", async () => {
-      vi.mocked(auth).mockResolvedValue(null);
+      vi.mocked(auth).mockResolvedValue(null as any);
 
       // Import the route handler
       const { POST } = await import("@/app/api/messages/send/route");
@@ -107,7 +107,7 @@ describe("Send Message API Logic", () => {
     it("should create contact if not exists", async () => {
       vi.mocked(auth).mockResolvedValue({ user: { id: "1" } } as any);
       vi.mocked(isConnected).mockReturnValue(true);
-      vi.mocked(prisma.contact.findUnique).mockResolvedValue(null);
+      vi.mocked(prisma.contact.findUnique).mockResolvedValue(null as any);
       vi.mocked(prisma.contact.create).mockResolvedValue({
         id: "contact-1",
         phone: "1234567890",

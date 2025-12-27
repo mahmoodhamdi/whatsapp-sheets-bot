@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AlertTriangle, Home, RotateCcw, ArrowLeft } from "lucide-react";
+import { AlertTriangle, RotateCcw, ArrowLeft } from "lucide-react";
 import { trackError } from "@/lib/analytics";
 
 interface ErrorProps {
