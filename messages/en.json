@@ -34,6 +34,48 @@
     "terms": "Terms of Service",
     "copyright": "© {year} WhatsApp Bot. All rights reserved."
   },
+  "features": {
+    "title": "Powerful Features",
+    "subtitle": "Everything you need to automate your WhatsApp business communication",
+    "autoReply": {
+      "title": "Smart Auto-Replies",
+      "description": "Create intelligent responses based on keywords, phrases, or regex patterns"
+    },
+    "smartRules": {
+      "title": "Smart Rules Engine",
+      "description": "Priority-based rules with exact, contains, starts-with, and regex matching"
+    },
+    "sheetsSync": {
+      "title": "Google Sheets Sync",
+      "description": "Automatically sync contacts and messages to Google Sheets"
+    },
+    "analytics": {
+      "title": "Detailed Analytics",
+      "description": "Track message performance, rule efficiency, and customer engagement"
+    },
+    "workingHours": {
+      "title": "Working Hours",
+      "description": "Set business hours and automatic out-of-office responses"
+    },
+    "multilingual": {
+      "title": "Multilingual Support",
+      "description": "Full Arabic (RTL) and English interface support"
+    },
+    "security": {
+      "title": "Enterprise Security",
+      "description": "Secure authentication, rate limiting, and data protection"
+    },
+    "mobile": {
+      "title": "Mobile Responsive",
+      "description": "Manage your bot from any device with our responsive dashboard"
+    },
+    "cta": {
+      "title": "Ready to Automate?",
+      "description": "Join thousands of businesses using WhatsApp Bot to improve customer communication",
+      "getStarted": "Get Started Free",
+      "viewPricing": "View Pricing"
+    }
+  },
   "landing": {
     "hero": {
       "title": "Automate Your WhatsApp Replies",
@@ -127,7 +169,12 @@
     "yearly": "Yearly",
     "yearlyDiscount": "Save {percent}%",
     "perMonth": "per month",
+    "month": "month",
     "popular": "Most Popular",
+    "getStarted": "Get Started",
+    "subscribe": "Subscribe",
+    "questions": "Have questions?",
+    "faqLink": "Check our FAQ",
     "plans": {
       "free": {
         "name": "Free",

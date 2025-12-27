@@ -95,7 +95,7 @@ export default async function RootLayout({
   const direction = localeDirection[locale];
 
   return (
-    <html lang={locale} dir={direction}>
+    <html lang={locale} dir={direction} suppressHydrationWarning>
       <head>
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link

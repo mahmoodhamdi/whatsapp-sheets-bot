@@ -113,19 +113,20 @@ export default function VerifyEmailPage() {
     }
   };
 
-  // Loading state
-  if (status === "loading") {
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status, router]);
+
+  // Loading state or not authenticated - show spinner
+  if (status === "loading" || status === "unauthenticated") {
     return (
       <div className="flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-green-600" />
       </div>
     );
-  }
-
-  // Not authenticated
-  if (status === "unauthenticated") {
-    router.push("/login");
-    return null;
   }
 
   return (

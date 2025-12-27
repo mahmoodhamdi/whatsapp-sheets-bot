@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 import { MessageSquare, Zap, BarChart3, Clock } from "lucide-react";
+import { AuthProvider } from "@/components/providers";
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -10,6 +11,7 @@ export default async function AuthLayout({ children }: AuthLayoutProps) {
   const t = await getTranslations("auth");
 
   return (
+    <AuthProvider>
     <div className="min-h-screen flex">
       {/* Branding Side - Hidden on mobile */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-green-600 to-green-700 text-white p-12 flex-col justify-between">
@@ -67,5 +69,6 @@ export default async function AuthLayout({ children }: AuthLayoutProps) {
         <div className="w-full max-w-md">{children}</div>
       </div>
     </div>
+    </AuthProvider>
   );
 }

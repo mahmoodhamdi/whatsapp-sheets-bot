@@ -1,7 +1,25 @@
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  MessageSquare,
+  Zap,
+  BarChart3,
+  Clock,
+  Sheet,
+  Globe,
+  Shield,
+  Smartphone,
+  ArrowRight,
+} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Features",
@@ -22,21 +40,108 @@ export const metadata: Metadata = {
   },
 };
 
-export default function FeaturesPage() {
+const features = [
+  {
+    icon: MessageSquare,
+    titleKey: "autoReply.title",
+    descriptionKey: "autoReply.description",
+  },
+  {
+    icon: Zap,
+    titleKey: "smartRules.title",
+    descriptionKey: "smartRules.description",
+  },
+  {
+    icon: Sheet,
+    titleKey: "sheetsSync.title",
+    descriptionKey: "sheetsSync.description",
+  },
+  {
+    icon: BarChart3,
+    titleKey: "analytics.title",
+    descriptionKey: "analytics.description",
+  },
+  {
+    icon: Clock,
+    titleKey: "workingHours.title",
+    descriptionKey: "workingHours.description",
+  },
+  {
+    icon: Globe,
+    titleKey: "multilingual.title",
+    descriptionKey: "multilingual.description",
+  },
+  {
+    icon: Shield,
+    titleKey: "security.title",
+    descriptionKey: "security.description",
+  },
+  {
+    icon: Smartphone,
+    titleKey: "mobile.title",
+    descriptionKey: "mobile.description",
+  },
+];
+
+export default async function FeaturesPage() {
+  const t = await getTranslations("features");
+
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="text-center px-4">
-        <h1 className="text-4xl font-bold mb-4">المميزات</h1>
-        <p className="text-muted-foreground mb-8">
-          صفحة المميزات - سيتم إضافة المحتوى في Phase 2
-        </p>
-        <Button variant="outline" asChild>
-          <Link href="/">
-            <ArrowRight className="me-2 h-4 w-4 rtl:rotate-180" />
-            العودة للرئيسية
-          </Link>
-        </Button>
+    <section className="py-20 px-4">
+      <div className="container mx-auto max-w-6xl">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{t("title")}</h1>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            {t("subtitle")}
+          </p>
+        </div>
+
+        {/* Features Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {features.map((feature, index) => {
+            const Icon = feature.icon;
+            return (
+              <Card key={index} className="text-center">
+                <CardHeader>
+                  <div className="mx-auto mb-4 h-14 w-14 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
+                    <Icon className="h-7 w-7 text-green-600" />
+                  </div>
+                  <CardTitle className="text-lg">
+                    {t(feature.titleKey)}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>{t(feature.descriptionKey)}</CardDescription>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+
+        {/* CTA Section */}
+        <div className="text-center bg-gradient-to-r from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 rounded-2xl p-12">
+          <h2 className="text-3xl font-bold mb-4">{t("cta.title")}</h2>
+          <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
+            {t("cta.description")}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              size="lg"
+              className="bg-green-600 hover:bg-green-700"
+              asChild
+            >
+              <Link href="/register">
+                {t("cta.getStarted")}
+                <ArrowRight className="ms-2 h-4 w-4 rtl:rotate-180" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link href="/pricing">{t("cta.viewPricing")}</Link>
+            </Button>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
