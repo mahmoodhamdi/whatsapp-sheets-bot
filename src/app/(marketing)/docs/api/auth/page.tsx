@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import {
@@ -11,6 +12,17 @@ import {
   CheckCircle,
   Lock,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Authentication API",
+  description:
+    "Authentication API reference: register, sign in, sign out, session management, and password reset endpoints with examples and error codes.",
+  openGraph: {
+    title: "Authentication API | WhatsApp Auto-Reply Bot",
+    description:
+      "Complete API reference for authentication endpoints.",
+  },
+};
 
 export default async function AuthApiDocsPage() {
   const t = await getTranslations("docs.api.auth");

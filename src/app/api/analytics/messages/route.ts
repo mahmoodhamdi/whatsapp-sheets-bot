@@ -131,16 +131,23 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    return NextResponse.json({
-      data,
-      summary: {
-        totalIncoming,
-        totalOutgoing,
-        avgPerDay,
-        peakDay,
-        peakCount,
+    return NextResponse.json(
+      {
+        data,
+        summary: {
+          totalIncoming,
+          totalOutgoing,
+          avgPerDay,
+          peakDay,
+          peakCount,
+        },
       },
-    });
+      {
+        headers: {
+          "Cache-Control": "private, max-age=60, stale-while-revalidate=120",
+        },
+      }
+    );
   } catch (error) {
     console.error("Analytics messages error:", error);
     return NextResponse.json(

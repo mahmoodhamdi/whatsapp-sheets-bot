@@ -80,20 +80,27 @@ export async function GET() {
         ? Math.round((outgoingCount / incomingCount) * 100)
         : 0;
 
-    return NextResponse.json({
-      totalMessages,
-      totalContacts,
-      totalRules,
-      activeRules,
-      todayMessages,
-      weekMessages,
-      monthMessages,
-      incomingCount,
-      outgoingCount,
-      autoRepliedCount,
-      syncedToSheetsCount,
-      responseRate,
-    });
+    return NextResponse.json(
+      {
+        totalMessages,
+        totalContacts,
+        totalRules,
+        activeRules,
+        todayMessages,
+        weekMessages,
+        monthMessages,
+        incomingCount,
+        outgoingCount,
+        autoRepliedCount,
+        syncedToSheetsCount,
+        responseRate,
+      },
+      {
+        headers: {
+          "Cache-Control": "private, max-age=60, stale-while-revalidate=120",
+        },
+      }
+    );
   } catch (error) {
     console.error("Analytics overview error:", error);
     return NextResponse.json(

@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import {
@@ -12,6 +13,17 @@ import {
   PieChart,
   Activity,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Analytics Dashboard",
+  description:
+    "Track WhatsApp messaging performance: message metrics, rule performance, contact analytics, time ranges, and data export options.",
+  openGraph: {
+    title: "Analytics Dashboard | WhatsApp Auto-Reply Bot",
+    description:
+      "Monitor your WhatsApp business metrics with our powerful analytics dashboard.",
+  },
+};
 
 export default async function AnalyticsDocsPage() {
   const t = await getTranslations("docs.features.analytics");

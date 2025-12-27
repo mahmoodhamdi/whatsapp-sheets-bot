@@ -84,11 +84,18 @@ export async function GET() {
         createdAt: r.createdAt.toISOString(),
       }));
 
-    return NextResponse.json({
-      rules: rulesWithStats,
-      topRules,
-      unusedRules,
-    });
+    return NextResponse.json(
+      {
+        rules: rulesWithStats,
+        topRules,
+        unusedRules,
+      },
+      {
+        headers: {
+          "Cache-Control": "private, max-age=60, stale-while-revalidate=120",
+        },
+      }
+    );
   } catch (error) {
     console.error("Analytics rules error:", error);
     return NextResponse.json(

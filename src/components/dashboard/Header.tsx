@@ -2,7 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { signOut } from "next-auth/react";
-import { LogOut, User } from "lucide-react";
+import { LogOut, User, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,15 +13,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { PlanBadge } from "@/components/subscription/PlanBadge";
 
 interface HeaderProps {
   user: {
     name?: string | null;
     email?: string | null;
   };
+  plan?: {
+    name: string;
+    slug: string;
+  };
 }
 
-export function Header({ user }: HeaderProps) {
+export function Header({ user, plan }: HeaderProps) {
   const t = useTranslations();
   const locale = useLocale();
 
@@ -34,7 +39,15 @@ export function Header({ user }: HeaderProps) {
 
   return (
     <header className="h-16 border-b bg-card flex items-center justify-between px-6">
-      <div />
+      <div className="flex items-center gap-4">
+        {plan && (
+          <PlanBadge
+            planName={plan.name}
+            planSlug={plan.slug}
+            showUpgradeLink={plan.slug === "free"}
+          />
+        )}
+      </div>
       <div className="flex items-center gap-2">
         <LanguageSwitcher currentLocale={locale} />
         <DropdownMenu>
@@ -65,9 +78,15 @@ export function Header({ user }: HeaderProps) {
             </div>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <a href="/dashboard/settings" className="flex items-center gap-2">
+              <a href="/dashboard/settings/account" className="flex items-center gap-2">
                 <User className="h-4 w-4" />
                 {t("nav.settings")}
+              </a>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <a href="/dashboard/settings/billing" className="flex items-center gap-2">
+                <CreditCard className="h-4 w-4" />
+                {t("nav.billing")}
               </a>
             </DropdownMenuItem>
             <DropdownMenuSeparator />

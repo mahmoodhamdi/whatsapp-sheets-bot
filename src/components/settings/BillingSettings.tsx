@@ -23,6 +23,10 @@ import {
   Calendar,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  trackSubscriptionCancelled,
+  trackUpgradePromptClicked,
+} from "@/lib/analytics";
 
 interface BillingSettingsProps {
   subscription: {
@@ -113,6 +117,9 @@ export function BillingSettings({ subscription, usage }: BillingSettingsProps) {
       if (!response.ok) {
         throw new Error(data.error || "Failed to cancel subscription");
       }
+
+      // Track subscription cancellation
+      trackSubscriptionCancelled(subscription?.plan.slug ?? "unknown");
 
       router.refresh();
       window.location.reload();
@@ -210,7 +217,13 @@ export function BillingSettings({ subscription, usage }: BillingSettingsProps) {
               )}
             </div>
             {!hasPaidPlan && (
-              <Button onClick={() => router.push("/pricing")} className="gap-2">
+              <Button
+                onClick={() => {
+                  trackUpgradePromptClicked("billing_page");
+                  router.push("/pricing");
+                }}
+                className="gap-2"
+              >
                 {t("upgrade")}
                 <ArrowUpRight className="h-4 w-4" />
               </Button>
@@ -387,7 +400,10 @@ export function BillingSettings({ subscription, usage }: BillingSettingsProps) {
           </CardHeader>
           <CardContent>
             <Button
-              onClick={() => router.push("/pricing")}
+              onClick={() => {
+                trackUpgradePromptClicked("billing_upgrade_card");
+                router.push("/pricing");
+              }}
               className="gap-2 bg-green-600 hover:bg-green-700"
             >
               {t("upgradePrompt.cta")}

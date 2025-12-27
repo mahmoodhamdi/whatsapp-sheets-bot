@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import {
@@ -11,6 +12,17 @@ import {
   CheckCircle,
   Smartphone,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "WhatsApp Connection API",
+  description:
+    "WhatsApp API reference: connection status, QR code generation, connect and disconnect endpoints. Manage WhatsApp session via API.",
+  openGraph: {
+    title: "WhatsApp Connection API | WhatsApp Auto-Reply Bot",
+    description:
+      "Complete API reference for WhatsApp connection management.",
+  },
+};
 
 export default async function WhatsAppApiDocsPage() {
   const t = await getTranslations("docs.api.whatsapp");

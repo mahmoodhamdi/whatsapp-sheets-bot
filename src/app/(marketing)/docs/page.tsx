@@ -1,6 +1,18 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { ArrowRight, MessageSquare, Table2, Zap, Globe } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Documentation",
+  description:
+    "Complete documentation for WhatsApp Auto-Reply Bot. Learn how to set up auto-replies, integrate with Google Sheets, and automate your business messaging.",
+  openGraph: {
+    title: "Documentation | WhatsApp Auto-Reply Bot",
+    description:
+      "Complete guide to setting up and using WhatsApp Auto-Reply Bot for your business.",
+  },
+};
 
 export default async function DocsIntroductionPage() {
   const t = await getTranslations("docs.introduction");

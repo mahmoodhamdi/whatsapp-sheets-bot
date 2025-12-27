@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import {
@@ -10,6 +11,17 @@ import {
   AlertTriangle,
   CheckCircle,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Contacts API",
+  description:
+    "Contacts API reference: list, search, update, and delete WhatsApp contacts. Pagination, filtering, and contact schema documentation.",
+  openGraph: {
+    title: "Contacts API | WhatsApp Auto-Reply Bot",
+    description:
+      "Complete API reference for managing WhatsApp contacts.",
+  },
+};
 
 export default async function ContactsApiDocsPage() {
   const t = await getTranslations("docs.api.contacts");

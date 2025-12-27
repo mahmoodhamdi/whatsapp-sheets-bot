@@ -15,6 +15,7 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { registerSchema, RegisterFormData } from "@/lib/validations/auth";
 import { toast } from "sonner";
 import { PasswordStrength } from "@/components/auth/PasswordStrength";
+import { trackSignUp } from "@/lib/analytics";
 
 export function RegisterForm() {
   const t = useTranslations("auth.register");
@@ -78,6 +79,9 @@ export function RegisterForm() {
         toast.error(tErrors("invalidCredentials"));
         return;
       }
+
+      // Track successful sign up
+      trackSignUp("credentials");
 
       toast.success(t("success"));
       // Redirect to email verification page

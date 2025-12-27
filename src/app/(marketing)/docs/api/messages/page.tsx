@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import {
@@ -10,6 +11,17 @@ import {
   CheckCircle,
   Zap,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Messages API",
+  description:
+    "Messages API reference: list messages, get by contact, send messages via WhatsApp. Filtering, pagination, and message schema documentation.",
+  openGraph: {
+    title: "Messages API | WhatsApp Auto-Reply Bot",
+    description:
+      "Complete API reference for WhatsApp message operations.",
+  },
+};
 
 export default async function MessagesApiDocsPage() {
   const t = await getTranslations("docs.api.messages");

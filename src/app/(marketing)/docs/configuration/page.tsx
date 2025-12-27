@@ -1,6 +1,18 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { ArrowRight, AlertTriangle, Key, MessageSquare, Table2, Clock } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Configuration Guide",
+  description:
+    "Configure WhatsApp Auto-Reply Bot: environment variables, WhatsApp connection, Google Sheets integration, and working hours setup.",
+  openGraph: {
+    title: "Configuration | WhatsApp Auto-Reply Bot",
+    description:
+      "Complete configuration guide for environment, WhatsApp, and Google Sheets.",
+  },
+};
 
 export default async function ConfigurationPage() {
   const t = await getTranslations("docs.configuration");

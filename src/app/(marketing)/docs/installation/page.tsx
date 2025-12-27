@@ -1,6 +1,18 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { ArrowRight, CheckCircle, AlertTriangle, Server, Container } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Installation Guide",
+  description:
+    "Install WhatsApp Auto-Reply Bot using Docker or manual setup. Complete guide with system requirements, environment configuration, and deployment options.",
+  openGraph: {
+    title: "Installation | WhatsApp Auto-Reply Bot",
+    description:
+      "Step-by-step installation guide for Docker and manual deployment.",
+  },
+};
 
 export default async function InstallationPage() {
   const t = await getTranslations("docs.installation");

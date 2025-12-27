@@ -6,8 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { getCurrentUsage } from "@/lib/services/usage";
-import { getSubscriptionLimits } from "@/lib/services/subscription";
+import { getSubscriptionLimits, getUserSubscription } from "@/lib/services/subscription";
 import { UsageDisplay } from "@/components/dashboard/UsageDisplay";
+import { UpgradeBanner } from "@/components/subscription/UpgradeBanner";
 
 async function getStats() {
   const [totalMessages, totalContacts, activeRules, todayMessages] =
@@ -63,15 +64,21 @@ export default async function DashboardPage() {
   const session = await auth();
   const userId = session?.user?.id;
 
-  const [stats, recentMessages, topContacts, usageData] = await Promise.all([
+  const [stats, recentMessages, topContacts, usageData, subscription] = await Promise.all([
     getStats(),
     getRecentMessages(),
     getTopContacts(),
     userId ? getUserUsageData(userId) : null,
+    userId ? getUserSubscription(userId) : null,
   ]);
+
+  const planSlug = subscription?.plan?.slug || "free";
 
   return (
     <div className="space-y-6">
+      {/* Upgrade Banner for free users */}
+      <UpgradeBanner planName={planSlug} />
+
       <h1 className="text-3xl font-bold">{t("dashboard.title")}</h1>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

@@ -30,6 +30,14 @@ export async function GET(request: NextRequest) {
       skip,
       take: limit,
       orderBy: { lastContact: "desc" },
+      select: {
+        id: true,
+        phone: true,
+        name: true,
+        messageCount: true,
+        lastContact: true,
+        createdAt: true,
+      },
     }),
     prisma.contact.count({ where }),
   ]);

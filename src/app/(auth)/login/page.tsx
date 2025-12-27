@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { trackLogin } from "@/lib/analytics";
 
 export default function LoginPage() {
   const t = useTranslations();
@@ -41,6 +42,8 @@ export default function LoginPage() {
           setError(t("auth.loginError"));
         }
       } else {
+        // Track successful login
+        trackLogin("credentials");
         router.push("/dashboard");
         router.refresh();
       }

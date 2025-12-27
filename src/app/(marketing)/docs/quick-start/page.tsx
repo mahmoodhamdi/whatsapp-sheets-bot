@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import {
@@ -8,6 +9,17 @@ import {
   Clock,
   Lightbulb,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Quick Start Guide",
+  description:
+    "Get started with WhatsApp Auto-Reply Bot in minutes. Step-by-step guide to connect WhatsApp, create auto-reply rules, and send your first automated message.",
+  openGraph: {
+    title: "Quick Start | WhatsApp Auto-Reply Bot",
+    description:
+      "Learn how to set up WhatsApp Auto-Reply Bot in just a few minutes.",
+  },
+};
 
 export default async function QuickStartPage() {
   const t = await getTranslations("docs.quickStart");

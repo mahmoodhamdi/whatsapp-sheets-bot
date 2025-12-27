@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import {
@@ -12,6 +13,17 @@ import {
   Clock,
   ListOrdered,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Auto-Reply Rules",
+  description:
+    "Master WhatsApp auto-reply rules: trigger types (EXACT, CONTAINS, STARTS_WITH, REGEX), priority settings, dynamic variables, and best practices.",
+  openGraph: {
+    title: "Auto-Reply Rules | WhatsApp Auto-Reply Bot",
+    description:
+      "Learn to create powerful auto-reply rules with trigger types and dynamic variables.",
+  },
+};
 
 export default async function AutoReplyDocsPage() {
   const t = await getTranslations("docs.features.autoReply");

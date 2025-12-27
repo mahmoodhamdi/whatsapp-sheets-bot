@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import {
@@ -14,6 +15,17 @@ import {
   Hash,
   Code,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Auto-Reply Rules API",
+  description:
+    "Rules API reference: create, update, delete, and toggle auto-reply rules. Trigger types, priority settings, and rule schema documentation.",
+  openGraph: {
+    title: "Auto-Reply Rules API | WhatsApp Auto-Reply Bot",
+    description:
+      "Complete API reference for managing auto-reply rules.",
+  },
+};
 
 export default async function RulesApiDocsPage() {
   const t = await getTranslations("docs.api.rules");

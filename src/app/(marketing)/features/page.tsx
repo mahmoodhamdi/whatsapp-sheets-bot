@@ -1,6 +1,26 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Features",
+  description:
+    "Explore all features of our WhatsApp Auto-Reply Bot: smart auto-replies, Google Sheets sync, analytics dashboard, working hours, and multi-language support.",
+  keywords: [
+    "WhatsApp bot features",
+    "auto reply rules",
+    "Google Sheets integration",
+    "analytics",
+    "working hours",
+    "مميزات بوت واتساب",
+  ],
+  openGraph: {
+    title: "Features | WhatsApp Auto-Reply Bot",
+    description:
+      "Smart auto-replies, Google Sheets sync, analytics, and more. Everything you need to automate your business.",
+  },
+};
 
 export default function FeaturesPage() {
   return (

@@ -28,6 +28,20 @@ export async function GET(request: NextRequest) {
   const rules = await prisma.autoReplyRule.findMany({
     where,
     orderBy: [{ priority: "desc" }, { createdAt: "desc" }],
+    select: {
+      id: true,
+      name: true,
+      trigger: true,
+      triggerType: true,
+      response: true,
+      priority: true,
+      isActive: true,
+      createdAt: true,
+      updatedAt: true,
+      _count: {
+        select: { messages: true },
+      },
+    },
   });
 
   return NextResponse.json(rules);

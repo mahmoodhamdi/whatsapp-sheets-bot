@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import {
@@ -13,6 +14,17 @@ import {
   FileSpreadsheet,
   AlertCircle,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Google Sheets Sync",
+  description:
+    "Sync WhatsApp contacts and messages with Google Sheets. Setup guide, data structure, sync options, and troubleshooting for Google Sheets integration.",
+  openGraph: {
+    title: "Google Sheets Sync | WhatsApp Auto-Reply Bot",
+    description:
+      "Automatically sync your WhatsApp data to Google Sheets for easy backup and reporting.",
+  },
+};
 
 export default async function SheetsSyncDocsPage() {
   const t = await getTranslations("docs.features.sheetsSync");

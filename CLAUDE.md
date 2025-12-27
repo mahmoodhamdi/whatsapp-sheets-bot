@@ -4,12 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-WhatsApp Auto-Reply Bot with Google Sheets integration. A Next.js 16 application targeting Saudi/Egyptian markets (stores, clinics, restaurants) with bilingual support (Arabic/English).
+WhatsApp Auto-Reply Bot with Google Sheets integration. A SaaS Next.js 16 application with subscription billing (Stripe), targeting Saudi/Egyptian markets with bilingual support (Arabic/English).
 
 ## Commands
 
 ```bash
-npm run dev          # Start development server
+npm run dev          # Start dev server
 npm run build        # Production build
 npm run lint         # Run ESLint
 npm run test         # Run all unit tests (vitest)
@@ -30,7 +30,6 @@ npx vitest run tests/unit/matcher.test.ts
 Docker:
 ```bash
 docker-compose up -d      # Start app + PostgreSQL
-docker-compose logs -f    # View logs
 docker-compose down       # Stop
 ```
 
@@ -42,18 +41,20 @@ docker-compose down       # Stop
 - **Auth**: NextAuth v5 (beta) with Credentials provider + JWT strategy
 - **i18n**: next-intl (Arabic default, supports English)
 - **UI**: shadcn/ui + Tailwind CSS v4 with RTL support
+- **Payments**: Stripe (subscriptions, webhooks)
 - **WhatsApp**: @whiskeysockets/baileys
 - **Sheets**: googleapis
 
 ### Route Groups
-- `(auth)/*` - Login pages (unauthenticated)
-- `(dashboard)/*` - Protected dashboard pages
+- `(auth)/*` - Login/register/password-reset pages
+- `(dashboard)/*` - Protected dashboard pages (require email verification)
 
 ### Middleware & Auth Flow
-The middleware (`src/middleware.ts`) wraps NextAuth's `auth()` and:
-- Redirects unauthenticated users to `/login` (except for public routes)
-- Redirects authenticated users away from `/login` to `/dashboard`
-- Public routes: `/login`, `/api/auth/*`
+The middleware (`src/middleware.ts`) wraps NextAuth's `auth()`:
+- Public routes: `/`, `/login`, `/register`, `/pricing`, `/docs/*`, `/api/auth/*`
+- Auth-only routes: `/verify-email` (logged in but unverified users)
+- Protected routes require both authentication AND email verification
+- Adds security headers (X-Frame-Options, CSP, etc.)
 
 ### Key Modules
 
@@ -64,18 +65,39 @@ The middleware (`src/middleware.ts`) wraps NextAuth's `auth()` and:
 **Google Sheets Sync** (`src/lib/google-sheets/`)
 - `sync.ts` - Batch sync for contacts and messages with sync logging
 
+**Subscription System** (`src/lib/services/`, `src/lib/stripe/`, `src/lib/features/`)
+- `plan.ts` - Plan management (free, starter, professional, enterprise)
+- `subscription.ts` - User subscription lifecycle
+- `usage.ts` - Usage tracking (messages, rules per billing period)
+- Feature gating via `hasFeature()` and `requireFeature()`
+
+**Security** (`src/lib/security/`)
+- `rate-limit.ts` - Rate limiting for API routes
+- `lockout.ts` - Account lockout after failed login attempts
+- `audit.ts` - Audit logging for security events
+
 **Auto-Reply Rules**
 - Rules sorted by priority (higher first), only active rules evaluated
 - TriggerTypes: EXACT, CONTAINS, STARTS_WITH, REGEX
 - Regex patterns use case-insensitive matching
 
 ### Database Models (Prisma)
-- `User` - Admin users with roles (ADMIN, USER)
+Core:
+- `User` - Users with roles, email verification, Stripe customer ID
 - `Contact` - WhatsApp contacts with message counts
-- `Message` - Message history with sync status and direction (INCOMING/OUTGOING)
+- `Message` - Message history with sync status and direction
 - `AutoReplyRule` - Trigger/response pairs with priority
-- `Settings` - App configuration (WhatsApp status, default reply, working hours)
-- `SyncLog` - Google Sheets sync history
+- `Settings` - App configuration
+
+Subscription:
+- `Plan` - Subscription tiers with limits (messagesPerMonth, rulesLimit, features JSON)
+- `Subscription` - User subscriptions linked to Stripe
+- `UsageRecord` - Monthly usage tracking per subscription
+
+Security:
+- `VerificationToken`, `PasswordResetToken` - Auth tokens
+- `AuditLog` - Security event logging
+- `WebhookEvent` - Stripe webhook processing
 
 ### i18n Configuration
 - Default locale: Arabic (`ar`)
@@ -90,21 +112,24 @@ Tests located in `tests/` directory:
 - `tests/unit/` - Unit tests (vitest)
 - `tests/e2e/` - E2E tests (Playwright)
 
-Test setup file: `tests/setup.ts`
-Vitest config uses Node environment with `@/` path alias.
+Vitest uses Node environment with `@/` path alias.
 Playwright runs against `http://localhost:3000` with auto-start dev server.
 
 ## Environment Variables
 
-Required in `.env`:
+Required:
 - `DATABASE_URL` - PostgreSQL connection string
 - `NEXTAUTH_SECRET` - NextAuth secret
-- `NEXTAUTH_URL` - Application URL (e.g., `http://localhost:3000`)
+- `NEXTAUTH_URL` - Application URL
+
+Stripe (for subscriptions):
+- `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`
+- `STRIPE_WEBHOOK_SECRET`
 
 Optional:
-- `GOOGLE_SHEET_ID` - Target Google Sheet ID
-- `GOOGLE_SHEETS_CREDENTIALS` - Base64 encoded service account JSON
+- `GOOGLE_SHEET_ID`, `GOOGLE_SHEETS_CREDENTIALS` - Sheets integration
 - `WHATSAPP_SESSION_PATH` - Custom session storage path
+- `RESEND_API_KEY` - Email sending (verification, password reset)
 - `ADMIN_EMAIL` / `ADMIN_PASSWORD` - Override seed defaults
 
 Default credentials after `npm run db:seed`:

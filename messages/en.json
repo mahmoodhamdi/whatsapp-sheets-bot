@@ -14,6 +14,7 @@
     "messages": "Messages",
     "contacts": "Contacts",
     "rules": "Auto-Reply Rules",
+    "billing": "Billing",
     "settings": "Settings",
     "logout": "Logout"
   },
@@ -1846,6 +1847,16 @@
     "notFound": "Not found",
     "unauthorized": "Unauthorized",
     "forbidden": "Forbidden",
+    "somethingWrong": "Something went wrong!",
+    "errorDescription": "We're sorry, an unexpected error occurred. Please try again.",
+    "dashboardErrorDescription": "An error occurred while loading this page. Please try again or go back to the dashboard.",
+    "pageNotFound": "Page not found",
+    "pageNotFoundDescription": "The page you're looking for doesn't exist or has been moved.",
+    "dashboardPageNotFoundDescription": "The dashboard page you're looking for doesn't exist.",
+    "tryAgain": "Try again",
+    "goHome": "Go home",
+    "goBack": "Go back",
+    "backToDashboard": "Back to Dashboard",
     "auth": {
       "invalidCredentials": "Invalid email or password",
       "emailExists": "This email is already registered",
@@ -1860,7 +1871,94 @@
       "cardDeclined": "Card was declined",
       "limitExceeded": "You've exceeded your plan limit"
     },
-    "tryAgain": "Please try again",
     "contactSupport": "Contact support"
+  },
+  "accountSettings": {
+    "title": "Account Settings",
+    "description": "Manage your account settings and preferences",
+    "tabs": {
+      "profile": "Profile",
+      "password": "Password",
+      "preferences": "Preferences",
+      "danger": "Danger Zone"
+    },
+    "profile": {
+      "title": "Profile Information",
+      "description": "Update your personal information",
+      "name": "Name",
+      "namePlaceholder": "Enter your name",
+      "nameError": "Name must be between 2 and 50 characters",
+      "email": "Email Address",
+      "emailNote": "Email cannot be changed. Contact support if you need to update it.",
+      "save": "Save Changes",
+      "updateSuccess": "Profile updated successfully"
+    },
+    "password": {
+      "title": "Change Password",
+      "description": "Update your password to keep your account secure",
+      "currentPassword": "Current Password",
+      "currentPasswordPlaceholder": "Enter your current password",
+      "currentPasswordRequired": "Current password is required",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Enter a strong new password",
+      "confirmPassword": "Confirm New Password",
+      "confirmPasswordPlaceholder": "Re-enter your new password",
+      "passwordRequirements": "Password must be at least 8 characters with uppercase, lowercase, and a number",
+      "passwordMismatch": "Passwords do not match",
+      "invalidCurrentPassword": "Current password is incorrect",
+      "update": "Update Password",
+      "updateSuccess": "Password updated successfully"
+    },
+    "preferences": {
+      "title": "Preferences",
+      "description": "Customize your experience",
+      "language": "Language",
+      "languageNote": "Choose your preferred language for the interface",
+      "theme": "Theme",
+      "themeLight": "Light",
+      "themeDark": "Dark",
+      "themeSystem": "System",
+      "themeNote": "Choose how the interface looks"
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "description": "Irreversible actions that affect your account",
+      "warningTitle": "Warning: This action cannot be undone",
+      "warningItem1": "All your data will be permanently deleted",
+      "warningItem2": "Your subscription will be cancelled immediately",
+      "warningItem3": "All contacts and messages will be removed",
+      "warningItem4": "You will lose access to all features",
+      "deleteButton": "Delete Account",
+      "dialogTitle": "Delete Your Account?",
+      "dialogDescription": "This action cannot be undone. This will permanently delete your account and remove all of your data from our servers.",
+      "confirmLabel": "Type {text} to confirm",
+      "confirmationMismatch": "Confirmation text does not match",
+      "cancel": "Cancel",
+      "confirmDelete": "Delete Account",
+      "deleteSuccess": "Your account has been deleted"
+    }
+  },
+  "upgradeBanner": {
+    "title": "Upgrade Your Plan",
+    "description": "Get unlimited messages, more rules, and advanced features",
+    "cta": "Upgrade Now",
+    "dismiss": "Dismiss"
+  },
+  "usageLimitWarning": {
+    "nearLimitTitle": "Approaching Limit",
+    "nearLimitDescription": "You've used {percent}% of your {resource} ({used}/{limit})",
+    "atLimitTitle": "Limit Reached",
+    "atLimitDescription": "You've reached your {resource} limit",
+    "ruleLimitTitle": "Rule Limit Reached",
+    "ruleLimitDescription": "You have {current} of {max} rules. Upgrade to create more.",
+    "upgrade": "Upgrade",
+    "upgradeForMore": "Upgrade for More",
+    "resources": {
+      "messages": "messages",
+      "rules": "rules"
+    }
+  },
+  "planBadge": {
+    "upgrade": "Upgrade"
   }
 }

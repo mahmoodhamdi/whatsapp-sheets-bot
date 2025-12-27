@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import {
@@ -12,6 +13,17 @@ import {
   CheckCircle,
   Lightbulb,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Working Hours",
+  description:
+    "Configure business working hours for WhatsApp auto-replies. Set schedules, off-hours messages, timezone settings, and custom business examples.",
+  openGraph: {
+    title: "Working Hours | WhatsApp Auto-Reply Bot",
+    description:
+      "Set up business hours to control when auto-replies are active.",
+  },
+};
 
 export default async function WorkingHoursDocsPage() {
   const t = await getTranslations("docs.features.workingHours");
