@@ -14,6 +14,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
   CreditCard,
   ExternalLink,
   Loader2,
@@ -68,6 +78,7 @@ export function BillingSettings({ subscription, usage }: BillingSettingsProps) {
   const [isCancelLoading, setIsCancelLoading] = useState(false);
   const [isResumeLoading, setIsResumeLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showCancelDialog, setShowCancelDialog] = useState(false);
 
   const planName = subscription?.plan.name ?? t("freePlan");
   const status = subscription?.status ?? "FREE";
@@ -104,8 +115,7 @@ export function BillingSettings({ subscription, usage }: BillingSettingsProps) {
   };
 
   const handleCancel = async () => {
-    if (!confirm(t("cancelConfirm"))) return;
-
+    setShowCancelDialog(false);
     setIsCancelLoading(true);
     setError(null);
     try {
@@ -370,7 +380,7 @@ export function BillingSettings({ subscription, usage }: BillingSettingsProps) {
               {!isCanceled && (
                 <Button
                   variant="outline"
-                  onClick={handleCancel}
+                  onClick={() => setShowCancelDialog(true)}
                   disabled={isCancelLoading}
                   className="text-destructive hover:text-destructive"
                 >
@@ -412,6 +422,27 @@ export function BillingSettings({ subscription, usage }: BillingSettingsProps) {
           </CardContent>
         </Card>
       )}
+
+      {/* Cancel Subscription Dialog */}
+      <AlertDialog open={showCancelDialog} onOpenChange={setShowCancelDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("cancelSubscription")}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("cancelConfirm")}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t("keepSubscription")}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleCancel}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {t("confirmCancel")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

@@ -10,7 +10,7 @@
 
 **A production-ready WhatsApp auto-reply SaaS with Stripe subscriptions, Google Sheets sync, and bilingual support (Arabic/English)**
 
-[Live Demo](#) • [Features](#features) • [Installation](#installation) • [Documentation](#documentation)
+[Live Demo](#) • [Features](#features) • [Installation](#installation) • [Documentation](./docs/README.md)
 
 </div>
 
@@ -224,7 +224,7 @@ src/
 | `npm run build` | Production build |
 | `npm run start` | Production server |
 | `npm run lint` | ESLint check |
-| `npm run test` | Unit tests (192 tests) |
+| `npm run test` | Unit & integration tests (247 tests) |
 | `npm run test:e2e` | E2E tests |
 | `npm run db:push` | Push schema |
 | `npm run db:seed` | Seed database |
@@ -236,11 +236,14 @@ src/
 ## Testing
 
 ```bash
-# Unit tests
-npm run test              # 192 tests
+# Unit & integration tests (247 tests)
+npm run test
 
-# E2E tests
+# E2E tests (95 tests)
 npm run test:e2e
+
+# Run specific test file
+npx vitest tests/unit/matcher.test.ts
 
 # Type check
 npx tsc --noEmit
@@ -282,6 +285,59 @@ Events to subscribe:
 After `npm run db:seed`:
 - **Email**: `admin@example.com`
 - **Password**: `admin123`
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+#### Database Connection Failed
+```bash
+# Check PostgreSQL is running
+pg_isready -h localhost -p 5432
+
+# Verify DATABASE_URL format
+postgresql://USER:PASSWORD@HOST:PORT/DATABASE
+```
+
+#### Prisma Client Not Generated
+```bash
+npx prisma generate
+```
+
+#### WhatsApp QR Code Not Showing
+- Ensure no other WhatsApp Web session is active
+- Clear the `sessions/` folder and reconnect
+- Check browser console for WebSocket errors
+
+#### Stripe Webhooks Not Working
+- Verify `STRIPE_WEBHOOK_SECRET` matches your endpoint secret
+- For local development, use Stripe CLI:
+  ```bash
+  stripe listen --forward-to localhost:3000/api/webhooks/stripe
+  ```
+
+#### Build Errors
+```bash
+# Clear Next.js cache
+rm -rf .next
+
+# Reinstall dependencies
+rm -rf node_modules package-lock.json
+npm install
+```
+
+#### Email Verification Not Sending
+- Verify `RESEND_API_KEY` is set correctly
+- Check Resend dashboard for delivery status
+- Ensure sender domain is verified
+
+### Getting Help
+
+- [GitHub Issues](https://github.com/mahmoodhamdi/whatsapp-sheets-bot/issues)
+- Check existing issues before creating new ones
+- Include error logs and environment details
 
 ---
 

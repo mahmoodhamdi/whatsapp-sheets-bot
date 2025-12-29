@@ -391,7 +391,17 @@
     "testInput": "Enter test message",
     "testResult": "Test Result",
     "match": "Match!",
-    "noMatch": "No match"
+    "noMatch": "No match",
+    "form": {
+      "editDescription": "Update the auto-reply rule settings",
+      "createDescription": "Create a new auto-reply rule for incoming messages",
+      "triggerPlaceholder": "e.g., hello, hi, مرحبا",
+      "triggerPlaceholderRegex": "e.g., price|cost|\\d+\\s*SAR",
+      "regexHelp": "Use | for alternatives (OR). Example: سعر|كم|تكلفة",
+      "priorityHelp": "Higher priority rules are checked first (0-100)",
+      "enabled": "Enabled",
+      "disabled": "Disabled"
+    }
   },
   "settings": {
     "title": "Settings",
@@ -1843,7 +1853,9 @@
       "title": "Upgrade for More Features",
       "description": "Unlock more messages, unlimited rules, and premium features with a paid plan.",
       "cta": "View Plans"
-    }
+    },
+    "keepSubscription": "Keep Subscription",
+    "confirmCancel": "Yes, Cancel"
   },
   "featureGate": {
     "locked": "Feature Locked",

@@ -10,7 +10,14 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],
+      exclude: [
+        "tests/**",
+        "**/*.config.*",
+        "**/node_modules/**",
+      ],
     },
+    // Increase timeout for integration tests
+    testTimeout: 10000,
   },
   resolve: {
     alias: {

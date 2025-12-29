@@ -43,6 +43,12 @@ import {
   isSubscriptionActive,
   getSubscriptionLimits,
   userHasFeature,
+  updateSubscriptionStatus,
+  updateSubscriptionFromStripe,
+  cancelSubscriptionAtPeriodEnd,
+  reactivateSubscription,
+  getSubscriptionByStripeId,
+  deleteSubscription,
 } from "@/lib/services/subscription";
 import {
   getCurrentUsage,
@@ -50,6 +56,9 @@ import {
   canCreateRule,
   getMessageUsagePercentage,
   getRemainingMessages,
+  incrementMessageCount,
+  resetUsageForPeriod,
+  getUsageHistory,
 } from "@/lib/services/usage";
 
 const mockFreePlan = {
@@ -340,6 +349,150 @@ describe("Subscription Service", () => {
 
       expect(result).toBe(false);
     });
+
+    it("should check free plan features if no subscription", async () => {
+      vi.mocked(prisma.subscription.findUnique).mockResolvedValue(null);
+      vi.mocked(prisma.plan.findUnique).mockResolvedValue(mockFreePlan as any);
+
+      const result = await userHasFeature("user-1", "basic_support");
+
+      expect(result).toBe(true);
+    });
+  });
+
+  describe("updateSubscriptionStatus", () => {
+    it("should update subscription status", async () => {
+      vi.mocked(prisma.subscription.update).mockResolvedValue({
+        id: "sub-1",
+        status: "PAST_DUE",
+      } as any);
+
+      const result = await updateSubscriptionStatus("sub-1", "PAST_DUE");
+
+      expect(result.status).toBe("PAST_DUE");
+      expect(prisma.subscription.update).toHaveBeenCalledWith({
+        where: { id: "sub-1" },
+        data: { status: "PAST_DUE" },
+      });
+    });
+  });
+
+  describe("updateSubscriptionFromStripe", () => {
+    it("should upsert subscription with Stripe data", async () => {
+      const stripeData = {
+        stripeSubscriptionId: "sub_stripe_123",
+        stripePriceId: "price_123",
+        planId: "plan-pro",
+        status: "ACTIVE" as const,
+        billingInterval: "MONTHLY" as const,
+        currentPeriodStart: new Date("2024-01-01"),
+        currentPeriodEnd: new Date("2024-02-01"),
+        cancelAtPeriodEnd: false,
+      };
+      vi.mocked(prisma.subscription.upsert).mockResolvedValue({
+        id: "sub-1",
+        userId: "user-1",
+        ...stripeData,
+      } as any);
+
+      const result = await updateSubscriptionFromStripe("user-1", stripeData);
+
+      expect(result.stripeSubscriptionId).toBe("sub_stripe_123");
+      expect(prisma.subscription.upsert).toHaveBeenCalledWith({
+        where: { userId: "user-1" },
+        update: stripeData,
+        create: {
+          userId: "user-1",
+          ...stripeData,
+        },
+      });
+    });
+  });
+
+  describe("cancelSubscriptionAtPeriodEnd", () => {
+    it("should mark subscription for cancellation", async () => {
+      vi.mocked(prisma.subscription.update).mockResolvedValue({
+        id: "sub-1",
+        cancelAtPeriodEnd: true,
+        canceledAt: expect.any(Date),
+      } as any);
+
+      const result = await cancelSubscriptionAtPeriodEnd("user-1");
+
+      expect(result.cancelAtPeriodEnd).toBe(true);
+      expect(prisma.subscription.update).toHaveBeenCalledWith({
+        where: { userId: "user-1" },
+        data: {
+          cancelAtPeriodEnd: true,
+          canceledAt: expect.any(Date),
+        },
+      });
+    });
+  });
+
+  describe("reactivateSubscription", () => {
+    it("should reactivate a canceled subscription", async () => {
+      vi.mocked(prisma.subscription.update).mockResolvedValue({
+        id: "sub-1",
+        cancelAtPeriodEnd: false,
+        canceledAt: null,
+      } as any);
+
+      const result = await reactivateSubscription("user-1");
+
+      expect(result.cancelAtPeriodEnd).toBe(false);
+      expect(result.canceledAt).toBeNull();
+      expect(prisma.subscription.update).toHaveBeenCalledWith({
+        where: { userId: "user-1" },
+        data: {
+          cancelAtPeriodEnd: false,
+          canceledAt: null,
+        },
+      });
+    });
+  });
+
+  describe("getSubscriptionByStripeId", () => {
+    it("should return subscription by Stripe ID", async () => {
+      const mockSubscription = {
+        id: "sub-1",
+        stripeSubscriptionId: "sub_stripe_123",
+        plan: mockProPlan,
+      };
+      vi.mocked(prisma.subscription.findUnique).mockResolvedValue(
+        mockSubscription as any
+      );
+
+      const result = await getSubscriptionByStripeId("sub_stripe_123");
+
+      expect(result).toEqual(mockSubscription);
+      expect(prisma.subscription.findUnique).toHaveBeenCalledWith({
+        where: { stripeSubscriptionId: "sub_stripe_123" },
+        include: { plan: true },
+      });
+    });
+
+    it("should return null for non-existent Stripe ID", async () => {
+      vi.mocked(prisma.subscription.findUnique).mockResolvedValue(null);
+
+      const result = await getSubscriptionByStripeId("invalid_id");
+
+      expect(result).toBeNull();
+    });
+  });
+
+  describe("deleteSubscription", () => {
+    it("should delete subscription for user", async () => {
+      vi.mocked(prisma.subscription.delete).mockResolvedValue({
+        id: "sub-1",
+      } as any);
+
+      await deleteSubscription("user-1");
+
+      expect(prisma.subscription.delete).toHaveBeenCalledWith({
+        where: { userId: "user-1" },
+      });
+    });
   });
 });
 
@@ -583,6 +736,115 @@ describe("Usage Service", () => {
       const result = await getRemainingMessages("user-1");
 
       expect(result).toBe(0);
+    });
+  });
+
+  describe("incrementMessageCount", () => {
+    it("should increment message count for existing record", async () => {
+      const periodStart = new Date("2024-01-01");
+      const periodEnd = new Date("2024-01-31");
+      vi.mocked(prisma.subscription.findUnique).mockResolvedValue({
+        id: "sub-1",
+        currentPeriodStart: periodStart,
+        currentPeriodEnd: periodEnd,
+        plan: mockFreePlan,
+      } as any);
+      vi.mocked(prisma.usageRecord.upsert).mockResolvedValue({
+        messagesCount: 26,
+        rulesCount: 0,
+        periodStart,
+        periodEnd,
+      } as any);
+
+      await incrementMessageCount("user-1");
+
+      expect(prisma.usageRecord.upsert).toHaveBeenCalledWith({
+        where: {
+          subscriptionId_periodStart: {
+            subscriptionId: "sub-1",
+            periodStart,
+          },
+        },
+        update: {
+          messagesCount: { increment: 1 },
+        },
+        create: {
+          subscriptionId: "sub-1",
+          periodStart,
+          periodEnd,
+          messagesCount: 1,
+          rulesCount: 0,
+        },
+      });
+    });
+
+    it("should do nothing if no subscription", async () => {
+      vi.mocked(prisma.subscription.findUnique).mockResolvedValue(null);
+
+      await incrementMessageCount("user-1");
+
+      expect(prisma.usageRecord.upsert).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("resetUsageForPeriod", () => {
+    it("should create new usage record for period", async () => {
+      const periodStart = new Date("2024-02-01");
+      const periodEnd = new Date("2024-03-01");
+      vi.mocked(prisma.usageRecord.create).mockResolvedValue({
+        id: "usage-new",
+        subscriptionId: "sub-1",
+        messagesCount: 0,
+        rulesCount: 0,
+        periodStart,
+        periodEnd,
+      } as any);
+
+      const result = await resetUsageForPeriod("sub-1", periodStart, periodEnd);
+
+      expect(result.messagesCount).toBe(0);
+      expect(result.rulesCount).toBe(0);
+      expect(prisma.usageRecord.create).toHaveBeenCalledWith({
+        data: {
+          subscriptionId: "sub-1",
+          periodStart,
+          periodEnd,
+          messagesCount: 0,
+          rulesCount: 0,
+        },
+      });
+    });
+  });
+
+  describe("getUsageHistory", () => {
+    it("should return usage history for user", async () => {
+      const mockHistory = [
+        { id: "usage-1", messagesCount: 100, periodStart: new Date("2024-01-01") },
+        { id: "usage-2", messagesCount: 80, periodStart: new Date("2023-12-01") },
+      ];
+      vi.mocked(prisma.subscription.findUnique).mockResolvedValue({
+        id: "sub-1",
+        plan: mockFreePlan,
+      } as any);
+      vi.mocked(prisma.usageRecord.findMany).mockResolvedValue(mockHistory as any);
+
+      const result = await getUsageHistory("user-1", 12);
+
+      expect(result).toEqual(mockHistory);
+      expect(prisma.usageRecord.findMany).toHaveBeenCalledWith({
+        where: { subscriptionId: "sub-1" },
+        orderBy: { periodStart: "desc" },
+        take: 12,
+      });
+    });
+
+    it("should return empty array if no subscription", async () => {
+      vi.mocked(prisma.subscription.findUnique).mockResolvedValue(null);
+
+      const result = await getUsageHistory("user-1");
+
+      expect(result).toEqual([]);
+      expect(prisma.usageRecord.findMany).not.toHaveBeenCalled();
     });
   });
 });

@@ -87,8 +87,8 @@ export function RuleForm({ rule }: RuleFormProps) {
           <CardTitle>{rule ? t("rules.edit") : t("rules.create")}</CardTitle>
           <CardDescription>
             {rule
-              ? "Update the auto-reply rule settings"
-              : "Create a new auto-reply rule for incoming messages"}
+              ? t("rules.form.editDescription")
+              : t("rules.form.createDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -141,8 +141,8 @@ export function RuleForm({ rule }: RuleFormProps) {
               }
               placeholder={
                 formData.triggerType === "REGEX"
-                  ? "e.g., price|cost|\\d+\\s*SAR"
-                  : "e.g., hello, hi, مرحبا"
+                  ? t("rules.form.triggerPlaceholderRegex")
+                  : t("rules.form.triggerPlaceholder")
               }
               required
               disabled={isLoading}
@@ -150,7 +150,7 @@ export function RuleForm({ rule }: RuleFormProps) {
             />
             {formData.triggerType === "REGEX" && (
               <p className="text-xs text-muted-foreground">
-                Use | for alternatives (OR). Example: سعر|كم|تكلفة
+                {t("rules.form.regexHelp")}
               </p>
             )}
           </div>
@@ -187,7 +187,7 @@ export function RuleForm({ rule }: RuleFormProps) {
                 disabled={isLoading}
               />
               <p className="text-xs text-muted-foreground">
-                Higher priority rules are checked first (0-100)
+                {t("rules.form.priorityHelp")}
               </p>
             </div>
             <div className="space-y-2">
@@ -201,7 +201,7 @@ export function RuleForm({ rule }: RuleFormProps) {
                   disabled={isLoading}
                 />
                 <span className="text-sm text-muted-foreground">
-                  {formData.isActive ? "Enabled" : "Disabled"}
+                  {formData.isActive ? t("rules.form.enabled") : t("rules.form.disabled")}
                 </span>
               </div>
             </div>

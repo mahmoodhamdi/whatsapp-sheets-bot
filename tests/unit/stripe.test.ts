@@ -154,3 +154,8 @@ describe("Customer Management - Not Configured", () => {
     });
   });
 });
+
+// Note: Testing customer management with Stripe configured requires
+// complex mocking of the Stripe constructor. The "Not Configured" tests
+// above cover the null/error paths, and the actual Stripe integration
+// is tested via webhook and subscription management tests.

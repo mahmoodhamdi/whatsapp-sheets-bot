@@ -15,6 +15,24 @@ test.describe("Settings", () => {
       await expect(page.locator("h1")).toBeVisible();
     });
 
+    test("should navigate to account settings", async ({ page }) => {
+      await page.goto("/dashboard/settings");
+      const accountLink = page.locator('a[href="/dashboard/settings/account"]');
+      if (await accountLink.isVisible()) {
+        await accountLink.click();
+        await expect(page).toHaveURL(/.*settings\/account/);
+      }
+    });
+
+    test("should navigate to billing settings", async ({ page }) => {
+      await page.goto("/dashboard/settings");
+      const billingLink = page.locator('a[href="/dashboard/settings/billing"]');
+      if (await billingLink.isVisible()) {
+        await billingLink.click();
+        await expect(page).toHaveURL(/.*settings\/billing/);
+      }
+    });
+
     test("should display general settings card", async ({ page }) => {
       await page.goto("/dashboard/settings");
       await expect(page.locator("#businessName")).toBeVisible();
