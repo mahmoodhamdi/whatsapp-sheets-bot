@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { Direction } from "@prisma/client";
+import { messagesQuerySchema, parseQueryParams } from "@/lib/validations/api";
 
 export async function GET(request: NextRequest) {
   const session = await auth();
@@ -9,13 +9,19 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const searchParams = request.nextUrl.searchParams;
-  const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "20");
-  const direction = searchParams.get("direction") as Direction | null;
-  const contactId = searchParams.get("contactId");
-  const search = searchParams.get("search") || "";
+  const queryResult = parseQueryParams(
+    request.nextUrl.searchParams,
+    messagesQuerySchema
+  );
 
+  if (!queryResult.success) {
+    return NextResponse.json(
+      { error: "Invalid query parameters", details: queryResult.error.issues },
+      { status: 400 }
+    );
+  }
+
+  const { page, limit, direction, contactId, search } = queryResult.data;
   const skip = (page - 1) * limit;
 
   const where: Record<string, unknown> = {};

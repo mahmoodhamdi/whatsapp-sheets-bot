@@ -7,6 +7,7 @@ import { sendEmail } from "@/lib/email";
 import { verificationEmailTemplate } from "@/lib/email/templates";
 import { createOrGetStripeCustomer } from "@/lib/stripe/customer";
 import { createFreeSubscription } from "@/lib/services/subscription";
+import { registerLimiter, getClientIP } from "@/lib/security/rate-limit";
 
 const registerSchema = z.object({
   name: z
@@ -24,6 +25,20 @@ const registerSchema = z.object({
 
 export async function POST(request: Request) {
   try {
+    // Rate limiting
+    const ip = getClientIP(request);
+    const { success, resetIn } = registerLimiter(ip);
+
+    if (!success) {
+      return NextResponse.json(
+        {
+          error: "Too many registration attempts. Please try again later.",
+          retryAfter: Math.ceil(resetIn / 1000),
+        },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
 
     // Validate input

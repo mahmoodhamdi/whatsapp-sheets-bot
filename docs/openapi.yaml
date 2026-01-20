@@ -1,0 +1,1025 @@
+openapi: 3.1.0
+info:
+  title: WhatsApp Auto-Reply Bot API
+  description: |
+    API for the WhatsApp Auto-Reply Bot SaaS platform.
+
+    ## Authentication
+    All protected endpoints require authentication via NextAuth.js session cookies.
+
+    ## Rate Limiting
+    - Login: 5 requests/minute
+    - Registration: 3 requests/minute
+    - Password Reset: 3 requests/minute
+    - General API: 60 requests/minute
+
+    ## Error Codes
+    - 400: Bad Request (validation error)
+    - 401: Unauthorized (not authenticated)
+    - 403: Forbidden (insufficient permissions)
+    - 404: Not Found
+    - 429: Too Many Requests (rate limited)
+    - 500: Internal Server Error
+  version: 1.0.0
+  contact:
+    email: support@example.com
+
+servers:
+  - url: http://localhost:3000/api
+    description: Development server
+  - url: https://your-domain.com/api
+    description: Production server
+
+tags:
+  - name: Authentication
+    description: User authentication endpoints
+  - name: User
+    description: User profile management
+  - name: Rules
+    description: Auto-reply rules management
+  - name: Contacts
+    description: WhatsApp contacts management
+  - name: Messages
+    description: Message history and sending
+  - name: Analytics
+    description: Usage analytics (requires Professional plan)
+  - name: Subscription
+    description: Subscription management
+  - name: WhatsApp
+    description: WhatsApp connection management
+  - name: Settings
+    description: Application settings
+
+paths:
+  /auth/register:
+    post:
+      tags: [Authentication]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password]
+              properties:
+                name:
+                  type: string
+                  minLength: 2
+                  maxLength: 50
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 8
+                  description: Must contain uppercase letter and number
+                locale:
+                  type: string
+                  enum: [ar, en]
+                  default: ar
+      responses:
+        '201':
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  user:
+                    $ref: '#/components/schemas/UserBasic'
+                  requiresVerification:
+                    type: boolean
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: Email already registered
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /auth/forgot-password:
+    post:
+      tags: [Authentication]
+      summary: Request password reset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+                locale:
+                  type: string
+                  enum: [ar, en]
+      responses:
+        '200':
+          description: Reset link sent (always returns success to prevent enumeration)
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /auth/reset-password:
+    post:
+      tags: [Authentication]
+      summary: Reset password with token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token, password]
+              properties:
+                token:
+                  type: string
+                password:
+                  type: string
+                  minLength: 8
+      responses:
+        '200':
+          description: Password reset successful
+        '400':
+          description: Invalid or expired token
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /auth/verify-email:
+    post:
+      tags: [Authentication]
+      summary: Verify email with code
+      security:
+        - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [code]
+              properties:
+                code:
+                  type: string
+                  minLength: 6
+                  maxLength: 6
+      responses:
+        '200':
+          description: Email verified successfully
+        '400':
+          description: Invalid or expired code
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/send-verification:
+    post:
+      tags: [Authentication]
+      summary: Resend verification email
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Verification email sent
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /user/profile:
+    get:
+      tags: [User]
+      summary: Get user profile
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      tags: [User]
+      summary: Update user profile
+      security:
+        - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 2
+                  maxLength: 50
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: Profile updated
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /user/password:
+    patch:
+      tags: [User]
+      summary: Change password
+      security:
+        - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [currentPassword, newPassword]
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+                  minLength: 8
+      responses:
+        '200':
+          description: Password changed
+        '400':
+          description: Current password incorrect
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /user/delete:
+    delete:
+      tags: [User]
+      summary: Delete user account
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Account deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /rules:
+    get:
+      tags: [Rules]
+      summary: Get all rules
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: List of rules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rule'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Rules]
+      summary: Create a new rule
+      security:
+        - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RuleCreate'
+      responses:
+        '201':
+          description: Rule created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Rule limit reached
+
+  /rules/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [Rules]
+      summary: Get a rule by ID
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Rule details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+        '404':
+          description: Rule not found
+    put:
+      tags: [Rules]
+      summary: Update a rule
+      security:
+        - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RuleCreate'
+      responses:
+        '200':
+          description: Rule updated
+        '404':
+          description: Rule not found
+    delete:
+      tags: [Rules]
+      summary: Delete a rule
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Rule deleted
+        '404':
+          description: Rule not found
+
+  /rules/{id}/toggle:
+    post:
+      tags: [Rules]
+      summary: Toggle rule active status
+      security:
+        - sessionCookie: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Rule toggled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+        '404':
+          description: Rule not found
+
+  /contacts:
+    get:
+      tags: [Contacts]
+      summary: Get contacts list
+      security:
+        - sessionCookie: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+        - name: search
+          in: query
+          schema:
+            type: string
+            maxLength: 200
+      responses:
+        '200':
+          description: Paginated contacts list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /contacts/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [Contacts]
+      summary: Get contact details with messages
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Contact with message history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactWithMessages'
+        '404':
+          description: Contact not found
+    delete:
+      tags: [Contacts]
+      summary: Delete a contact
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Contact deleted
+        '404':
+          description: Contact not found
+
+  /messages:
+    get:
+      tags: [Messages]
+      summary: Get messages list
+      security:
+        - sessionCookie: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: direction
+          in: query
+          schema:
+            type: string
+            enum: [INCOMING, OUTGOING]
+        - name: contactId
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Paginated messages list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessagesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /messages/send:
+    post:
+      tags: [Messages]
+      summary: Send a message
+      security:
+        - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phone, message]
+              properties:
+                phone:
+                  type: string
+                  pattern: '^\+?[0-9]{10,15}$'
+                message:
+                  type: string
+                  minLength: 1
+                  maxLength: 4096
+      responses:
+        '200':
+          description: Message sent
+        '400':
+          description: WhatsApp not connected
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Message limit reached
+
+  /analytics/overview:
+    get:
+      tags: [Analytics]
+      summary: Get analytics overview
+      description: Requires Professional plan or higher
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Analytics overview
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsOverview'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Feature not available on current plan
+
+  /subscription:
+    get:
+      tags: [Subscription]
+      summary: Get current subscription
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Current subscription details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /subscription/cancel:
+    post:
+      tags: [Subscription]
+      summary: Cancel subscription
+      description: Cancels at end of billing period
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Subscription scheduled for cancellation
+        '400':
+          description: Cannot cancel free plan
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /subscription/resume:
+    post:
+      tags: [Subscription]
+      summary: Resume canceled subscription
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Subscription resumed
+        '400':
+          description: Subscription not scheduled for cancellation
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /usage:
+    get:
+      tags: [Subscription]
+      summary: Get usage statistics
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Usage statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /whatsapp/status:
+    get:
+      tags: [WhatsApp]
+      summary: Get WhatsApp connection status
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Connection status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  connected:
+                    type: boolean
+                  qr:
+                    type: string
+                    description: QR code data (when connecting)
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /whatsapp/connect:
+    post:
+      tags: [WhatsApp]
+      summary: Connect to WhatsApp
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Connection initiated
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /whatsapp/disconnect:
+    post:
+      tags: [WhatsApp]
+      summary: Disconnect from WhatsApp
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Disconnected
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /settings:
+    get:
+      tags: [Settings]
+      summary: Get application settings
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Settings'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      tags: [Settings]
+      summary: Update settings
+      security:
+        - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SettingsUpdate'
+      responses:
+        '200':
+          description: Settings updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: authjs.session-token
+      description: NextAuth.js session cookie
+
+  responses:
+    Unauthorized:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Unauthorized
+    BadRequest:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              retryAfter:
+                type: integer
+                description: Seconds until rate limit resets
+
+  schemas:
+    UserBasic:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        emailVerified:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    Rule:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        trigger:
+          type: string
+        triggerType:
+          type: string
+          enum: [EXACT, CONTAINS, STARTS_WITH, REGEX]
+        response:
+          type: string
+        priority:
+          type: integer
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    RuleCreate:
+      type: object
+      required: [name, trigger, triggerType, response]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        trigger:
+          type: string
+          minLength: 1
+        triggerType:
+          type: string
+          enum: [EXACT, CONTAINS, STARTS_WITH, REGEX]
+        response:
+          type: string
+          minLength: 1
+          maxLength: 4096
+        priority:
+          type: integer
+          minimum: 0
+          maximum: 100
+        isActive:
+          type: boolean
+          default: true
+
+    Contact:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        phone:
+          type: string
+        name:
+          type: string
+          nullable: true
+        messageCount:
+          type: integer
+        lastContact:
+          type: string
+          format: date-time
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+
+    ContactWithMessages:
+      allOf:
+        - $ref: '#/components/schemas/Contact'
+        - type: object
+          properties:
+            messages:
+              type: array
+              items:
+                $ref: '#/components/schemas/Message'
+
+    ContactsResponse:
+      type: object
+      properties:
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        content:
+          type: string
+        direction:
+          type: string
+          enum: [INCOMING, OUTGOING]
+        status:
+          type: string
+          enum: [SENT, RECEIVED, FAILED]
+        createdAt:
+          type: string
+          format: date-time
+
+    MessagesResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+        totalPages:
+          type: integer
+
+    AnalyticsOverview:
+      type: object
+      properties:
+        totalMessages:
+          type: integer
+        totalContacts:
+          type: integer
+        totalRules:
+          type: integer
+        activeRules:
+          type: integer
+        todayMessages:
+          type: integer
+        weekMessages:
+          type: integer
+        monthMessages:
+          type: integer
+        responseRate:
+          type: integer
+
+    Subscription:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [ACTIVE, CANCELED, PAST_DUE, TRIALING, FREE]
+        plan:
+          $ref: '#/components/schemas/Plan'
+        currentPeriodStart:
+          type: string
+          format: date-time
+        currentPeriodEnd:
+          type: string
+          format: date-time
+        cancelAtPeriodEnd:
+          type: boolean
+
+    Plan:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        slug:
+          type: string
+        priceMonthly:
+          type: integer
+        priceYearly:
+          type: integer
+        messagesPerMonth:
+          type: integer
+        rulesLimit:
+          type: integer
+        features:
+          type: array
+          items:
+            type: string
+
+    Usage:
+      type: object
+      properties:
+        messagesUsed:
+          type: integer
+        messagesLimit:
+          type: integer
+        rulesUsed:
+          type: integer
+        rulesLimit:
+          type: integer
+        periodStart:
+          type: string
+          format: date-time
+        periodEnd:
+          type: string
+          format: date-time
+
+    Settings:
+      type: object
+      properties:
+        id:
+          type: string
+        businessName:
+          type: string
+          nullable: true
+        defaultReply:
+          type: string
+          nullable: true
+        googleSheetsId:
+          type: string
+          nullable: true
+        whatsappConnected:
+          type: boolean
+        workingHours:
+          type: object
+          nullable: true
+          properties:
+            start:
+              type: string
+            end:
+              type: string
+            days:
+              type: array
+              items:
+                type: string
+
+    SettingsUpdate:
+      type: object
+      properties:
+        businessName:
+          type: string
+          maxLength: 100
+        defaultReply:
+          type: string
+          maxLength: 1000
+        googleSheetsId:
+          type: string
+          nullable: true
+        workingHours:
+          type: object
+          nullable: true
+          properties:
+            start:
+              type: string
+            end:
+              type: string
+            days:
+              type: array
+              items:
+                type: string

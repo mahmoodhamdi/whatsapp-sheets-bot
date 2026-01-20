@@ -1,5 +1,6 @@
 "use client";
 
+import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, RotateCcw } from "lucide-react";
@@ -11,7 +12,10 @@ interface GlobalErrorProps {
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
   useEffect(() => {
+    // Log to console for development
     console.error("Global error:", error);
+    // Send to Sentry for production monitoring
+    Sentry.captureException(error);
   }, [error]);
 
   return (

@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import {
+  contactsQuerySchema,
+  parseQueryParams,
+} from "@/lib/validations/api";
 
 export async function GET(request: NextRequest) {
   const session = await auth();
@@ -8,11 +12,19 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const searchParams = request.nextUrl.searchParams;
-  const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "10");
-  const search = searchParams.get("search") || "";
+  const queryResult = parseQueryParams(
+    request.nextUrl.searchParams,
+    contactsQuerySchema
+  );
 
+  if (!queryResult.success) {
+    return NextResponse.json(
+      { error: "Invalid query parameters", details: queryResult.error.issues },
+      { status: 400 }
+    );
+  }
+
+  const { page, limit, search } = queryResult.data;
   const skip = (page - 1) * limit;
 
   const where = search

@@ -156,6 +156,39 @@ describe("Customer Management - Not Configured", () => {
 });
 
 // Note: Testing customer management with Stripe configured requires
-// complex mocking of the Stripe constructor. The "Not Configured" tests
+// complex mocking of the Stripe constructor class. The "Not Configured" tests
 // above cover the null/error paths, and the actual Stripe integration
 // is tested via webhook and subscription management tests.
+//
+// Additional coverage for customer.ts is provided through:
+// - Integration tests (auth-flow.test.ts - registration creates customer)
+// - Webhook tests (customer events handling)
+// - Subscription management tests (customer operations)
+
+describe("Stripe Module Exports", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.resetModules();
+    vi.stubEnv("STRIPE_SECRET_KEY", "");
+  });
+
+  it("should export all required functions from customer module", async () => {
+    const customerModule = await import("@/lib/stripe/customer");
+
+    expect(customerModule.createOrGetStripeCustomer).toBeDefined();
+    expect(customerModule.getStripeCustomer).toBeDefined();
+    expect(customerModule.updateStripeCustomer).toBeDefined();
+    expect(customerModule.deleteStripeCustomer).toBeDefined();
+    expect(customerModule.getCustomerIdForCheckout).toBeDefined();
+  });
+
+  it("should export all required functions from index module", async () => {
+    const stripeModule = await import("@/lib/stripe/index");
+
+    expect(stripeModule.formatAmount).toBeDefined();
+    expect(stripeModule.formatAmountAr).toBeDefined();
+    expect(stripeModule.formatAmountLocalized).toBeDefined();
+    expect(stripeModule.isStripeConfigured).toBeDefined();
+    expect(stripeModule.getStripe).toBeDefined();
+  });
+});

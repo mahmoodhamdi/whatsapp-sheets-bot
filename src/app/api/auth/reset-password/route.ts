@@ -5,6 +5,7 @@ import {
   consumeResetToken,
 } from "@/lib/auth/password-reset";
 import { createAuditLog, getClientInfo } from "@/lib/security/audit";
+import { resetPasswordLimiter, getClientIP } from "@/lib/security/rate-limit";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 
@@ -19,6 +20,20 @@ const resetPasswordSchema = z.object({
 
 export async function POST(request: Request) {
   try {
+    // Rate limiting
+    const ip = getClientIP(request);
+    const { success, resetIn } = resetPasswordLimiter(ip);
+
+    if (!success) {
+      return NextResponse.json(
+        {
+          error: "Too many attempts. Please try again later.",
+          retryAfter: Math.ceil(resetIn / 1000),
+        },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
     const result = resetPasswordSchema.safeParse(body);
 

@@ -61,18 +61,33 @@ export function createRateLimiter(config: RateLimitConfig) {
 
 // Pre-configured limiters
 export const loginLimiter = createRateLimiter({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // 5 attempts per 15 minutes
+  windowMs: 60 * 1000, // 1 minute
+  max: 5, // 5 attempts per minute
+});
+
+export const registerLimiter = createRateLimiter({
+  windowMs: 60 * 1000, // 1 minute
+  max: 3, // 3 registrations per minute
 });
 
 export const passwordResetLimiter = createRateLimiter({
-  windowMs: 60 * 60 * 1000, // 1 hour
-  max: 3, // 3 requests per hour
+  windowMs: 60 * 1000, // 1 minute
+  max: 3, // 3 requests per minute
+});
+
+export const resetPasswordLimiter = createRateLimiter({
+  windowMs: 60 * 1000, // 1 minute
+  max: 3, // 3 reset attempts per minute
 });
 
 export const verificationLimiter = createRateLimiter({
   windowMs: 60 * 1000, // 1 minute
   max: 1, // 1 request per minute
+});
+
+export const apiLimiter = createRateLimiter({
+  windowMs: 60 * 1000, // 1 minute
+  max: 60, // 60 requests per minute for general API
 });
 
 // Helper to get IP from request
