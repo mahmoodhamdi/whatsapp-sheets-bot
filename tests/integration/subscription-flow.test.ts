@@ -16,9 +16,8 @@ import {
   mockUserFactory,
   mockSubscriptionFactory,
   mockUsageFactory,
-  mockRuleFactory,
 } from "./setup";
-import { createTestScenario, uniqueId } from "./helpers";
+import { createTestScenario } from "./helpers";
 
 // Mock prisma
 vi.mock("@/lib/prisma", () => ({

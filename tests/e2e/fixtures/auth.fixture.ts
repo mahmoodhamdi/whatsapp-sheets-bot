@@ -9,6 +9,7 @@ export const test = base.extend<{
     const loginPage = new LoginPage(page);
     await loginPage.goto();
     await loginPage.loginAsAdmin();
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(page);
   },
 });

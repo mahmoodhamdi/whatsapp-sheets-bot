@@ -70,11 +70,7 @@ test.describe("Billing Settings", () => {
     await page.waitForTimeout(1000);
 
     // Should display period information (monthly/yearly or dates)
-    const periodInfo = page.locator("text=/شهري|سنوي|Monthly|Yearly|period/i");
-    const hasPerodInfo = await periodInfo.first().isVisible().catch(() => false);
-
-    // Period info might not be visible for free plans, so this is optional
-    // Just ensure the page loads successfully
+    // Period info might not be visible for free plans, so we just ensure the page loads
     await expect(page.locator("h1")).toBeVisible();
   });
 

@@ -129,10 +129,11 @@ Type-safe `Feature` type in `src/lib/features/index.ts`:
 
 ## Testing
 
-- Unit tests: `tests/unit/*.test.ts` (14 test files)
-- E2E tests: `tests/e2e/` (Playwright)
+- Unit tests: `tests/unit/*.test.ts`
+- Integration tests: `tests/integration/*.test.ts`
+- E2E tests: `tests/e2e/*.spec.ts` (Playwright with Page Object Model in `tests/e2e/pages/`)
 - Setup: `tests/setup.ts` (mocks env vars)
-- Config: `vitest.config.ts`
+- Config: `vitest.config.ts`, `playwright.config.ts`
 
 ## Environment Variables
 
