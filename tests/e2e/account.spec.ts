@@ -4,7 +4,7 @@ test.describe("Account Settings", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/login");
     await page.fill("#email", "admin@example.com");
-    await page.fill("#password", "admin123");
+    await page.fill("#password", "Admin123!");
     await page.click('button[type="submit"]');
     await page.waitForURL(/.*dashboard/, { timeout: 10000 });
   });
@@ -99,7 +99,7 @@ test.describe("Account Settings", () => {
 
       await page.click('[value="password"]');
 
-      await page.fill("#currentPassword", "admin123");
+      await page.fill("#currentPassword", "Admin123!");
       await page.fill("#newPassword", "weak"); // Too weak
       await page.fill("#confirmPassword", "weak");
 
@@ -115,7 +115,7 @@ test.describe("Account Settings", () => {
 
       await page.click('[value="password"]');
 
-      await page.fill("#currentPassword", "admin123");
+      await page.fill("#currentPassword", "Admin123!");
       await page.fill("#newPassword", "NewSecurePass123!");
       await page.fill("#confirmPassword", "DifferentPass123!");
 

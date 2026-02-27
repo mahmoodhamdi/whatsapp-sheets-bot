@@ -1,48 +1,41 @@
 import { Page, Locator, expect } from "@playwright/test";
 
-export class LoginPage {
+export class RegisterPage {
   readonly page: Page;
+  readonly nameInput: Locator;
   readonly emailInput: Locator;
   readonly passwordInput: Locator;
+  readonly confirmPasswordInput: Locator;
   readonly submitButton: Locator;
   readonly errorMessage: Locator;
-  readonly languageSwitcher: Locator;
+  readonly loginLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
+    this.nameInput = page.locator("#name");
     this.emailInput = page.locator("#email");
     this.passwordInput = page.locator("#password");
+    this.confirmPasswordInput = page.locator("#confirmPassword");
     this.submitButton = page.locator('button[type="submit"]');
     this.errorMessage = page.locator(".text-red-500");
-    this.languageSwitcher = page.locator('[data-testid="language-switcher"]');
+    this.loginLink = page.locator('a[href="/login"]');
   }
 
   async goto() {
-    await this.page.goto("/login");
+    await this.page.goto("/register");
   }
 
-  async login(email: string, password: string) {
+  async register(name: string, email: string, password: string) {
+    await this.nameInput.fill(name);
     await this.emailInput.fill(email);
     await this.passwordInput.fill(password);
+    if (await this.confirmPasswordInput.isVisible()) {
+      await this.confirmPasswordInput.fill(password);
+    }
     await this.submitButton.click();
-  }
-
-  async loginAsAdmin() {
-    await this.login("admin@example.com", "Admin123!");
-    await this.page.waitForURL(/.*dashboard/, { timeout: 10000 });
   }
 
   async expectError() {
     await expect(this.errorMessage).toBeVisible();
-  }
-
-  async switchToEnglish() {
-    await this.languageSwitcher.click();
-    await this.page.click("text=English");
-  }
-
-  async switchToArabic() {
-    await this.languageSwitcher.click();
-    await this.page.click("text=العربية");
   }
 }

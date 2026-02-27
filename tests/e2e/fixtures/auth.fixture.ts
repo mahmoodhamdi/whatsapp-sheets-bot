@@ -27,6 +27,6 @@ export async function loginAsAdmin(page: Page): Promise<void> {
 export const TEST_CREDENTIALS = {
   admin: {
     email: "admin@example.com",
-    password: "admin123",
+    password: "Admin123!",
   },
 };

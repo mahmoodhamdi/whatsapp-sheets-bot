@@ -16,7 +16,7 @@ const publicRoutes = [
 ];
 
 // Routes that start with these prefixes are public
-const publicPrefixes = ["/api/auth", "/docs/"];
+const publicPrefixes = ["/api/auth", "/api/health", "/api/webhooks", "/docs/"];
 
 // Routes that require authentication but not email verification
 const authOnlyRoutes = ["/verify-email"];

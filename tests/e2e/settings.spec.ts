@@ -4,7 +4,7 @@ test.describe("Settings", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/login");
     await page.fill("#email", "admin@example.com");
-    await page.fill("#password", "admin123");
+    await page.fill("#password", "Admin123!");
     await page.click('button[type="submit"]');
     await page.waitForURL(/.*dashboard/, { timeout: 10000 });
   });
