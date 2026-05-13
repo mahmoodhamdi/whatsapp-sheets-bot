@@ -84,7 +84,7 @@ These are documented in the brief but deferred. Each is sized as a separate feat
 | Feature | Sized | Why Deferred |
 |---|---|---|
 | WhatsApp Cloud API adapter (full impl) | 3–5 days | Requires Meta Business onboarding for testing |
-| AI-powered replies (OpenAI/Anthropic) | 1 week | Wire-up + cost-control + safety review |
+| AI-powered replies (LLM provider of choice) | 1 week | Wire-up + cost-control + safety review |
 | Conversation flow builder (visual) | 2 weeks | Significant UI work + drag/drop component |
 | Broadcast/Campaign with audience filters | 1 week | Compliance review for opt-in/opt-out |
 | Live chat takeover (human agent handoff) | 1 week | Real-time channel + presence tracking |

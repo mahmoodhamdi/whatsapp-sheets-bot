@@ -62,7 +62,7 @@ Minimum contract: 12 months. After year 1, monthly continues without renewal com
 | Add-on | EG (EGP) | SA (SAR) | Description |
 |---|---|---|---|
 | Custom Branding | 5,000 | 1,000 | Logo, colors, custom domain in dashboard + emails |
-| AI Replies Integration | 8,000 | 1,600 | OpenAI/Anthropic API wiring + fallback rules + training |
+| AI Replies Integration | 8,000 | 1,600 | LLM provider wiring (your choice of API) + fallback rules + training |
 | Migration from Another Tool | 10,000 | 2,000 | Import existing contacts/rules from Wati / chat exports |
 | Additional WhatsApp Numbers | 3,000 each | 600 each | Per extra number connected (Cloud API or Baileys) |
 | Mobile Apps (PWA polish) | 6,000 | 1,200 | Native install banners, push notifications |

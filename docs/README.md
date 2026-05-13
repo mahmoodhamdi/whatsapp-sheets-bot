@@ -21,7 +21,6 @@ Welcome to the WhatsApp Auto-Reply Bot documentation.
 
 - [README](../README.md) - Project overview and quick start
 - [SECURITY](../SECURITY.md) - Security policy and practices
-- [CLAUDE.md](../CLAUDE.md) - Instructions for Claude Code
 
 ## Support
 

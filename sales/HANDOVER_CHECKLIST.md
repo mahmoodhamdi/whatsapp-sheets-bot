@@ -35,7 +35,7 @@ Run through this list jointly with the client during the handover session. Both 
 - [ ] GitHub repo transferred OR client added as Admin
 - [ ] All sales/* docs delivered (this file, deployment guide, pricing, support, etc.)
 - [ ] In-app docs reviewed (`/docs` route walkthrough)
-- [ ] CLAUDE.md / developer guide handed over
+- [ ] README + docs/ developer guide handed over
 - [ ] CI/CD workflow walkthrough done
 
 ### C. Live Training (recorded)
